@@ -97,6 +97,54 @@ Kurz zusammengefasst: Quarkus verwendet primär die Mutiny-API für reaktive App
 verlangen Typen wie **Uni** oder **Multi**. Es würde dann zum Konflikt zwischen den Typen von anderen reaaktiven API wie
 **RxJava** oder **Vert.x** kommen.
 
+== Beispiele mit ReactiveX
+
+[plantuml]
+----
+include::puml/architecture.puml[]
+----
+
+Es befinden sich im Repository zwei Beispiele mit ReactiveX:
+
+* Angular mit RxJS
+* Android mit RxJava
+
+Um Daten zu bekommen, wurde eine Fake-REST-API von https://jsonplaceholder.typicode.com/[jsonplaceholder] verwendet. Sie
+gibt ToDos zurück und so sieht die Struktur aus:
+
+[plantuml]
+----
+include::puml/todos.puml[]
+----
+
+== Angular (rxjs-demo)
+
+[plantuml]
+----
+!$highlight_component = "rxjs"
+include::puml/architecture.puml[]
+----
+
+
+RxJS ist eine reaktive Bibliothek, die mit Angular verwendet wird, um asynchrone Datenströme wie API-Aufrufe,
+Benutzereingaben und Ereignisse zu verwalten. Ein wichtiges Konzept hierbei ist die **Single Source of Truth (SSOT)**.
+
+=== Single Source of Truth
+
+Das SSOT-Prinzip bedeutet, dass alle Daten aus einer zentralen Quelle stammen.
+Mit RxJS wird diese Quelle typischerweise durch Observables oder Subjects repräsentiert.
+
+
+== RxJava in Android
+
+[plantuml]
+----
+!$highlight_component = "rxjava"
+include::puml/architecture.puml[]
+----
+
+RxJava ist eine Implementierung von ReactiveX für die JVM und wird häufig in Android-Apps verwendet, um asynchrone Operationen wie Netzwerkaufrufe, Datenbankzugriffe und Benutzerinteraktionen zu verwalten.
+
 
 
 == Quelle

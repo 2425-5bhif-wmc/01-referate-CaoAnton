@@ -1,0 +1,32 @@
+left to right direction
+
+skinparam linetype ortho
+
+skinparam component<<current>> {
+    BorderColor red
+    BorderThickness 1
+}
+
+!if ($highlight_component == "rxjs")
+    component [rxjs-demo (Angular)] as js <<current>>
+!else
+    component [rxjs-demo (Angular)] as js
+!endif
+
+!if ($highlight_component == "rxjava")
+    component [rxjava-demo (Android)] as java <<current>>
+!else
+    component [rxjava-demo (Android)] as java
+!endif
+
+!if ($highlight_component == "todos")
+    component [todos\n\t- jsonplaceholder] as json <<current>>
+!else
+    component [todos\n\t- jsonplaceholder] as json
+!endif
+
+json --> js: requests
+js--> json
+
+json --> java: requests
+java --> json
