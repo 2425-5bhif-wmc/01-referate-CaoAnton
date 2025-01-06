@@ -1,0 +1,22 @@
+<header>
+
+</header>
+<main class="container">
+  <nav>
+    <ul>
+      <li><strong>HTL Leonding ({{ store.value.todos.length }} Todos)</strong></li>
+    </ul>
+    <ul>
+      <li><a href="./register">Register</a></li>
+      <li><a routerLink="./todo">Todo</a></li>
+      <li><a href="#">Products</a></li>
+    </ul>
+  </nav>
+  <h1>Hello {{ store.value.name }} {{ store.value.email }}!</h1>
+  <button (click)="loadTodos()">Load Todos</button>
+  <router-outlet/>
+
+</main>
+<footer>
+
+</footer>

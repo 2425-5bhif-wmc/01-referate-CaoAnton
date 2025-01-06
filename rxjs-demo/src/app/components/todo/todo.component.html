@@ -1,0 +1,9 @@
+<p>todo works!({{(viewModel | async)?.length}})</p>
+
+<ol>
+  @for (todo of viewModel | async; track todo.title) {
+    <li>{{ todo.title }}</li>
+  } @empty {
+    <li>There are no items.</li>
+  }
+</ol>
