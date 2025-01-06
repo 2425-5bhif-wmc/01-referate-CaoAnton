@@ -1,0 +1,12 @@
+@startuml
+
+'https://plantuml.com/class-diagramm
+left to right direction
+
+class Todo{
+- userId: Long
+- id: Long
+- title: String
+- completed: boolean
+}
+@enduml

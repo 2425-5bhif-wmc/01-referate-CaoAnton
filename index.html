@@ -549,15 +549,6 @@ pre.rouge .gs {
   font-weight: bold;
 }
 </style>
-<style>
-    pre.rouge .hll {
-        background-color: #ffc;
-        display: block;
-    }
-    pre.rouge .hll * {
-        background-color: initial;
-    }
-</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -578,7 +569,14 @@ pre.rouge .gs {
 </li>
 <li><a href="#_alternative">2. Alternative</a></li>
 <li><a href="#_quarkus_mutiny_vs_andere_reaktive_api">3. Quarkus Mutiny vs andere reaktive API</a></li>
-<li><a href="#_quelle">4. Quelle</a></li>
+<li><a href="#_beispiele_mit_reactivex">4. Beispiele mit ReactiveX</a></li>
+<li><a href="#_angular_rxjs_demo">5. Angular (rxjs-demo)</a>
+<ul class="sectlevel2">
+<li><a href="#_single_source_of_truth">5.1. Single Source of Truth</a></li>
+</ul>
+</li>
+<li><a href="#_rxjava_in_android">6. RxJava in Android</a></li>
+<li><a href="#_quelle">7. Quelle</a></li>
 </ul>
 </div>
 </div>
@@ -724,7 +722,73 @@ or Reactive Messaging).</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_quelle"><a class="anchor" href="#_quelle"></a>4. Quelle</h2>
+<h2 id="_beispiele_mit_reactivex"><a class="anchor" href="#_beispiele_mit_reactivex"></a>4. Beispiele mit ReactiveX</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="images/diag-plantuml-md5-28be95aa269b132e3ac17a7c51075e1b.png" alt="Diagram" width="687" height="74">
+</div>
+</div>
+<div class="paragraph">
+<p>Es befinden sich im Repository zwei Beispiele mit ReactiveX:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Angular mit RxJS</p>
+</li>
+<li>
+<p>Android mit RxJava</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Um Daten zu bekommen, wurde eine Fake-REST-API von <a href="https://jsonplaceholder.typicode.com/">jsonplaceholder</a> verwendet. Sie
+gibt ToDos zurück und so sieht die Struktur aus:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/diag-plantuml-md5-9c94654fa2234ed18185d7c21437c749.png" alt="Diagram" width="185" height="133">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_angular_rxjs_demo"><a class="anchor" href="#_angular_rxjs_demo"></a>5. Angular (rxjs-demo)</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="images/diag-plantuml-md5-f7cfe3703ece8ece746af05a3abc5180.png" alt="Diagram" width="687" height="74">
+</div>
+</div>
+<div class="paragraph">
+<p>RxJS ist eine reaktive Bibliothek, die mit Angular verwendet wird, um asynchrone Datenströme wie API-Aufrufe,
+Benutzereingaben und Ereignisse zu verwalten. Ein wichtiges Konzept hierbei ist die <strong>Single Source of Truth (SSOT)</strong>.</p>
+</div>
+<div class="sect2">
+<h3 id="_single_source_of_truth"><a class="anchor" href="#_single_source_of_truth"></a>5.1. Single Source of Truth</h3>
+<div class="paragraph">
+<p>Das SSOT-Prinzip bedeutet, dass alle Daten aus einer zentralen Quelle stammen.
+Mit RxJS wird diese Quelle typischerweise durch Observables oder Subjects repräsentiert.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_rxjava_in_android"><a class="anchor" href="#_rxjava_in_android"></a>6. RxJava in Android</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="images/diag-plantuml-md5-c041c3deb7f15548ee5128b343d882e6.png" alt="Diagram" width="687" height="74">
+</div>
+</div>
+<div class="paragraph">
+<p>RxJava ist eine Implementierung von ReactiveX für die JVM und wird häufig in Android-Apps verwendet, um asynchrone Operationen wie Netzwerkaufrufe, Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quelle"><a class="anchor" href="#_quelle"></a>7. Quelle</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -749,7 +813,7 @@ e_vignette</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-06 17:12:54 UTC
+Last updated 2025-01-06 21:34:53 UTC
 </div>
 </div>
 </body>
