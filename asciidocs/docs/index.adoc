@@ -35,6 +35,8 @@ Nicht zu verwechseln mit **Observer** (Subscriber)!
 Ein Observer ist ein Objekt, das auf die Daten reagiert, die von einem Observable gesendet werden.
 Es definiert, wie mit den gesendeten Daten umgegangen wird.
 
+image::observable.jpg[]
+
 Eigenschaften des Observers:
 
 - **next:** Sendet Daten.
@@ -43,59 +45,80 @@ Eigenschaften des Observers:
 
 Beispiel:
 
-```typescript
+[source, typescript]
+----
 import { Observable } from 'rxjs';
 
-const observable = new Observable(subscriber => {
-  subscriber.next('Daten 1');
-  subscriber.next('Daten 2');
+const observable = new Observable((subscriber) => {
+  subscriber.next(1);
+  subscriber.next(2);
+  subscriber.next(3);
   setTimeout(() => {
-    subscriber.next('Daten 3');
+    subscriber.next(4);
     subscriber.complete();
   }, 1000);
 });
 
+console.log('just before subscribe');
 observable.subscribe({
-  next: value => console.log(value),
-  complete: () => console.log('Fertig!'),
+  next(x) {
+    console.log('got value ' + x);
+  },
+  error(err) {
+    console.error('something wrong occurred: ' + err);
+  },
+  complete() {
+    console.log('done');
+  },
 });
-```
+console.log('just after subscribe');
+----
+
+.Output
+[%collapsible]
+====
+----
+just before subscribe
+got value 1
+got value 2
+got value 3
+just after subscribe
+got value 4
+done
+----
+====
+
+image::observable-exmaple.png[]
 
 == Alternative
 
 Es gibt verschiedene Alternativen zu ReactiveX, die ähnliche Funktionalitäten für asynchrone Programmierung bieten:
 
-- **https://github.com/reactor/reactor-core[Reactor Core]**
-- **https://smallrye.io/smallrye-mutiny/latest/[Mutiny]**
-- **https://kotlinlang.org/docs/coroutines-overview.html[Kotlin Coroutines]**
-- **https://vertx.io/[Vert.x]**
+- **https://github.com/reactor/reactor-core[Reactor Core]**: wird häufig in Java Spring verwendet
+- **https://smallrye.io/smallrye-mutiny/latest/[Mutiny]**: wird primär in Quarkus verwendet
+- **https://vertx.io/[Vert.x]**: für Java oder Kotlin verwendet
 
 == Quarkus Mutiny vs andere reaktive API
 
-[quote, Quarkus]
-____
-Mutiny is the primary API when dealing with the reactive features from Quarkus. It means that most extensions support
-Mutiny either by exposing an API returning Unis and Multis (such as reactive data sources or rest clients)
-or understanding when your methods return a Uni or a Multi (such as Quarkus REST (formerly RESTEasy Reactive)
-or Reactive Messaging).
-____
-https://quarkus.io/guides/mutiny-primer[Quarkus Mutiny]
 
-Kurz zusammengefasst: Quarkus verwendet primär die Mutiny-API für reaktive Applikationen. Viele Extensions wie:
-
-----
-<dependency>
-    <groupId>io.quarkus</groupId>
-    <artifactId>quarkus-hibernate-reactive</artifactId>
-</dependency>
-<dependency>
-    <groupId>io.quarkus</groupId>
-    <artifactId>quarkus-reactive-pg-client</artifactId>
-</dependency>
-----
-
+Quarkus verwendet primär die Mutiny-API für reaktive Applikationen. Viele der eingebauten Extensions wie:
 verlangen Typen wie **Uni** oder **Multi**. Es würde dann zum Konflikt zwischen den Typen von anderen reaaktiven API wie
-**RxJava** oder **Vert.x** kommen.
+**RxJava** oder **Vert.x** kommen. https://quarkus.io/guides/mutiny-primer[Quarkus Mutiny]
+
+[cols="3,3,3", options="header"]
+|===
+|Merkmal                     |Mutiny                                     |RxJava
+
+|**Single-Item Stream**      |`Uni<T>`                                   |`Single<T>` / `Maybe<T>`
+|**Multi-Item Stream**       |`Multi<T>`                                 |`Observable<T>` / `Flowable<T>`
+|**Fehlerbehandlung**        |`onFailure().recoverWithItem()`             |`onErrorResumeNext()`
+|**Ressourcenverbrauch**     |Gering (optimiert für Quarkus)             |Höher, allgemeiner Einsatz
+|**Integration**             |Nahtlos mit Quarkus Extensions             |Framework-unabhängig
+|**Zielsetzung**             |Cloud-native, reaktive Microservices       |Allgemeine reaktive Programmierung
+|**Sprachunterstützung**     |Java                                       |Java, Kotlin
+|===
+
+
 
 == Beispiele mit ReactiveX
 
@@ -110,12 +133,43 @@ Es befinden sich im Repository zwei Beispiele mit ReactiveX:
 * Android mit RxJava
 
 Um Daten zu bekommen, wurde eine Fake-REST-API von https://jsonplaceholder.typicode.com/[jsonplaceholder] verwendet. Sie
-gibt ToDos zurück und so sieht die Struktur aus:
+gibt ToDos zurück und die Struktur sieht so aus:
 
 [plantuml]
 ----
 include::puml/todos.puml[]
 ----
+
+== Android (rxjava-demo)
+
+[plantuml]
+----
+!$highlight_component = "rxjava"
+include::puml/architecture.puml[]
+----
+
+RxJava ist eine Implementierung von ReactiveX für die JVM und wird häufig in Android-Apps verwendet, um asynchrone
+Operationen wie  Datenbankzugriffe und Benutzerinteraktionen zu verwalten.
+
+=== Android-MVVM
+
+image::android-mvvm-pattern.png[]
+
+* Model:
+** Repräsentiert die Daten und Geschäftslogik der Anwendung
+**
+* ViewModel:
+** verbindet die Model und die View
+** Holt Daten aus dem Model, verarbeitet sie und stellt sie der View bereit.
+** Sendet Datenstreams an die View und empfängt Daten von ihr.
+** Beobachtet Änderungen im Model und leitet diese an die View weiter.
+* View:
+** Reagiert auf Benutzerinteraktionen (z.B. Klicks) und sendet diese an das ViewModel
+** Beobachtet Datenänderungen aus dem ViewModel und aktualisiert die UI entsprechend
+
+=== Drei Prinzipien
+
+=== Projekt
 
 == Angular (rxjs-demo)
 
@@ -125,26 +179,24 @@ include::puml/todos.puml[]
 include::puml/architecture.puml[]
 ----
 
+RxJS ist eine reaktive Bibliothek, die speziell in Angular verwendet wird, um asynchrone Datenströme wie API-Aufrufe,
+Benutzereingaben und Ereignisse zu verwalten.
 
-RxJS ist eine reaktive Bibliothek, die mit Angular verwendet wird, um asynchrone Datenströme wie API-Aufrufe,
-Benutzereingaben und Ereignisse zu verwalten. Ein wichtiges Konzept hierbei ist die **Single Source of Truth (SSOT)**.
+=== Struktur des Projekts
 
-=== Single Source of Truth
+image::angular-project.png[]
 
-Das SSOT-Prinzip bedeutet, dass alle Daten aus einer zentralen Quelle stammen.
-Mit RxJS wird diese Quelle typischerweise durch Observables oder Subjects repräsentiert.
+==== Model
 
-
-== RxJava in Android
-
-[plantuml]
+.model.ts
+[source, typescript]
 ----
-!$highlight_component = "rxjava"
-include::puml/architecture.puml[]
+include::../../rxjs-demo/src/app/model/model.ts[]
 ----
 
-RxJava ist eine Implementierung von ReactiveX für die JVM und wird häufig in Android-Apps verwendet, um asynchrone Operationen wie Netzwerkaufrufe, Datenbankzugriffe und Benutzerinteraktionen zu verwalten.
-
+<.> definiert das Modell
+<.> der anfängliche Zustand des Modells
+<.> das zentrale Element in der Anwendung (Single Source Of Truth)
 
 
 == Quelle
@@ -152,5 +204,5 @@ RxJava ist eine Implementierung von ReactiveX für die JVM und wird häufig in A
 - https://reactivex.io/intro.html
 - https://blog.logrocket.com/guide-rxjs-observables/
 - https://www.ramotion.com/blog/synchronous-vs-asynchronous-programming/
-- https://tektutorialshub.com/angular/angular-observable-tutorial-using-rxjs/#google_vignette
-e_vignette
+- https://www.tektutorialshub.com/angular/angular-observable-tutorial-using-rxjs/
+- https://www.digitalocean.com/community/tutorials/android-mvvm-design-pattern
