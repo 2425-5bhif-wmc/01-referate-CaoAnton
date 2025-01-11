@@ -556,7 +556,7 @@ pre.rouge .gs {
 <div class="details">
 <span id="author" class="author">Anton Cao</span><br>
 <span id="revnumber">version 1.0,</span>
-<span id="revdate">2025-01-06</span>
+<span id="revdate">2025-01-11</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -570,12 +570,18 @@ pre.rouge .gs {
 <li><a href="#_alternative">2. Alternative</a></li>
 <li><a href="#_quarkus_mutiny_vs_andere_reaktive_api">3. Quarkus Mutiny vs andere reaktive API</a></li>
 <li><a href="#_beispiele_mit_reactivex">4. Beispiele mit ReactiveX</a></li>
-<li><a href="#_angular_rxjs_demo">5. Angular (rxjs-demo)</a>
+<li><a href="#_android_rxjava_demo">5. Android (rxjava-demo)</a>
 <ul class="sectlevel2">
-<li><a href="#_single_source_of_truth">5.1. Single Source of Truth</a></li>
+<li><a href="#_android_mvvm">5.1. Android-MVVM</a></li>
+<li><a href="#_drei_prinzipien">5.2. Drei Prinzipien</a></li>
+<li><a href="#_projekt">5.3. Projekt</a></li>
 </ul>
 </li>
-<li><a href="#_rxjava_in_android">6. RxJava in Android</a></li>
+<li><a href="#_angular_rxjs_demo">6. Angular (rxjs-demo)</a>
+<ul class="sectlevel2">
+<li><a href="#_struktur_des_projekts">6.1. Struktur des Projekts</a></li>
+</ul>
+</li>
 <li><a href="#_quelle">7. Quelle</a></li>
 </ul>
 </div>
@@ -616,6 +622,11 @@ der Zeit Daten (z. B. Ereignisse, API-Antworten oder Benutzereingaben) senden ka
 Ein Observer ist ein Objekt, das auf die Daten reagiert, die von einem Observable gesendet werden.
 Es definiert, wie mit den gesendeten Daten umgegangen wird.</p>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="images/observable.jpg" alt="observable">
+</div>
+</div>
 <div class="paragraph">
 <p>Eigenschaften des Observers:</p>
 </div>
@@ -639,19 +650,50 @@ Es definiert, wie mit den gesendeten Daten umgegangen wird.</p>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">Observable</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">rxjs</span><span class="dl">'</span><span class="p">;</span>
 
-<span class="kd">const</span> <span class="nx">observable</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Observable</span><span class="p">(</span><span class="nx">subscriber</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="nx">subscriber</span><span class="p">.</span><span class="nf">next</span><span class="p">(</span><span class="dl">'</span><span class="s1">Daten 1</span><span class="dl">'</span><span class="p">);</span>
-  <span class="nx">subscriber</span><span class="p">.</span><span class="nf">next</span><span class="p">(</span><span class="dl">'</span><span class="s1">Daten 2</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">observable</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Observable</span><span class="p">((</span><span class="nx">subscriber</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">subscriber</span><span class="p">.</span><span class="nf">next</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="nx">subscriber</span><span class="p">.</span><span class="nf">next</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+  <span class="nx">subscriber</span><span class="p">.</span><span class="nf">next</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
   <span class="nf">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="nx">subscriber</span><span class="p">.</span><span class="nf">next</span><span class="p">(</span><span class="dl">'</span><span class="s1">Daten 3</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">subscriber</span><span class="p">.</span><span class="nf">next</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
     <span class="nx">subscriber</span><span class="p">.</span><span class="nf">complete</span><span class="p">();</span>
   <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
 <span class="p">});</span>
 
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">just before subscribe</span><span class="dl">'</span><span class="p">);</span>
 <span class="nx">observable</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">({</span>
-  <span class="na">next</span><span class="p">:</span> <span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">value</span><span class="p">),</span>
-  <span class="na">complete</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Fertig!</span><span class="dl">'</span><span class="p">),</span>
-<span class="p">});</span></code></pre>
+  <span class="nf">next</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">got value </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">x</span><span class="p">);</span>
+  <span class="p">},</span>
+  <span class="nf">error</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">something wrong occurred: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">err</span><span class="p">);</span>
+  <span class="p">},</span>
+  <span class="nf">complete</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">done</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">},</span>
+<span class="p">});</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">just after subscribe</span><span class="dl">'</span><span class="p">);</span></code></pre>
+</div>
+</div>
+<details>
+<summary class="title">Output</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>just before subscribe
+got value 1
+got value 2
+got value 3
+just after subscribe
+got value 4
+done</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="imageblock">
+<div class="content">
+<img src="images/observable-exmaple.png" alt="observable exmaple">
 </div>
 </div>
 </div>
@@ -666,16 +708,13 @@ Es definiert, wie mit den gesendeten Daten umgegangen wird.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong><a href="https://github.com/reactor/reactor-core">Reactor Core</a></strong></p>
+<p><strong><a href="https://github.com/reactor/reactor-core">Reactor Core</a></strong>: wird häufig in Java Spring verwendet</p>
 </li>
 <li>
-<p><strong><a href="https://smallrye.io/smallrye-mutiny/latest/">Mutiny</a></strong></p>
+<p><strong><a href="https://smallrye.io/smallrye-mutiny/latest/">Mutiny</a></strong>: wird primär in Quarkus verwendet</p>
 </li>
 <li>
-<p><strong><a href="https://kotlinlang.org/docs/coroutines-overview.html">Kotlin Coroutines</a></strong></p>
-</li>
-<li>
-<p><strong><a href="https://vertx.io/">Vert.x</a></strong></p>
+<p><strong><a href="https://vertx.io/">Vert.x</a></strong>: für Java oder Kotlin verwendet</p>
 </li>
 </ul>
 </div>
@@ -684,41 +723,62 @@ Es definiert, wie mit den gesendeten Daten umgegangen wird.</p>
 <div class="sect1">
 <h2 id="_quarkus_mutiny_vs_andere_reaktive_api"><a class="anchor" href="#_quarkus_mutiny_vs_andere_reaktive_api"></a>3. Quarkus Mutiny vs andere reaktive API</h2>
 <div class="sectionbody">
-<div class="quoteblock">
-<blockquote>
 <div class="paragraph">
-<p>Mutiny is the primary API when dealing with the reactive features from Quarkus. It means that most extensions support
-Mutiny either by exposing an API returning Unis and Multis (such as reactive data sources or rest clients)
-or understanding when your methods return a Uni or a Multi (such as Quarkus REST (formerly RESTEasy Reactive)
-or Reactive Messaging).</p>
+<p>Quarkus verwendet primär die Mutiny-API für reaktive Applikationen. Viele der eingebauten Extensions wie:
+verlangen Typen wie <strong>Uni</strong> oder <strong>Multi</strong>. Es würde dann zum Konflikt zwischen den Typen von anderen reaaktiven API wie
+<strong>RxJava</strong> oder <strong>Vert.x</strong> kommen. <a href="https://quarkus.io/guides/mutiny-primer">Quarkus Mutiny</a></p>
 </div>
-</blockquote>
-<div class="attribution">
-&#8212; Quarkus
-</div>
-</div>
-<div class="paragraph">
-<p><a href="https://quarkus.io/guides/mutiny-primer">Quarkus Mutiny</a></p>
-</div>
-<div class="paragraph">
-<p>Kurz zusammengefasst: Quarkus verwendet primär die Mutiny-API für reaktive Applikationen. Viele Extensions wie:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;dependency&gt;
-    &lt;groupId&gt;io.quarkus&lt;/groupId&gt;
-    &lt;artifactId&gt;quarkus-hibernate-reactive&lt;/artifactId&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;io.quarkus&lt;/groupId&gt;
-    &lt;artifactId&gt;quarkus-reactive-pg-client&lt;/artifactId&gt;
-&lt;/dependency&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>verlangen Typen wie <strong>Uni</strong> oder <strong>Multi</strong>. Es würde dann zum Konflikt zwischen den Typen von anderen reaaktiven API wie
-<strong>RxJava</strong> oder <strong>Vert.x</strong> kommen.</p>
-</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Merkmal</th>
+<th class="tableblock halign-left valign-top">Mutiny</th>
+<th class="tableblock halign-left valign-top">RxJava</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Single-Item Stream</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Uni&lt;T&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Single&lt;T&gt;</code> / <code>Maybe&lt;T&gt;</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multi-Item Stream</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Multi&lt;T&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Observable&lt;T&gt;</code> / <code>Flowable&lt;T&gt;</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Fehlerbehandlung</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>onFailure().recoverWithItem()</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>onErrorResumeNext()</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Ressourcenverbrauch</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gering (optimiert für Quarkus)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Höher, allgemeiner Einsatz</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Integration</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nahtlos mit Quarkus Extensions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Framework-unabhängig</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Zielsetzung</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud-native, reaktive Microservices</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allgemeine reaktive Programmierung</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Sprachunterstützung</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Java, Kotlin</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
@@ -744,7 +804,7 @@ or Reactive Messaging).</p>
 </div>
 <div class="paragraph">
 <p>Um Daten zu bekommen, wurde eine Fake-REST-API von <a href="https://jsonplaceholder.typicode.com/">jsonplaceholder</a> verwendet. Sie
-gibt ToDos zurück und so sieht die Struktur aus:</p>
+gibt ToDos zurück und die Struktur sieht so aus:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -754,28 +814,7 @@ gibt ToDos zurück und so sieht die Struktur aus:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_angular_rxjs_demo"><a class="anchor" href="#_angular_rxjs_demo"></a>5. Angular (rxjs-demo)</h2>
-<div class="sectionbody">
-<div class="imageblock">
-<div class="content">
-<img src="images/diag-plantuml-md5-f7cfe3703ece8ece746af05a3abc5180.png" alt="Diagram" width="687" height="74">
-</div>
-</div>
-<div class="paragraph">
-<p>RxJS ist eine reaktive Bibliothek, die mit Angular verwendet wird, um asynchrone Datenströme wie API-Aufrufe,
-Benutzereingaben und Ereignisse zu verwalten. Ein wichtiges Konzept hierbei ist die <strong>Single Source of Truth (SSOT)</strong>.</p>
-</div>
-<div class="sect2">
-<h3 id="_single_source_of_truth"><a class="anchor" href="#_single_source_of_truth"></a>5.1. Single Source of Truth</h3>
-<div class="paragraph">
-<p>Das SSOT-Prinzip bedeutet, dass alle Daten aus einer zentralen Quelle stammen.
-Mit RxJS wird diese Quelle typischerweise durch Observables oder Subjects repräsentiert.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_rxjava_in_android"><a class="anchor" href="#_rxjava_in_android"></a>6. RxJava in Android</h2>
+<h2 id="_android_rxjava_demo"><a class="anchor" href="#_android_rxjava_demo"></a>5. Android (rxjava-demo)</h2>
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
@@ -783,7 +822,118 @@ Mit RxJS wird diese Quelle typischerweise durch Observables oder Subjects reprä
 </div>
 </div>
 <div class="paragraph">
-<p>RxJava ist eine Implementierung von ReactiveX für die JVM und wird häufig in Android-Apps verwendet, um asynchrone Operationen wie Netzwerkaufrufe, Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
+<p>RxJava ist eine Implementierung von ReactiveX für die JVM und wird häufig in Android-Apps verwendet, um asynchrone
+Operationen wie  Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
+</div>
+<div class="sect2">
+<h3 id="_android_mvvm"><a class="anchor" href="#_android_mvvm"></a>5.1. Android-MVVM</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/android-mvvm-pattern.png" alt="android mvvm pattern">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Model:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Repräsentiert die Daten und Geschäftslogik der Anwendung
+**</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>ViewModel:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>verbindet die Model und die View</p>
+</li>
+<li>
+<p>Holt Daten aus dem Model, verarbeitet sie und stellt sie der View bereit.</p>
+</li>
+<li>
+<p>Sendet Datenstreams an die View und empfängt Daten von ihr.</p>
+</li>
+<li>
+<p>Beobachtet Änderungen im Model und leitet diese an die View weiter.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>View:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Reagiert auf Benutzerinteraktionen (z.B. Klicks) und sendet diese an das ViewModel</p>
+</li>
+<li>
+<p>Beobachtet Datenänderungen aus dem ViewModel und aktualisiert die UI entsprechend</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_drei_prinzipien"><a class="anchor" href="#_drei_prinzipien"></a>5.2. Drei Prinzipien</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_projekt"><a class="anchor" href="#_projekt"></a>5.3. Projekt</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_angular_rxjs_demo"><a class="anchor" href="#_angular_rxjs_demo"></a>6. Angular (rxjs-demo)</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="images/diag-plantuml-md5-f7cfe3703ece8ece746af05a3abc5180.png" alt="Diagram" width="687" height="74">
+</div>
+</div>
+<div class="paragraph">
+<p>RxJS ist eine reaktive Bibliothek, die speziell in Angular verwendet wird, um asynchrone Datenströme wie API-Aufrufe,
+Benutzereingaben und Ereignisse zu verwalten.</p>
+</div>
+<div class="sect2">
+<h3 id="_struktur_des_projekts"><a class="anchor" href="#_struktur_des_projekts"></a>6.1. Struktur des Projekts</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/angular-project.png" alt="angular project">
+</div>
+</div>
+<div class="sect3">
+<h4 id="_model"><a class="anchor" href="#_model"></a>6.1.1. Model</h4>
+<div class="listingblock">
+<div class="title">model.ts</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="nx">Unresolved</span> <span class="nx">directive</span> <span class="k">in</span> <span class="nx">index</span><span class="p">.</span><span class="nx">adoc</span> <span class="o">-</span> <span class="nx">include</span><span class="p">::..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="nx">rxjs</span><span class="o">-</span><span class="nx">demo</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">model</span><span class="o">/</span><span class="nx">model</span><span class="p">.</span><span class="nx">ts</span><span class="p">[]</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>definiert das Modell</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>der anfängliche Zustand des Modells</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>das zentrale Element in der Anwendung (Single Source Of Truth)</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -802,8 +952,10 @@ Mit RxJS wird diese Quelle typischerweise durch Observables oder Subjects reprä
 <p><a href="https://www.ramotion.com/blog/synchronous-vs-asynchronous-programming/" class="bare">https://www.ramotion.com/blog/synchronous-vs-asynchronous-programming/</a></p>
 </li>
 <li>
-<p><a href="https://tektutorialshub.com/angular/angular-observable-tutorial-using-rxjs/#google_vignette" class="bare">https://tektutorialshub.com/angular/angular-observable-tutorial-using-rxjs/#google_vignette</a>
-e_vignette</p>
+<p><a href="https://www.tektutorialshub.com/angular/angular-observable-tutorial-using-rxjs/" class="bare">https://www.tektutorialshub.com/angular/angular-observable-tutorial-using-rxjs/</a></p>
+</li>
+<li>
+<p><a href="https://www.digitalocean.com/community/tutorials/android-mvvm-design-pattern" class="bare">https://www.digitalocean.com/community/tutorials/android-mvvm-design-pattern</a></p>
 </li>
 </ul>
 </div>
@@ -813,7 +965,7 @@ e_vignette</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-06 21:34:53 UTC
+Last updated 2025-01-11 20:08:27 UTC
 </div>
 </div>
 </body>
