@@ -169,7 +169,122 @@ image::android-mvvm-pattern.png[]
 
 === Drei Prinzipien
 
+https://redux.js.org/understanding/thinking-in-redux/three-principles[Three Principles]
+
+* Single Source of Truth
+* State is Read-Only
+* Changes are Made with Pure Functions
+
+==== Single Source of Truth
+
+* Der gesamte Zustand der Anwendung wird in einem einzigen, zentralen Store gespeichert.
+* RxJava mit BehaviorSubject
+
+==== State is Read-Only
+
+* Der Zustand kann nicht direkt geändert werden. Änderungen erfolgen nur durch das Auslösen von Actions.
+* Änderungen am Zustand erfolgen durch definierte Methoden im ViewModel.
+* Mit RxJava erfolgt die Änderung des Zustands über Events oder Streams (z.B. durch onNext() in einem Subject).
+
+==== Changes are Made with Pure Functions
+
+* Änderungen des Zustands erfolgen durch reine Funktionen (Reducers), die keine Seiteneffekte haben.
+* Methoden im ViewModel sollten idealerweise rein sein: Sie verändern nicht direkt die View oder äußere Zustände.
+
 === Projekt
+
+
+
+* Feature:
+* Model:
+* Util:
+
+
+==== Util
+
+.store
+[%collapsible]
+====
+.StoreBase.java
+[source, java]
+----
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/util/store/StoreBase.java[]
+----
+====
+
+.immer
+[%collapsible]
+====
+.Immer.java
+[source, java]
+----
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/util/immer/Immer.java[]
+----
+====
+
+.mapper
+[%collapsible]
+====
+* dient zur zur Serialisierung und Deserialisierung von Objekten nach JSON und zurück.
+* führt er tiefe Klonoperationen aus.
+====
+
+
+.resteasy
+[%collapsible]
+====
+
+====
+
+.config
+[%collapsible]
+====
+
+====
+
+==== Model
+
+.Model.java
+[%collapsible]
+====
+
+====
+
+
+.Store.java
+[%collapsible]
+====
+
+====
+
+.ToDo.java
+[%collapsible]
+====
+
+====
+
+.UIState.java
+[%collapsible]
+====
+
+====
+
+
+==== Feature
+
+* Fokus auf example und todo
+
+.example
+[%collapsible]
+====
+
+====
+
+.todo
+[%collapsible]
+====
+
+====
 
 == Angular (rxjs-demo)
 
