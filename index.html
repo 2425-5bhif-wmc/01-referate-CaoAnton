@@ -931,6 +931,11 @@ Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 </div>
 <div class="sect2">
 <h3 id="_projekt"><a class="anchor" href="#_projekt"></a>5.3. Projekt</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/android-project.png" alt="android project">
+</div>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -946,6 +951,11 @@ Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 </div>
 <div class="sect3">
 <h4 id="_util"><a class="anchor" href="#_util"></a>5.3.1. Util</h4>
+<div class="imageblock">
+<div class="content">
+<img src="images/android-project-util.png" alt="android project util">
+</div>
+</div>
 <details>
 <summary class="title">mapper</summary>
 <div class="content">
@@ -1119,6 +1129,11 @@ Es werden nur relevante Änderungen am Zustand übernommen</td>
 </div>
 <div class="sect3">
 <h4 id="_model"><a class="anchor" href="#_model"></a>5.3.2. Model</h4>
+<div class="imageblock">
+<div class="content">
+<img src="images/android-project-model.png" alt="android project model">
+</div>
+</div>
 <details>
 <summary class="title">Model.java</summary>
 <div class="content">
@@ -1154,6 +1169,11 @@ Es werden nur relevante Änderungen am Zustand übernommen</td>
 </div>
 <div class="sect3">
 <h4 id="_feature"><a class="anchor" href="#_feature"></a>5.3.3. Feature</h4>
+<div class="imageblock">
+<div class="content">
+<img src="images/android-project-feature.png" alt="android project feature">
+</div>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -1338,6 +1358,11 @@ Benutzereingaben und Ereignisse zu verwalten.</p>
 </div>
 <div class="sect3">
 <h4 id="_model_2"><a class="anchor" href="#_model_2"></a>6.1.1. Model</h4>
+<div class="imageblock">
+<div class="content">
+<img src="images/angular-project-model.png" alt="angular project model">
+</div>
+</div>
 <div class="listingblock">
 <div class="title">model.ts</div>
 <div class="content">
@@ -1358,7 +1383,153 @@ Benutzereingaben und Ereignisse zu verwalten.</p>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
 <td>das zentrale Element in der Anwendung (Single Source Of Truth)</td>
 </tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>set(&#8230;&#8203;)
+<div class="ulist">
+<ul>
+<li>
+<p>Änderungen am Zustand vorzunehmen, ohne den aktuellen Zustand direkt zu manipulieren.</p>
+</li>
+<li>
+<p>recipe-Funktion, die beschreibt, wie der Zustand verändert werden soll.</p>
+</li>
+<li>
+<p>die produce() führt eine immutable Änderung durch &#8594; der aktuelle Zustand vom Store wird geholt und die recipe beschreibt
+die Änderungen. Es wird eine Kopie vorgenommen und im store.next() werden alle Subscriber benachrichtigt, dass sich im
+Model was geändert hat.</p>
+</li>
+</ul>
+</div></td>
+</tr>
 </table>
+</div>
+<div class="listingblock">
+<div class="title">todo.ts</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="nx">Unresolved</span> <span class="nx">directive</span> <span class="k">in</span> <span class="nx">index</span><span class="p">.</span><span class="nx">adoc</span> <span class="o">-</span> <span class="nx">include</span><span class="p">::..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="nx">rxjs</span><span class="o">-</span><span class="nx">demo</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">model</span><span class="o">/</span><span class="nx">todo</span><span class="p">.</span><span class="nx">ts</span><span class="p">[]</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_services"><a class="anchor" href="#_services"></a>6.1.2. Services</h4>
+<div class="imageblock">
+<div class="content">
+<img src="images/angular-project-service.png" alt="angular project service">
+</div>
+</div>
+<div class="listingblock">
+<div class="title">store.service.ts</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="nx">Unresolved</span> <span class="nx">directive</span> <span class="k">in</span> <span class="nx">index</span><span class="p">.</span><span class="nx">adoc</span> <span class="o">-</span> <span class="nx">include</span><span class="p">::..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="nx">rxjs</span><span class="o">-</span><span class="nx">demo</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">services</span><span class="o">/</span><span class="nx">store</span><span class="p">.</span><span class="nx">service</span><span class="p">.</span><span class="nx">ts</span><span class="p">[]</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">todo.service.ts</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="nx">Unresolved</span> <span class="nx">directive</span> <span class="k">in</span> <span class="nx">index</span><span class="p">.</span><span class="nx">adoc</span> <span class="o">-</span> <span class="nx">include</span><span class="p">::..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="nx">rxjs</span><span class="o">-</span><span class="nx">demo</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">services</span><span class="o">/</span><span class="nx">todo</span><span class="p">.</span><span class="nx">service</span><span class="p">.</span><span class="nx">ts</span><span class="p">[]</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>holt sich vom <a href="https://jsonplaceholder.typicode.com/todos">jsonplaceholder</a> die ToDoss</p>
+</li>
+<li>
+<p>lastValueFrom: wandelt das Observable in ein Promise um und wartet darauf, dass es abgeschlossen wird. Wenn es
+abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem Fall die Liste der Todos).</p>
+</li>
+<li>
+<p>nachdem er sich die Daten geholt hat, speichert er das im store</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_components"><a class="anchor" href="#_components"></a>6.1.3. Components</h4>
+<div class="imageblock">
+<div class="content">
+<img src="images/angular-project-component.png" alt="angular project component">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>todo</p>
+</li>
+<li>
+<p>example</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="_todo_2"><a class="anchor" href="#_todo_2"></a>todo</h5>
+<div class="listingblock">
+<div class="title">todo.component.html</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="nx">Unresolved</span> <span class="nx">directive</span> <span class="k">in</span> <span class="nx">index</span><span class="p">.</span><span class="nx">adoc</span> <span class="o">-</span> <span class="nx">include</span><span class="p">::..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="nx">rxjs</span><span class="o">-</span><span class="nx">demo</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">components</span><span class="o">/</span><span class="nx">todo</span><span class="o">/</span><span class="nx">todo</span><span class="p">.</span><span class="nx">component</span><span class="p">.</span><span class="nx">html</span><span class="p">[]</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">todo.component.ts</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="nx">Unresolved</span> <span class="nx">directive</span> <span class="k">in</span> <span class="nx">index</span><span class="p">.</span><span class="nx">adoc</span> <span class="o">-</span> <span class="nx">include</span><span class="p">::..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="nx">rxjs</span><span class="o">-</span><span class="nx">demo</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">components</span><span class="o">/</span><span class="nx">todo</span><span class="o">/</span><span class="nx">todo</span><span class="p">.</span><span class="nx">component</span><span class="p">.</span><span class="nx">ts</span><span class="p">[]</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>holt sich wie beim vorherigen <code>Android-Beispiel</code> die todos</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_2"><a class="anchor" href="#_example_2"></a>example</h5>
+<div class="listingblock">
+<div class="title">example.component.html</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="nx">Unresolved</span> <span class="nx">directive</span> <span class="k">in</span> <span class="nx">index</span><span class="p">.</span><span class="nx">adoc</span> <span class="o">-</span> <span class="nx">include</span><span class="p">::..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="nx">rxjs</span><span class="o">-</span><span class="nx">demo</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">components</span><span class="o">/</span><span class="nx">example</span><span class="o">/</span><span class="nx">example</span><span class="p">.</span><span class="nx">component</span><span class="p">.</span><span class="nx">html</span><span class="p">[]</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">example.component.ts</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="nx">Unresolved</span> <span class="nx">directive</span> <span class="k">in</span> <span class="nx">index</span><span class="p">.</span><span class="nx">adoc</span> <span class="o">-</span> <span class="nx">include</span><span class="p">::..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="nx">rxjs</span><span class="o">-</span><span class="nx">demo</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">components</span><span class="o">/</span><span class="nx">example</span><span class="o">/</span><span class="nx">example</span><span class="p">.</span><span class="nx">component</span><span class="p">.</span><span class="nx">ts</span><span class="p">[]</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+für die Erklärung für filter, map und take siehe Abschnitt 5.3.3. Feature / Alle rx-Methoden
+</td>
+</tr>
+</table>
+</div>
+<details>
+<summary class="title">concatMap</summary>
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="images/concat.png" alt="concat">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>concatMap verarbeitet jeden Wert nacheinander.</p>
+</li>
+<li>
+<p>Für jeden Wert von ['A', 'B', 'C'] wird ein neues Observable mit zwei Werten nacheinander erzeugt (A1, A2).</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
 </div>
 </div>
 </div>
@@ -1384,6 +1555,12 @@ Benutzereingaben und Ereignisse zu verwalten.</p>
 <li>
 <p><a href="https://www.digitalocean.com/community/tutorials/android-mvvm-design-pattern" class="bare">https://www.digitalocean.com/community/tutorials/android-mvvm-design-pattern</a></p>
 </li>
+<li>
+<p><a href="https://immerjs.github.io/immer/" class="bare">https://immerjs.github.io/immer/</a></p>
+</li>
+<li>
+<p><a href="https://redux.js.org/understanding/thinking-in-redux/three-principles" class="bare">https://redux.js.org/understanding/thinking-in-redux/three-principles</a></p>
+</li>
 </ul>
 </div>
 </div>
@@ -1392,7 +1569,7 @@ Benutzereingaben und Ereignisse zu verwalten.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-12 18:04:15 UTC
+Last updated 2025-01-12 20:05:42 UTC
 </div>
 </div>
 </body>
