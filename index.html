@@ -591,6 +591,66 @@ pre.rouge .gs {
 <h2 id="_reactivex"><a class="anchor" href="#_reactivex"></a>1. ReactiveX</h2>
 <div class="sectionbody">
 <div class="paragraph">
+<p>package at.htl.leonding.util.immer;</p>
+</div>
+<div class="paragraph">
+<p>import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;</p>
+</div>
+<div class="paragraph">
+<p>import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;</p>
+</div>
+<div class="paragraph">
+<p>import at.htl.leonding.util.mapper.Mapper;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;</p>
+</div>
+<div class="paragraph">
+<p>/** Immer simplifies handling immutable data structures.
+ * @param &lt;T&gt; The type of the baseState
+ */</p>
+</div>
+<div class="paragraph">
+<p>public class Immer&lt;T&gt; {
+    private static final String TAG = Immer.class.getSimpleName();
+    final public Mapper&lt;T&gt; mapper; // &lt;.&gt;
+    final Handler handler; // &lt;.&gt;</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>    public Immer(Class&lt;? extends T&gt; type) {
+        mapper = new Mapper&lt;T&gt;(type);
+        handler = new Handler(Looper.getMainLooper());
+    }
+    /** Create a deep clone of the existing model, apply a recipe to it and finally pass the new state to the consumer.
+     * To reduce the load on the main thread we clone the current state in a separate thread.
+     * To avoid multithreading issues we call back the recipe and resultConsumer running on the one and only Main thread of the app.
+     * We do not call the resultConsumer if the clone equals the currentState,
+     * @param pipe the previous readonly single source or truth
+     * @param recipe the callback function that modifies parts of the cloned state
+     * @param resultConsumer the callback function that uses the cloned &amp; modified model
+     */
+// Immer.java
+    <i class="conum" data-value="1"></i><b>(1)</b>
+    public void produce(BehaviorSubject&lt;T&gt; pipe, Consumer&lt;T&gt; recipe, Consumer&lt;T&gt; resultConsumer) {
+        handler.post(() -&gt; {
+            var t = mapper.clone(pipe.getValue());
+            var currentAsJson = mapper.toResource(t);
+            recipe.accept(t);
+            var nextAsJson = mapper.toResource(t);
+            if (!nextAsJson.equals(currentAsJson)) {
+                Log.d(TAG, String.format("=== state changed ===\n%s\n=&gt;\n%s---", currentAsJson, nextAsJson));
+                resultConsumer.accept(t);
+            } else {
+                Log.w(TAG, "produce() without change");
+            }
+        });
+    }
+}</pre>
+</div>
+</div>
+<div class="paragraph">
 <p>ReactiveX (Reactive Extensions) ist eine API für asynchrone und eventbasierte Programmierung mithilfe von <strong>Observables</strong>.
 Das Hauptproblem, das ReactiveX löst, ist der Umgang mit asynchronen Datenströmen in einer verständlichen, flexiblen und fehlerresistenten Weise.</p>
 </div>
@@ -982,7 +1042,56 @@ Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 <div class="listingblock">
 <div class="title">Immer.java</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="nc">Unresolved</span> <span class="n">directive</span> <span class="n">in</span> <span class="n">index</span><span class="o">.</span><span class="na">adoc</span> <span class="o">-</span> <span class="nl">include:</span><span class="o">:../../../</span><span class="n">android</span><span class="o">-</span><span class="n">mvvm</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">at</span><span class="o">/</span><span class="n">htl</span><span class="o">/</span><span class="n">leonding</span><span class="o">/</span><span class="n">util</span><span class="o">/</span><span class="n">immer</span><span class="o">/</span><span class="nc">Immer</span><span class="o">.</span><span class="na">java</span><span class="o">[]</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">at.htl.leonding.util.immer</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">android.os.Handler</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.os.Looper</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.util.Log</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.concurrent.CompletableFuture</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.function.Consumer</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">at.htl.leonding.util.mapper.Mapper</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.reactivex.rxjava3.subjects.BehaviorSubject</span><span class="o">;</span>
+
+<span class="cm">/** Immer simplifies handling immutable data structures.
+ * @param &lt;T&gt; The type of the baseState
+ */</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Immer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">TAG</span> <span class="o">=</span> <span class="nc">Immer</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getSimpleName</span><span class="o">();</span>
+    <span class="kd">final</span> <span class="kd">public</span> <span class="nc">Mapper</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">mapper</span><span class="o">;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="kd">final</span> <span class="nc">Handler</span> <span class="n">handler</span><span class="o">;</span> <i class="conum" data-value="2"></i><b>(2)</b>
+
+    <span class="kd">public</span> <span class="nf">Immer</span><span class="o">(</span><span class="nc">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="no">T</span><span class="o">&gt;</span> <span class="n">type</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Mapper</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;(</span><span class="n">type</span><span class="o">);</span>
+        <span class="n">handler</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Handler</span><span class="o">(</span><span class="nc">Looper</span><span class="o">.</span><span class="na">getMainLooper</span><span class="o">());</span>
+    <span class="o">}</span>
+    <span class="cm">/** Create a deep clone of the existing model, apply a recipe to it and finally pass the new state to the consumer.
+     * To reduce the load on the main thread we clone the current state in a separate thread.
+     * To avoid multithreading issues we call back the recipe and resultConsumer running on the one and only Main thread of the app.
+     * We do not call the resultConsumer if the clone equals the currentState,
+     * @param pipe the previous readonly single source or truth
+     * @param recipe the callback function that modifies parts of the cloned state
+     * @param resultConsumer the callback function that uses the cloned &amp; modified model
+     */</span>
+<span class="c1">// Immer.java</span>
+    <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">produce</span><span class="o">(</span><span class="nc">BehaviorSubject</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">pipe</span><span class="o">,</span> <span class="nc">Consumer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">recipe</span><span class="o">,</span> <span class="nc">Consumer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">resultConsumer</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">handler</span><span class="o">.</span><span class="na">post</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="kt">var</span> <span class="n">t</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="na">clone</span><span class="o">(</span><span class="n">pipe</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+            <span class="kt">var</span> <span class="n">currentAsJson</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="na">toResource</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+            <span class="n">recipe</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+            <span class="kt">var</span> <span class="n">nextAsJson</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="na">toResource</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(!</span><span class="n">nextAsJson</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">currentAsJson</span><span class="o">))</span> <span class="o">{</span>
+                <span class="nc">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="no">TAG</span><span class="o">,</span> <span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"=== state changed ===\n%s\n=&gt;\n%s---"</span><span class="o">,</span> <span class="n">currentAsJson</span><span class="o">,</span> <span class="n">nextAsJson</span><span class="o">));</span>
+                <span class="n">resultConsumer</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="nc">Log</span><span class="o">.</span><span class="na">w</span><span class="o">(</span><span class="no">TAG</span><span class="o">,</span> <span class="s">"produce() without change"</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -2190,7 +2299,7 @@ für die Erklärung für filter, map und take siehe Abschnitt 5.3.3. Feature / A
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-12 22:30:11 UTC
+Last updated 2025-01-12 23:06:59 UTC
 </div>
 </div>
 </body>
