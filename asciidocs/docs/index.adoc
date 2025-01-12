@@ -290,26 +290,38 @@ image::android-project-model.png[]
 .Model.java
 [%collapsible]
 ====
+[source, java]
+----
 include::../../android-mvvm/app/src/main/java/at/htl/leonding/model/Model.java[]
+----
 ====
 
 
 .Store.java
 [%collapsible]
 ====
+[source, java]
+----
 include::../../android-mvvm/app/src/main/java/at/htl/leonding/model/Store.java[]
+----
 ====
 
 .ToDo.java
 [%collapsible]
 ====
+[source, java]
+----
 include::../../android-mvvm/app/src/main/java/at/htl/leonding/model/ToDo.java[]
+----
 ====
 
 .UIState.java
 [%collapsible]
 ====
+[source, java]
+----
 include::../../android-mvvm/app/src/main/java/at/htl/leonding/model/UIState.java[]
+----
 ====
 
 
@@ -331,11 +343,10 @@ include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/Rx
 ----
 
 .RxJavaViewModel.java
-[source, kotlin]
+[source, java]
 ----
 include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaViewModel.java[]
 ----
-
 ====
 
 ===== Alle rx-Methoden:
@@ -384,13 +395,11 @@ image::take.png[]
 [%collapsible]
 ====
 
-.ToDoClient.java
 [source, java]
 ----
 include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/todo/ToDoClient.java[]
 ----
 
-.ToDoService.java
 [source, java]
 ----
 include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/todo/ToDoService.java[]
