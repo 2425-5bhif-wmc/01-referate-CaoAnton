@@ -3,6 +3,7 @@ import {StoreService} from "../../services/store.service";
 import {distinctUntilChanged, map} from "rxjs";
 import {Todo} from "../../model";
 import {AsyncPipe} from "@angular/common";
+import {TodoService} from "../../services/todo.service";
 
 @Component({
   selector: 'app-todo',
@@ -13,19 +14,16 @@ import {AsyncPipe} from "@angular/common";
   templateUrl: './todo.component.html',
   styleUrl: './todo.component.css'
 })
-export class TodoComponent implements OnInit {
-  //store = inject(StoreService).store
+export class TodoComponent {
+  todoService = inject(TodoService)
   viewModel = inject(StoreService)
     .store
     .pipe(
       map(model => model.todos),
       distinctUntilChanged()
     )
-
-  ngOnInit() {
-    // this.store.pipe(
-    //   map(model => model.todos),
-    //   distinctUntilChanged()
-    // ).subscribe(todos => console.log("Todo-Component", todos))
+  loadTodos() {
+    this.todoService.findAll()
   }
+
 }

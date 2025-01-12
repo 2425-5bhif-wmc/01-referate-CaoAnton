@@ -1,0 +1,18 @@
+<div class="container">
+  <h2>RxJS Operators Demonstration</h2>
+
+  <!-- Button for each function -->
+  <button (click)="demonstrateMap()">map</button>
+  <button (click)="demonstrateFilter()">filter</button>
+  <button (click)="demonstrateConcatMap()">concatMap</button>
+  <button (click)="demonstrateTake()">take</button>
+  <button (click)="demonstrateFirst()">first</button>
+  <button (click)="demonstrateLast()">last</button>
+
+  <div class="output">
+    <p><strong>Aktuelle Methode:</strong> {{ currentMethod }}</p>
+    <p><strong>Verwendete Parameter:</strong> {{ currentParameters }}</p>
+    <p><strong>Before:</strong> {{ before }}</p>
+    <p><strong>After:</strong> {{ after }}</p>
+  </div>
+</div>

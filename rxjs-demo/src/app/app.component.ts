@@ -13,13 +13,7 @@ import {TodoService} from "./services/todo.service";
 })
 export class AppComponent implements OnInit {
   store = inject(StoreService).store
-  todoService = inject(TodoService)
-
   ngOnInit() {
     //this.todoService.findAll()
-  }
-
-  loadTodos() {
-    this.todoService.findAll()
   }
 }

@@ -188,11 +188,17 @@ https://redux.js.org/understanding/thinking-in-redux/three-principles[Three Prin
 
 === Projekt
 
+image::android-project.png[]
+
+
 * Util
 * Model
 * Feature
 
 ==== Util
+
+image::android-project-util.png[]
+
 
 .mapper
 [%collapsible]
@@ -278,6 +284,9 @@ image::publish-subject.png[]
 
 ==== Model
 
+image::android-project-model.png[]
+
+
 .Model.java
 [%collapsible]
 ====
@@ -305,6 +314,8 @@ include::../../android-mvvm/app/src/main/java/at/htl/leonding/model/UIState.java
 
 
 ==== Feature
+
+image::android-project-feature.png[]
 
 * Fokus auf example und todo
 
@@ -409,6 +420,7 @@ image::angular-project.png[]
 
 ==== Model
 
+image::angular-project-model.png[]
 .model.ts
 [source, typescript]
 ----
@@ -418,7 +430,87 @@ include::../../rxjs-demo/src/app/model/model.ts[]
 <.> definiert das Modell
 <.> der anfängliche Zustand des Modells
 <.> das zentrale Element in der Anwendung (Single Source Of Truth)
+<.> set(...)
+* Änderungen am Zustand vorzunehmen, ohne den aktuellen Zustand direkt zu manipulieren.
+* recipe-Funktion, die beschreibt, wie der Zustand verändert werden soll.
+* die produce() führt eine immutable Änderung durch -> der aktuelle Zustand vom Store wird geholt und die recipe beschreibt
+die Änderungen. Es wird eine Kopie vorgenommen und im store.next() werden alle Subscriber benachrichtigt, dass sich im
+Model was geändert hat.
 
+.todo.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/model/todo.ts[]
+----
+
+==== Services
+
+image::angular-project-service.png[]
+
+
+.store.service.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/services/store.service.ts[]
+----
+
+.todo.service.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/services/todo.service.ts[]
+----
+* holt sich vom https://jsonplaceholder.typicode.com/todos[jsonplaceholder] die ToDoss
+* lastValueFrom: wandelt das Observable in ein Promise um und wartet darauf, dass es abgeschlossen wird. Wenn es
+abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem Fall die Liste der Todos).
+* nachdem er sich die Daten geholt hat, speichert er das im store
+
+
+==== Components
+
+image::angular-project-component.png[]
+
+* todo
+* example
+
+===== todo
+
+.todo.component.html
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/todo/todo.component.html[]
+----
+
+.todo.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/todo/todo.component.ts[]
+----
+
+* holt sich wie beim vorherigen `Android-Beispiel` die todos
+
+===== example
+
+.example.component.html
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.html[]
+----
+
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[]
+----
+
+NOTE: für die Erklärung für filter, map und take siehe Abschnitt 5.3.3. Feature / Alle rx-Methoden
+
+.concatMap
+[%collapsible]
+====
+image::concat.png[]
+* concatMap verarbeitet jeden Wert nacheinander.
+* Für jeden Wert von ['A', 'B', 'C'] wird ein neues Observable mit zwei Werten nacheinander erzeugt (A1, A2).
+====
 
 == Quelle
 
@@ -427,3 +519,5 @@ include::../../rxjs-demo/src/app/model/model.ts[]
 - https://www.ramotion.com/blog/synchronous-vs-asynchronous-programming/
 - https://www.tektutorialshub.com/angular/angular-observable-tutorial-using-rxjs/
 - https://www.digitalocean.com/community/tutorials/android-mvvm-design-pattern
+- https://immerjs.github.io/immer/
+- https://redux.js.org/understanding/thinking-in-redux/three-principles
