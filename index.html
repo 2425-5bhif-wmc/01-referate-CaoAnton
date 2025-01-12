@@ -556,7 +556,7 @@ pre.rouge .gs {
 <div class="details">
 <span id="author" class="author">Anton Cao</span><br>
 <span id="revnumber">version 1.0,</span>
-<span id="revdate">2025-01-11</span>
+<span id="revdate">2025-01-12</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -882,11 +882,181 @@ Operationen wie  Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 </div>
 <div class="sect2">
 <h3 id="_drei_prinzipien"><a class="anchor" href="#_drei_prinzipien"></a>5.2. Drei Prinzipien</h3>
-
+<div class="paragraph">
+<p><a href="https://redux.js.org/understanding/thinking-in-redux/three-principles">Three Principles</a></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Single Source of Truth</p>
+</li>
+<li>
+<p>State is Read-Only</p>
+</li>
+<li>
+<p>Changes are Made with Pure Functions</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_single_source_of_truth"><a class="anchor" href="#_single_source_of_truth"></a>5.2.1. Single Source of Truth</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Der gesamte Zustand der Anwendung wird in einem einzigen, zentralen Store gespeichert.</p>
+</li>
+<li>
+<p>RxJava mit BehaviorSubject</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_state_is_read_only"><a class="anchor" href="#_state_is_read_only"></a>5.2.2. State is Read-Only</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Der Zustand kann nicht direkt geändert werden. Änderungen erfolgen nur durch das Auslösen von Actions.</p>
+</li>
+<li>
+<p>Änderungen am Zustand erfolgen durch definierte Methoden im ViewModel.</p>
+</li>
+<li>
+<p>Mit RxJava erfolgt die Änderung des Zustands über Events oder Streams (z.B. durch onNext() in einem Subject).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_changes_are_made_with_pure_functions"><a class="anchor" href="#_changes_are_made_with_pure_functions"></a>5.2.3. Changes are Made with Pure Functions</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Änderungen des Zustands erfolgen durch reine Funktionen (Reducers), die keine Seiteneffekte haben.</p>
+</li>
+<li>
+<p>Methoden im ViewModel sollten idealerweise rein sein: Sie verändern nicht direkt die View oder äußere Zustände.</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_projekt"><a class="anchor" href="#_projekt"></a>5.3. Projekt</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Feature:</p>
+</li>
+<li>
+<p>Model:</p>
+</li>
+<li>
+<p>Util:</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_util"><a class="anchor" href="#_util"></a>5.3.1. Util</h4>
+<details>
+<summary class="title">store</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">StoreBase.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nc">Unresolved</span> <span class="n">directive</span> <span class="n">in</span> <span class="n">index</span><span class="o">.</span><span class="na">adoc</span> <span class="o">-</span> <span class="nl">include:</span><span class="o">:../../</span><span class="n">android</span><span class="o">-</span><span class="n">mvvm</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">at</span><span class="o">/</span><span class="n">htl</span><span class="o">/</span><span class="n">leonding</span><span class="o">/</span><span class="n">util</span><span class="o">/</span><span class="n">store</span><span class="o">/</span><span class="nc">StoreBase</span><span class="o">.</span><span class="na">java</span><span class="o">[]</span></code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">immer</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">Immer.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nc">Unresolved</span> <span class="n">directive</span> <span class="n">in</span> <span class="n">index</span><span class="o">.</span><span class="na">adoc</span> <span class="o">-</span> <span class="nl">include:</span><span class="o">:../../</span><span class="n">android</span><span class="o">-</span><span class="n">mvvm</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">at</span><span class="o">/</span><span class="n">htl</span><span class="o">/</span><span class="n">leonding</span><span class="o">/</span><span class="n">util</span><span class="o">/</span><span class="n">immer</span><span class="o">/</span><span class="nc">Immer</span><span class="o">.</span><span class="na">java</span><span class="o">[]</span></code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">mapper</summary>
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>dient zur zur Serialisierung und Deserialisierung von Objekten nach JSON und zurück.</p>
+</li>
+<li>
+<p>führt er tiefe Klonoperationen aus.</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">resteasy</summary>
+<div class="content">
 
+</div>
+</details>
+<details>
+<summary class="title">config</summary>
+<div class="content">
+
+</div>
+</details>
+</div>
+<div class="sect3">
+<h4 id="_model"><a class="anchor" href="#_model"></a>5.3.2. Model</h4>
+<details>
+<summary class="title">Model.java</summary>
+<div class="content">
+
+</div>
+</details>
+<details>
+<summary class="title">Store.java</summary>
+<div class="content">
+
+</div>
+</details>
+<details>
+<summary class="title">ToDo.java</summary>
+<div class="content">
+
+</div>
+</details>
+<details>
+<summary class="title">UIState.java</summary>
+<div class="content">
+
+</div>
+</details>
+</div>
+<div class="sect3">
+<h4 id="_feature"><a class="anchor" href="#_feature"></a>5.3.3. Feature</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Fokus auf example und todo</p>
+</li>
+</ul>
+</div>
+<details>
+<summary class="title">example</summary>
+<div class="content">
+
+</div>
+</details>
+<details>
+<summary class="title">todo</summary>
+<div class="content">
+
+</div>
+</details>
+</div>
 </div>
 </div>
 </div>
@@ -910,7 +1080,7 @@ Benutzereingaben und Ereignisse zu verwalten.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_model"><a class="anchor" href="#_model"></a>6.1.1. Model</h4>
+<h4 id="_model_2"><a class="anchor" href="#_model_2"></a>6.1.1. Model</h4>
 <div class="listingblock">
 <div class="title">model.ts</div>
 <div class="content">
@@ -965,7 +1135,7 @@ Benutzereingaben und Ereignisse zu verwalten.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-11 20:08:27 UTC
+Last updated 2025-01-12 01:08:24 UTC
 </div>
 </div>
 </body>
