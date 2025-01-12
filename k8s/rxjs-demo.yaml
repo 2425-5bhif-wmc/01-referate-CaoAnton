@@ -1,0 +1,56 @@
+# Angular Application
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rxjs-demo
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rxjs-demo
+  template:
+    metadata:
+      labels:
+        app: rxjs-demo
+    spec:
+      containers:
+        - name: rxjs-demo
+          image: ghcr.io/caoanton/rxjs-demo:latest
+          # remove this when stable. Currently, we do not take care of version numbers
+          imagePullPolicy: Always
+          # command: ["tail","-f","/dev/null"]
+          ports:
+            - containerPort: 80
+#          startupProbe:
+#            httpGet:
+#              path: /api/q/health
+#              port: 8080
+#            timeoutSeconds: 5
+#            initialDelaySeconds: 15
+#          readinessProbe:
+#            tcpSocket:
+#              port: 8080
+#            initialDelaySeconds: 5
+#            periodSeconds: 10
+#          livenessProbe:
+#            httpGet:
+#              path: /api/q/health
+#              port: 8080
+#            timeoutSeconds: 5
+#            initialDelaySeconds: 60
+#            periodSeconds: 120
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rxjs-demo
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      nodePort: 30001  # This is optional, Minikube will auto-assign if you omit it
+  type: NodePort
+  selector:
+    app: rxjs-demo
