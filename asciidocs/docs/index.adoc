@@ -216,7 +216,7 @@ image::deep-copy.jpg[]
 .Immer.java
 [source, java]
 ----
-include::../../android-mvvm/app/src/main/java/at/htl/leonding/util/immer/Immer.java[]
+include::../../../android-mvvm/app/src/main/java/at/htl/leonding/util/immer/Immer.java[]
 ----
 
 <.> die Objekte werden in JSON umwandelt und zurück
