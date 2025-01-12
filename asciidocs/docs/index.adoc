@@ -12,6 +12,9 @@ ifndef::backend[:backend: html5]
 
 == ReactiveX
 
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/util/immer/Immer.java[]
+
+
 ReactiveX (Reactive Extensions) ist eine API für asynchrone und eventbasierte Programmierung mithilfe von **Observables**.
 Das Hauptproblem, das ReactiveX löst, ist der Umgang mit asynchronen Datenströmen in einer verständlichen, flexiblen und fehlerresistenten Weise.
 
@@ -216,7 +219,7 @@ image::deep-copy.jpg[]
 .Immer.java
 [source, java]
 ----
-include::../../../android-mvvm/app/src/main/java/at/htl/leonding/util/immer/Immer.java[]
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/util/immer/Immer.java[]
 ----
 
 <.> die Objekte werden in JSON umwandelt und zurück
