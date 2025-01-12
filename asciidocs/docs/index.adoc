@@ -101,24 +101,21 @@ Es gibt verschiedene Alternativen zu ReactiveX, die ähnliche Funktionalitäten 
 == Quarkus Mutiny vs andere reaktive API
 
 
-Quarkus verwendet primär die Mutiny-API für reaktive Applikationen. Viele der eingebauten Extensions wie:
-verlangen Typen wie **Uni** oder **Multi**. Es würde dann zum Konflikt zwischen den Typen von anderen reaaktiven API wie
-**RxJava** oder **Vert.x** kommen. https://quarkus.io/guides/mutiny-primer[Quarkus Mutiny]
+Quarkus verwendet primär die Mutiny-API für reaktive Applikationen. Viele der eingebauten Extensions
+verlangen Typen wie **Uni** oder **Multi**. Es würde dann zum Konflikt zwischen den Typen von anderen reaktiven API wie
+**RxJava** kommen. https://quarkus.io/guides/mutiny-primer[Quarkus Mutiny]
 
 [cols="3,3,3", options="header"]
 |===
 |Merkmal                     |Mutiny                                     |RxJava
 
-|**Single-Item Stream**      |`Uni<T>`                                   |`Single<T>` / `Maybe<T>`
-|**Multi-Item Stream**       |`Multi<T>`                                 |`Observable<T>` / `Flowable<T>`
-|**Fehlerbehandlung**        |`onFailure().recoverWithItem()`             |`onErrorResumeNext()`
+|**Single-Item Stream**      |`Uni<T>`                                   |`Single<T>`
+|**Multi-Item Stream**       |`Multi<T>`                                 |`Observable<T>`
 |**Ressourcenverbrauch**     |Gering (optimiert für Quarkus)             |Höher, allgemeiner Einsatz
 |**Integration**             |Nahtlos mit Quarkus Extensions             |Framework-unabhängig
 |**Zielsetzung**             |Cloud-native, reaktive Microservices       |Allgemeine reaktive Programmierung
 |**Sprachunterstützung**     |Java                                       |Java, Kotlin
 |===
-
-
 
 == Beispiele mit ReactiveX
 
@@ -140,6 +137,8 @@ gibt ToDos zurück und die Struktur sieht so aus:
 include::puml/todos.puml[]
 ----
 
+https://jsonplaceholder.typicode.com/todos
+
 == Android (rxjava-demo)
 
 [plantuml]
@@ -149,7 +148,7 @@ include::puml/architecture.puml[]
 ----
 
 RxJava ist eine Implementierung von ReactiveX für die JVM und wird häufig in Android-Apps verwendet, um asynchrone
-Operationen wie  Datenbankzugriffe und Benutzerinteraktionen zu verwalten.
+Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.
 
 === Android-MVVM
 
@@ -157,7 +156,6 @@ image::android-mvvm-pattern.png[]
 
 * Model:
 ** Repräsentiert die Daten und Geschäftslogik der Anwendung
-**
 * ViewModel:
 ** verbindet die Model und die View
 ** Holt Daten aus dem Model, verarbeitet sie und stellt sie der View bereit.
@@ -178,38 +176,32 @@ https://redux.js.org/understanding/thinking-in-redux/three-principles[Three Prin
 ==== Single Source of Truth
 
 * Der gesamte Zustand der Anwendung wird in einem einzigen, zentralen Store gespeichert.
-* RxJava mit BehaviorSubject
 
 ==== State is Read-Only
 
 * Der Zustand kann nicht direkt geändert werden. Änderungen erfolgen nur durch das Auslösen von Actions.
-* Änderungen am Zustand erfolgen durch definierte Methoden im ViewModel.
-* Mit RxJava erfolgt die Änderung des Zustands über Events oder Streams (z.B. durch onNext() in einem Subject).
 
 ==== Changes are Made with Pure Functions
 
-* Änderungen des Zustands erfolgen durch reine Funktionen (Reducers), die keine Seiteneffekte haben.
-* Methoden im ViewModel sollten idealerweise rein sein: Sie verändern nicht direkt die View oder äußere Zustände.
+* hat keine Seiteneffekte
+* der Funktionswert bestimmt sich nur durch die Parameter
 
 === Projekt
 
-
-
-* Feature:
-* Model:
-* Util:
-
+* Util
+* Model
+* Feature
 
 ==== Util
 
-.store
+.mapper
 [%collapsible]
 ====
-.StoreBase.java
-[source, java]
-----
-include::../../android-mvvm/app/src/main/java/at/htl/leonding/util/store/StoreBase.java[]
-----
+* dient zur Serialisierung und Deserialisierung von Objekten nach JSON und zurück.
+* führt auch tiefe Klonoperationen aus.
+
+image::deep-copy.jpg[]
+
 ====
 
 .immer
@@ -220,26 +212,68 @@ include::../../android-mvvm/app/src/main/java/at/htl/leonding/util/store/StoreBa
 ----
 include::../../android-mvvm/app/src/main/java/at/htl/leonding/util/immer/Immer.java[]
 ----
+
+<.> die Objekte werden in JSON umwandelt und zurück
+<.> führt die Aufgaben im Main-Thread aus
+<.> die Methode produce(...) sorgt dafür, dass die Änderungen sicher und kontrolliert vorgenommen wird.
+Es werden nur relevante Änderungen am Zustand übernommen
+
+.Behavior Subject
+image::behavior-subject.png[]
+
 ====
 
-.mapper
+
+.store
 [%collapsible]
 ====
-* dient zur zur Serialisierung und Deserialisierung von Objekten nach JSON und zurück.
-* führt er tiefe Klonoperationen aus.
-====
+.StoreBase.java
+[source, java]
+----
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/util/store/StoreBase.java[]
+----
 
+* Basisklasse für Store
+* Verwaltet den Zustand
+
+.ViewModelBase.java
+[source, java]
+----
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/util/store/ViewModelBase.java[]
+----
+
+* Basisklasse für die Viewmodel
+* Stellt nur die relevanten Daten für die View bereit
+
+<.> PublishSubject gibt immer nur die zukünftigen Werte an die Subscriber
+<.> repräsentiert eine Subscription für einen Observable-Stream. Beenden oder Abbestellen von Observern von einem Observable.
+<.> Konstruktor der ViewModelBase. Der Ablauf:
+1. Verbindung zum Store → store.pipe liefert den aktuellen Zustand.
+2. Umwandlung → map(this::toViewModel) wandelt das Model in das ViewModel um.
+3. Optimierung → distinctUntilChanged() verhindert doppelte Benachrichtigungen.
+4. Weitergabe → subscribe(subject::onNext) sendet Updates an die View
+
+.Ablauf
+image::viewmodel.png[]
+
+image::behavior-subject2.png[]
+.BehaviorSubject vs. PublishSubject
+image::publish-subject.png[]
+
+====
 
 .resteasy
 [%collapsible]
 ====
-
+* enthält eine Sammlung von Klassen, die zusammenarbeiten, um REST-API-Clients in einer Android-Anwendung effizient zu erstellen.
+* JAX-RS-Implementierung für Java nutzt Jackson zur JSON-Verarbeitung.
 ====
 
 .config
 [%collapsible]
 ====
-
+* Konfigurationsverwaltung für die Anwendung bereit
+* Es lädt Konfigurationsdateien (z.B. application.properties)
 ====
 
 ==== Model
@@ -247,26 +281,26 @@ include::../../android-mvvm/app/src/main/java/at/htl/leonding/util/immer/Immer.j
 .Model.java
 [%collapsible]
 ====
-
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/model/Model.java[]
 ====
 
 
 .Store.java
 [%collapsible]
 ====
-
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/model/Store.java[]
 ====
 
 .ToDo.java
 [%collapsible]
 ====
-
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/model/ToDo.java[]
 ====
 
 .UIState.java
 [%collapsible]
 ====
-
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/model/UIState.java[]
 ====
 
 
@@ -274,16 +308,88 @@ include::../../android-mvvm/app/src/main/java/at/htl/leonding/util/immer/Immer.j
 
 * Fokus auf example und todo
 
-.example
+===== Example
+
 [%collapsible]
 ====
 
+.RxJavaView.kt
+[source, kotlin]
+----
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaView.kt[]
+----
+
+.RxJavaViewModel.java
+[source, kotlin]
+----
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaViewModel.java[]
+----
+
 ====
 
-.todo
+===== Alle rx-Methoden:
+
+.map
+[%collapsible]
+====
+image::map.png[]
+* transformiert jedes Element der Observable nach einer angegebenen Funktion
+====
+
+
+.filter
+[%collapsible]
+====
+image::filter.png[]
+* filtert die Elemente einer Observable basierend auf einer Bedingung
+====
+
+
+.zip
+[%collapsible]
+====
+image::zip.png[]
+* kombiniert mehrere Observables und erstellt neue Paare von Elementen
+====
+
+
+.interval
+[%collapsible]
+====
+image::interval.png[]
+* erzeugt fortlaufende Werte in einem festen Zeitintervall
+====
+
+.take
+[%collapsible]
+====
+image::take.png[]
+* nimmt nur eine bestimmte Anzahl von Elementen
+====
+
+
+===== todo
+
 [%collapsible]
 ====
 
+.ToDoClient.java
+[source, java]
+----
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/todo/ToDoClient.java[]
+----
+
+.ToDoService.java
+[source, java]
+----
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/todo/ToDoService.java[]
+----
+<.> getAll()
+
+* Der Consumer speichert die abgerufenen ToDo-Daten im store.
+* Die apply-Methode wird verwendet, um den toDos-Wert des Models im Store zu setzen.
+* es wird asynchron mit der CompletableFuture die all-Methode im Client aufgerufen
+* wenn er erfolgreich die Daten holen konnte, wird er im `store` gespeichert
 ====
 
 == Angular (rxjs-demo)
