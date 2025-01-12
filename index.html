@@ -724,9 +724,9 @@ done</pre>
 <h2 id="_quarkus_mutiny_vs_andere_reaktive_api"><a class="anchor" href="#_quarkus_mutiny_vs_andere_reaktive_api"></a>3. Quarkus Mutiny vs andere reaktive API</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Quarkus verwendet primär die Mutiny-API für reaktive Applikationen. Viele der eingebauten Extensions wie:
-verlangen Typen wie <strong>Uni</strong> oder <strong>Multi</strong>. Es würde dann zum Konflikt zwischen den Typen von anderen reaaktiven API wie
-<strong>RxJava</strong> oder <strong>Vert.x</strong> kommen. <a href="https://quarkus.io/guides/mutiny-primer">Quarkus Mutiny</a></p>
+<p>Quarkus verwendet primär die Mutiny-API für reaktive Applikationen. Viele der eingebauten Extensions
+verlangen Typen wie <strong>Uni</strong> oder <strong>Multi</strong>. Es würde dann zum Konflikt zwischen den Typen von anderen reaktiven API wie
+<strong>RxJava</strong> kommen. <a href="https://quarkus.io/guides/mutiny-primer">Quarkus Mutiny</a></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -745,17 +745,12 @@ verlangen Typen wie <strong>Uni</strong> oder <strong>Multi</strong>. Es würde 
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Single-Item Stream</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Uni&lt;T&gt;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Single&lt;T&gt;</code> / <code>Maybe&lt;T&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Single&lt;T&gt;</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multi-Item Stream</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Multi&lt;T&gt;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Observable&lt;T&gt;</code> / <code>Flowable&lt;T&gt;</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Fehlerbehandlung</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>onFailure().recoverWithItem()</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>onErrorResumeNext()</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Observable&lt;T&gt;</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Ressourcenverbrauch</strong></p></td>
@@ -811,6 +806,9 @@ gibt ToDos zurück und die Struktur sieht so aus:</p>
 <img src="images/diag-plantuml-md5-9c94654fa2234ed18185d7c21437c749.png" alt="Diagram" width="185" height="133">
 </div>
 </div>
+<div class="paragraph">
+<p><a href="https://jsonplaceholder.typicode.com/todos" class="bare">https://jsonplaceholder.typicode.com/todos</a></p>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -823,7 +821,7 @@ gibt ToDos zurück und die Struktur sieht so aus:</p>
 </div>
 <div class="paragraph">
 <p>RxJava ist eine Implementierung von ReactiveX für die JVM und wird häufig in Android-Apps verwendet, um asynchrone
-Operationen wie  Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
+Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 </div>
 <div class="sect2">
 <h3 id="_android_mvvm"><a class="anchor" href="#_android_mvvm"></a>5.1. Android-MVVM</h3>
@@ -839,8 +837,7 @@ Operationen wie  Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Repräsentiert die Daten und Geschäftslogik der Anwendung
-**</p>
+<p>Repräsentiert die Daten und Geschäftslogik der Anwendung</p>
 </li>
 </ul>
 </div>
@@ -905,9 +902,6 @@ Operationen wie  Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 <li>
 <p>Der gesamte Zustand der Anwendung wird in einem einzigen, zentralen Store gespeichert.</p>
 </li>
-<li>
-<p>RxJava mit BehaviorSubject</p>
-</li>
 </ul>
 </div>
 </div>
@@ -918,12 +912,6 @@ Operationen wie  Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 <li>
 <p>Der Zustand kann nicht direkt geändert werden. Änderungen erfolgen nur durch das Auslösen von Actions.</p>
 </li>
-<li>
-<p>Änderungen am Zustand erfolgen durch definierte Methoden im ViewModel.</p>
-</li>
-<li>
-<p>Mit RxJava erfolgt die Änderung des Zustands über Events oder Streams (z.B. durch onNext() in einem Subject).</p>
-</li>
 </ul>
 </div>
 </div>
@@ -932,10 +920,10 @@ Operationen wie  Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Änderungen des Zustands erfolgen durch reine Funktionen (Reducers), die keine Seiteneffekte haben.</p>
+<p>hat keine Seiteneffekte</p>
 </li>
 <li>
-<p>Methoden im ViewModel sollten idealerweise rein sein: Sie verändern nicht direkt die View oder äußere Zustände.</p>
+<p>der Funktionswert bestimmt sich nur durch die Parameter</p>
 </li>
 </ul>
 </div>
@@ -946,25 +934,34 @@ Operationen wie  Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Feature:</p>
+<p>Util</p>
 </li>
 <li>
-<p>Model:</p>
+<p>Model</p>
 </li>
 <li>
-<p>Util:</p>
+<p>Feature</p>
 </li>
 </ul>
 </div>
 <div class="sect3">
 <h4 id="_util"><a class="anchor" href="#_util"></a>5.3.1. Util</h4>
 <details>
-<summary class="title">store</summary>
+<summary class="title">mapper</summary>
 <div class="content">
-<div class="listingblock">
-<div class="title">StoreBase.java</div>
+<div class="ulist">
+<ul>
+<li>
+<p>dient zur Serialisierung und Deserialisierung von Objekten nach JSON und zurück.</p>
+</li>
+<li>
+<p>führt auch tiefe Klonoperationen aus.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="nc">Unresolved</span> <span class="n">directive</span> <span class="n">in</span> <span class="n">index</span><span class="o">.</span><span class="na">adoc</span> <span class="o">-</span> <span class="nl">include:</span><span class="o">:../../</span><span class="n">android</span><span class="o">-</span><span class="n">mvvm</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">at</span><span class="o">/</span><span class="n">htl</span><span class="o">/</span><span class="n">leonding</span><span class="o">/</span><span class="n">util</span><span class="o">/</span><span class="n">store</span><span class="o">/</span><span class="nc">StoreBase</span><span class="o">.</span><span class="na">java</span><span class="o">[]</span></code></pre>
+<img src="images/deep-copy.jpg" alt="deep copy">
 </div>
 </div>
 </div>
@@ -978,33 +975,145 @@ Operationen wie  Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 <pre class="rouge highlight"><code data-lang="java"><span class="nc">Unresolved</span> <span class="n">directive</span> <span class="n">in</span> <span class="n">index</span><span class="o">.</span><span class="na">adoc</span> <span class="o">-</span> <span class="nl">include:</span><span class="o">:../../</span><span class="n">android</span><span class="o">-</span><span class="n">mvvm</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">at</span><span class="o">/</span><span class="n">htl</span><span class="o">/</span><span class="n">leonding</span><span class="o">/</span><span class="n">util</span><span class="o">/</span><span class="n">immer</span><span class="o">/</span><span class="nc">Immer</span><span class="o">.</span><span class="na">java</span><span class="o">[]</span></code></pre>
 </div>
 </div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>die Objekte werden in JSON umwandelt und zurück</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>führt die Aufgaben im Main-Thread aus</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>die Methode produce(&#8230;&#8203;) sorgt dafür, dass die Änderungen sicher und kontrolliert vorgenommen wird.
+Es werden nur relevante Änderungen am Zustand übernommen</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/behavior-subject.png" alt="behavior subject">
+</div>
+<div class="title">Figure 1. Behavior Subject</div>
+</div>
 </div>
 </details>
 <details>
-<summary class="title">mapper</summary>
+<summary class="title">store</summary>
 <div class="content">
+<div class="listingblock">
+<div class="title">StoreBase.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nc">Unresolved</span> <span class="n">directive</span> <span class="n">in</span> <span class="n">index</span><span class="o">.</span><span class="na">adoc</span> <span class="o">-</span> <span class="nl">include:</span><span class="o">:../../</span><span class="n">android</span><span class="o">-</span><span class="n">mvvm</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">at</span><span class="o">/</span><span class="n">htl</span><span class="o">/</span><span class="n">leonding</span><span class="o">/</span><span class="n">util</span><span class="o">/</span><span class="n">store</span><span class="o">/</span><span class="nc">StoreBase</span><span class="o">.</span><span class="na">java</span><span class="o">[]</span></code></pre>
+</div>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>dient zur zur Serialisierung und Deserialisierung von Objekten nach JSON und zurück.</p>
+<p>Basisklasse für Store</p>
 </li>
 <li>
-<p>führt er tiefe Klonoperationen aus.</p>
+<p>Verwaltet den Zustand</p>
 </li>
 </ul>
+</div>
+<div class="listingblock">
+<div class="title">ViewModelBase.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nc">Unresolved</span> <span class="n">directive</span> <span class="n">in</span> <span class="n">index</span><span class="o">.</span><span class="na">adoc</span> <span class="o">-</span> <span class="nl">include:</span><span class="o">:../../</span><span class="n">android</span><span class="o">-</span><span class="n">mvvm</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">at</span><span class="o">/</span><span class="n">htl</span><span class="o">/</span><span class="n">leonding</span><span class="o">/</span><span class="n">util</span><span class="o">/</span><span class="n">store</span><span class="o">/</span><span class="nc">ViewModelBase</span><span class="o">.</span><span class="na">java</span><span class="o">[]</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Basisklasse für die Viewmodel</p>
+</li>
+<li>
+<p>Stellt nur die relevanten Daten für die View bereit</p>
+</li>
+</ul>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>PublishSubject gibt immer nur die zukünftigen Werte an die Subscriber</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>repräsentiert eine Subscription für einen Observable-Stream. Beenden oder Abbestellen von Observern von einem Observable.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Konstruktor der ViewModelBase. Der Ablauf:
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Verbindung zum Store → store.pipe liefert den aktuellen Zustand.</p>
+</li>
+<li>
+<p>Umwandlung → map(this::toViewModel) wandelt das Model in das ViewModel um.</p>
+</li>
+<li>
+<p>Optimierung → distinctUntilChanged() verhindert doppelte Benachrichtigungen.</p>
+</li>
+<li>
+<p>Weitergabe → subscribe(subject::onNext) sendet Updates an die View</p>
+</li>
+</ol>
+</div></td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/viewmodel.png" alt="viewmodel">
+</div>
+<div class="title">Figure 2. Ablauf</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/behavior-subject2.png" alt="behavior subject2">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/publish-subject.png" alt="publish subject">
+</div>
+<div class="title">Figure 3. BehaviorSubject vs. PublishSubject</div>
 </div>
 </div>
 </details>
 <details>
 <summary class="title">resteasy</summary>
 <div class="content">
-
+<div class="ulist">
+<ul>
+<li>
+<p>enthält eine Sammlung von Klassen, die zusammenarbeiten, um REST-API-Clients in einer Android-Anwendung effizient zu erstellen.</p>
+</li>
+<li>
+<p>JAX-RS-Implementierung für Java nutzt Jackson zur JSON-Verarbeitung.</p>
+</li>
+</ul>
+</div>
 </div>
 </details>
 <details>
 <summary class="title">config</summary>
 <div class="content">
-
+<div class="ulist">
+<ul>
+<li>
+<p>Konfigurationsverwaltung für die Anwendung bereit</p>
+</li>
+<li>
+<p>Es lädt Konfigurationsdateien (z.B. application.properties)</p>
+</li>
+</ul>
+</div>
 </div>
 </details>
 </div>
@@ -1013,25 +1122,33 @@ Operationen wie  Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 <details>
 <summary class="title">Model.java</summary>
 <div class="content">
-
+<div class="paragraph">
+<p>Unresolved directive in index.adoc - include::../../android-mvvm/app/src/main/java/at/htl/leonding/model/Model.java[]</p>
+</div>
 </div>
 </details>
 <details>
 <summary class="title">Store.java</summary>
 <div class="content">
-
+<div class="paragraph">
+<p>Unresolved directive in index.adoc - include::../../android-mvvm/app/src/main/java/at/htl/leonding/model/Store.java[]</p>
+</div>
 </div>
 </details>
 <details>
 <summary class="title">ToDo.java</summary>
 <div class="content">
-
+<div class="paragraph">
+<p>Unresolved directive in index.adoc - include::../../android-mvvm/app/src/main/java/at/htl/leonding/model/ToDo.java[]</p>
+</div>
 </div>
 </details>
 <details>
 <summary class="title">UIState.java</summary>
 <div class="content">
-
+<div class="paragraph">
+<p>Unresolved directive in index.adoc - include::../../android-mvvm/app/src/main/java/at/htl/leonding/model/UIState.java[]</p>
+</div>
 </div>
 </details>
 </div>
@@ -1044,18 +1161,158 @@ Operationen wie  Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 </li>
 </ul>
 </div>
+<div class="sect4">
+<h5 id="_example"><a class="anchor" href="#_example"></a>Example</h5>
 <details>
-<summary class="title">example</summary>
+<summary class="title">Details</summary>
 <div class="content">
-
+<div class="listingblock">
+<div class="title">RxJavaView.kt</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="kotlin"><span class="nc">Unresolved</span> <span class="n">directive</span> <span class="k">in</span> <span class="n">index</span><span class="p">.</span><span class="n">adoc</span> <span class="p">-</span> <span class="n">include</span><span class="o">::..</span><span class="p">/</span><span class="o">..</span><span class="p">/</span><span class="n">android-mvvm</span><span class="p">/</span><span class="n">app</span><span class="p">/</span><span class="n">src</span><span class="p">/</span><span class="n">main</span><span class="p">/</span><span class="n">java</span><span class="p">/</span><span class="n">at</span><span class="p">/</span><span class="n">htl</span><span class="p">/</span><span class="n">leonding</span><span class="p">/</span><span class="n">feature</span><span class="p">/</span><span class="n">example</span><span class="p">/</span><span class="nc">RxJavaView</span><span class="p">.</span><span class="n">kt</span><span class="p">[]</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">RxJavaViewModel.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="kotlin"><span class="nc">Unresolved</span> <span class="n">directive</span> <span class="k">in</span> <span class="n">index</span><span class="p">.</span><span class="n">adoc</span> <span class="p">-</span> <span class="n">include</span><span class="o">::..</span><span class="p">/</span><span class="o">..</span><span class="p">/</span><span class="n">android-mvvm</span><span class="p">/</span><span class="n">app</span><span class="p">/</span><span class="n">src</span><span class="p">/</span><span class="n">main</span><span class="p">/</span><span class="n">java</span><span class="p">/</span><span class="n">at</span><span class="p">/</span><span class="n">htl</span><span class="p">/</span><span class="n">leonding</span><span class="p">/</span><span class="n">feature</span><span class="p">/</span><span class="n">example</span><span class="p">/</span><span class="nc">RxJavaViewModel</span><span class="p">.</span><span class="n">java</span><span class="p">[]</span></code></pre>
+</div>
+</div>
+</div>
+</details>
+</div>
+<div class="sect4">
+<h5 id="_alle_rx_methoden"><a class="anchor" href="#_alle_rx_methoden"></a>Alle rx-Methoden:</h5>
+<details>
+<summary class="title">map</summary>
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="images/map.png" alt="map">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>transformiert jedes Element der Observable nach einer angegebenen Funktion</p>
+</li>
+</ul>
+</div>
 </div>
 </details>
 <details>
-<summary class="title">todo</summary>
+<summary class="title">filter</summary>
 <div class="content">
-
+<div class="imageblock">
+<div class="content">
+<img src="images/filter.png" alt="filter">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>filtert die Elemente einer Observable basierend auf einer Bedingung</p>
+</li>
+</ul>
+</div>
 </div>
 </details>
+<details>
+<summary class="title">zip</summary>
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="images/zip.png" alt="zip">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>kombiniert mehrere Observables und erstellt neue Paare von Elementen</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">interval</summary>
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="images/interval.png" alt="interval">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>erzeugt fortlaufende Werte in einem festen Zeitintervall</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">take</summary>
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img src="images/take.png" alt="take">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>nimmt nur eine bestimmte Anzahl von Elementen</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
+</div>
+<div class="sect4">
+<h5 id="_todo"><a class="anchor" href="#_todo"></a>todo</h5>
+<details>
+<summary class="title">Details</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">ToDoClient.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nc">Unresolved</span> <span class="n">directive</span> <span class="n">in</span> <span class="n">index</span><span class="o">.</span><span class="na">adoc</span> <span class="o">-</span> <span class="nl">include:</span><span class="o">:../../</span><span class="n">android</span><span class="o">-</span><span class="n">mvvm</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">at</span><span class="o">/</span><span class="n">htl</span><span class="o">/</span><span class="n">leonding</span><span class="o">/</span><span class="n">feature</span><span class="o">/</span><span class="n">todo</span><span class="o">/</span><span class="nc">ToDoClient</span><span class="o">.</span><span class="na">java</span><span class="o">[]</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">ToDoService.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nc">Unresolved</span> <span class="n">directive</span> <span class="n">in</span> <span class="n">index</span><span class="o">.</span><span class="na">adoc</span> <span class="o">-</span> <span class="nl">include:</span><span class="o">:../../</span><span class="n">android</span><span class="o">-</span><span class="n">mvvm</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">at</span><span class="o">/</span><span class="n">htl</span><span class="o">/</span><span class="n">leonding</span><span class="o">/</span><span class="n">feature</span><span class="o">/</span><span class="n">todo</span><span class="o">/</span><span class="nc">ToDoService</span><span class="o">.</span><span class="na">java</span><span class="o">[]</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>getAll()
+<div class="ulist">
+<ul>
+<li>
+<p>Der Consumer speichert die abgerufenen ToDo-Daten im store.</p>
+</li>
+<li>
+<p>Die apply-Methode wird verwendet, um den toDos-Wert des Models im Store zu setzen.</p>
+</li>
+<li>
+<p>es wird asynchron mit der CompletableFuture die all-Methode im Client aufgerufen</p>
+</li>
+<li>
+<p>wenn er erfolgreich die Daten holen konnte, wird er im <code>store</code> gespeichert</p>
+</li>
+</ul>
+</div></td>
+</tr>
+</table>
+</div>
+</div>
+</details>
+</div>
 </div>
 </div>
 </div>
@@ -1135,7 +1392,7 @@ Benutzereingaben und Ereignisse zu verwalten.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-12 01:08:24 UTC
+Last updated 2025-01-12 18:04:15 UTC
 </div>
 </div>
 </body>
