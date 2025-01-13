@@ -556,7 +556,7 @@ pre.rouge .gs {
 <div class="details">
 <span id="author" class="author">Anton Cao</span><br>
 <span id="revnumber">version 1.0,</span>
-<span id="revdate">2025-01-12</span>
+<span id="revdate">2025-01-13</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -582,7 +582,8 @@ pre.rouge .gs {
 <li><a href="#_struktur_des_projekts">6.1. Struktur des Projekts</a></li>
 </ul>
 </li>
-<li><a href="#_quelle">7. Quelle</a></li>
+<li><a href="#_glossar">7. Glossar</a></li>
+<li><a href="#_quelle">8. Quelle</a></li>
 </ul>
 </div>
 </div>
@@ -591,68 +592,9 @@ pre.rouge .gs {
 <h2 id="_reactivex"><a class="anchor" href="#_reactivex"></a>1. ReactiveX</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>package at.htl.leonding.util.immer;</p>
-</div>
-<div class="paragraph">
-<p>import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;</p>
-</div>
-<div class="paragraph">
-<p>import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;</p>
-</div>
-<div class="paragraph">
-<p>import at.htl.leonding.util.mapper.Mapper;
-import io.reactivex.rxjava3.subjects.BehaviorSubject;</p>
-</div>
-<div class="paragraph">
-<p>/** Immer simplifies handling immutable data structures.
- * @param &lt;T&gt; The type of the baseState
- */</p>
-</div>
-<div class="paragraph">
-<p>public class Immer&lt;T&gt; {
-    private static final String TAG = Immer.class.getSimpleName();
-    final public Mapper&lt;T&gt; mapper; // &lt;.&gt;
-    final Handler handler; // &lt;.&gt;</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>    public Immer(Class&lt;? extends T&gt; type) {
-        mapper = new Mapper&lt;T&gt;(type);
-        handler = new Handler(Looper.getMainLooper());
-    }
-    /** Create a deep clone of the existing model, apply a recipe to it and finally pass the new state to the consumer.
-     * To reduce the load on the main thread we clone the current state in a separate thread.
-     * To avoid multithreading issues we call back the recipe and resultConsumer running on the one and only Main thread of the app.
-     * We do not call the resultConsumer if the clone equals the currentState,
-     * @param pipe the previous readonly single source or truth
-     * @param recipe the callback function that modifies parts of the cloned state
-     * @param resultConsumer the callback function that uses the cloned &amp; modified model
-     */
-// Immer.java
-    <i class="conum" data-value="1"></i><b>(1)</b>
-    public void produce(BehaviorSubject&lt;T&gt; pipe, Consumer&lt;T&gt; recipe, Consumer&lt;T&gt; resultConsumer) {
-        handler.post(() -&gt; {
-            var t = mapper.clone(pipe.getValue());
-            var currentAsJson = mapper.toResource(t);
-            recipe.accept(t);
-            var nextAsJson = mapper.toResource(t);
-            if (!nextAsJson.equals(currentAsJson)) {
-                Log.d(TAG, String.format("=== state changed ===\n%s\n=&gt;\n%s---", currentAsJson, nextAsJson));
-                resultConsumer.accept(t);
-            } else {
-                Log.w(TAG, "produce() without change");
-            }
-        });
-    }
-}</pre>
-</div>
-</div>
-<div class="paragraph">
 <p>ReactiveX (Reactive Extensions) ist eine API für asynchrone und eventbasierte Programmierung mithilfe von <strong>Observables</strong>.
-Das Hauptproblem, das ReactiveX löst, ist der Umgang mit asynchronen Datenströmen in einer verständlichen, flexiblen und fehlerresistenten Weise.</p>
+Das Hauptproblem, das ReactiveX löst, ist der Umgang mit asynchronen Datenströmen durch die Kombination von Pull- und
+Push-Verfahren, um eine verständliche, flexible und fehlerresistente Verarbeitung zu ermöglichen.</p>
 </div>
 <div class="sect2">
 <h3 id="_asynchron"><a class="anchor" href="#_asynchron"></a>1.1. Asynchron</h3>
@@ -700,6 +642,23 @@ Es definiert, wie mit den gesendeten Daten umgegangen wird.</p>
 </li>
 <li>
 <p><strong>complete:</strong> Signalisiert das Ende des Streams.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_pull_und_push_verfahren_im_zusammenhang_mit_observables"><a class="anchor" href="#_pull_und_push_verfahren_im_zusammenhang_mit_observables"></a>1.2.1. Pull- und Push-Verfahren im Zusammenhang mit Observables</h4>
+<div class="paragraph">
+<p>ReactiveX kombiniert Pull- und Push-Prinzipien:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Pull:</strong> Ein Observer (Subscriber) entscheidet, ob er sich für ein Observable registrieren möchte.
+Dadurch hat der Konsument die Kontrolle darüber, welche Datenquellen ihn interessieren.</p>
+</li>
+<li>
+<p><strong>Push:</strong> Sobald ein Observer sich registriert hat, sendet das Observable Daten (Events) aktiv an den Observer,
+ohne dass der Observer diese explizit anfordern muss.</p>
 </li>
 </ul>
 </div>
@@ -754,6 +713,7 @@ done</pre>
 <div class="imageblock">
 <div class="content">
 <img src="images/observable-exmaple.png" alt="observable exmaple">
+</div>
 </div>
 </div>
 </div>
@@ -972,6 +932,9 @@ Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 <li>
 <p>Der Zustand kann nicht direkt geändert werden. Änderungen erfolgen nur durch das Auslösen von Actions.</p>
 </li>
+<li>
+<p>Actions beschreiben, <strong>was geändert werden soll</strong>, ohne die Details der Implementierung zu enthalten.</p>
+</li>
 </ul>
 </div>
 </div>
@@ -980,10 +943,10 @@ Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>hat keine Seiteneffekte</p>
+<p>hat keine Seiteneffekte &#8594; greift nicht auf externe Ressourcen (z. B. Datenbanken) zu und hat keine unerwarteten Auswirkungen.</p>
 </li>
 <li>
-<p>der Funktionswert bestimmt sich nur durch die Parameter</p>
+<p>der Funktionswert bestimmt sich nur durch die Parameter &#8594; Sie gibt immer denselben Rückgabewert für dieselben Eingabewerte zurück.</p>
 </li>
 </ul>
 </div>
@@ -1093,6 +1056,11 @@ Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
     <span class="o">}</span>
 <span class="o">}</span></code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p><strong>Immer</strong> ist eine JavaScript-Bibliothek, die das Arbeiten mit unveränderlichen (immutable) Zuständen vereinfacht.
+Mit Immer kannst du Zustände so bearbeiten, als ob sie veränderbar wären, indem du direkt Änderungen daran vornimmst.
+Intern sorgt Immer dafür, dass der ursprüngliche Zustand unverändert bleibt, indem es eine Kopie erstellt und nur diese aktualisiert.</p>
 </div>
 <div class="colist arabic">
 <table>
@@ -1209,7 +1177,7 @@ Es werden nur relevante Änderungen am Zustand übernommen</td>
     <span class="o">}</span>
 
     <span class="cm">/** map the "big" model to our "small" viewmodel */</span>
-    <span class="kd">protected</span> <span class="kd">abstract</span> <span class="no">T</span> <span class="nf">toViewModel</span><span class="o">(</span><span class="nc">Model</span> <span class="n">model</span><span class="o">);</span> <i class="conum" data-value="4"></i><b>(4)</b>
+    <span class="kd">protected</span> <span class="kd">abstract</span> <span class="no">T</span> <span class="nf">toViewModel</span><span class="o">(</span><span class="nc">Model</span> <span class="n">model</span><span class="o">);</span>
 <span class="o">}</span></code></pre>
 </div>
 </div>
@@ -1432,75 +1400,20 @@ Es werden nur relevante Änderungen am Zustand übernommen</td>
 </div>
 <div class="sect4">
 <h5 id="_example"><a class="anchor" href="#_example"></a>Example</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Im example befinden sich verschiedene Operatoren von RxJava</p>
+</li>
+</ul>
+</div>
 <details>
-<summary class="title">Details</summary>
+<summary class="title">map</summary>
 <div class="content">
 <div class="listingblock">
 <div class="title">RxJavaView.kt</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="kotlin"><span class="k">package</span> <span class="nn">at.htl.leonding.feature.example</span>
-
-<span class="k">import</span> <span class="nn">androidx.compose.foundation.layout.*</span>
-<span class="k">import</span> <span class="nn">androidx.compose.foundation.lazy.LazyColumn</span>
-<span class="k">import</span> <span class="nn">androidx.compose.foundation.lazy.items</span>
-<span class="k">import</span> <span class="nn">androidx.compose.material3.Button</span>
-<span class="k">import</span> <span class="nn">androidx.compose.material3.Text</span>
-<span class="k">import</span> <span class="nn">androidx.compose.runtime.Composable</span>
-<span class="k">import</span> <span class="nn">androidx.compose.runtime.mutableStateListOf</span>
-<span class="k">import</span> <span class="nn">androidx.compose.runtime.remember</span>
-<span class="k">import</span> <span class="nn">androidx.compose.ui.Modifier</span>
-<span class="k">import</span> <span class="nn">androidx.compose.ui.unit.dp</span>
-<span class="k">import</span> <span class="nn">io.reactivex.rxjava3.disposables.CompositeDisposable</span>
-<span class="k">import</span> <span class="nn">javax.inject.Inject</span>
-
-<span class="kd">class</span> <span class="nc">RxJavaView</span> <span class="nd">@Inject</span> <span class="k">constructor</span><span class="p">(</span><span class="k">private</span> <span class="kd">val</span> <span class="py">rxJavaViewModel</span><span class="p">:</span> <span class="nc">RxJavaViewModel</span><span class="p">)</span> <span class="p">{</span>
-
-    <span class="c1">// Initialize CompositeDisposable to manage subscriptions</span>
-    <span class="k">private</span> <span class="kd">val</span> <span class="py">compositeDisposable</span> <span class="p">=</span> <span class="nc">CompositeDisposable</span><span class="p">()</span>
-
-    <span class="nd">@Composable</span>
-    <span class="k">fun</span> <span class="nf">RxJavaDemoScreen</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kd">val</span> <span class="py">beforeResults</span> <span class="p">=</span> <span class="nf">remember</span> <span class="p">{</span> <span class="n">mutableStateListOf</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">&gt;()</span> <span class="p">}</span>
-        <span class="kd">val</span> <span class="py">afterResults</span> <span class="p">=</span> <span class="nf">remember</span> <span class="p">{</span> <span class="n">mutableStateListOf</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">&gt;()</span> <span class="p">}</span>
-
-        <span class="nc">LazyColumn</span><span class="p">(</span>
-            <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span>
-                <span class="p">.</span><span class="nf">fillMaxSize</span><span class="p">()</span>
-                <span class="p">.</span><span class="nf">padding</span><span class="p">(</span><span class="mi">16</span><span class="p">.</span><span class="n">dp</span><span class="p">),</span>
-            <span class="n">verticalArrangement</span> <span class="p">=</span> <span class="nc">Arrangement</span><span class="p">.</span><span class="nf">spacedBy</span><span class="p">(</span><span class="mi">8</span><span class="p">.</span><span class="n">dp</span><span class="p">)</span> <span class="c1">// Add spacing between items</span>
-        <span class="p">)</span> <span class="p">{</span>
-            <span class="c1">// Before Results Header</span>
-            <span class="nf">item</span> <span class="p">{</span>
-                <span class="nc">Text</span><span class="p">(</span><span class="s">"Before:"</span><span class="p">,</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">padding</span><span class="p">(</span><span class="n">bottom</span> <span class="p">=</span> <span class="mi">8</span><span class="p">.</span><span class="n">dp</span><span class="p">))</span>
-            <span class="p">}</span>
-
-            <span class="c1">// Before Results List</span>
-            <span class="nf">items</span><span class="p">(</span><span class="n">beforeResults</span><span class="p">)</span> <span class="p">{</span> <span class="n">item</span> <span class="p">-&gt;</span>
-                <span class="nc">Text</span><span class="p">(</span><span class="n">text</span> <span class="p">=</span> <span class="n">item</span><span class="p">)</span>
-            <span class="p">}</span>
-
-            <span class="c1">// After Results Header</span>
-            <span class="nf">item</span> <span class="p">{</span>
-                <span class="nc">Text</span><span class="p">(</span><span class="s">"After:"</span><span class="p">,</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">padding</span><span class="p">(</span><span class="n">bottom</span> <span class="p">=</span> <span class="mi">8</span><span class="p">.</span><span class="n">dp</span><span class="p">))</span>
-            <span class="p">}</span>
-
-            <span class="c1">// After Results List</span>
-            <span class="nf">items</span><span class="p">(</span><span class="n">afterResults</span><span class="p">)</span> <span class="p">{</span> <span class="n">item</span> <span class="p">-&gt;</span>
-                <span class="nc">Text</span><span class="p">(</span><span class="n">text</span> <span class="p">=</span> <span class="n">item</span><span class="p">)</span>
-            <span class="p">}</span>
-
-            <span class="c1">// Reset Button</span>
-            <span class="nf">item</span> <span class="p">{</span>
-                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
-                    <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
-                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Reset All"</span><span class="p">)</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-
-            <span class="c1">// Map Operator Button</span>
+<pre class="rouge highlight"><code data-lang="kotlin">            <span class="c1">// Map Operator Button</span>
             <span class="nf">item</span> <span class="p">{</span>
                 <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
                     <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
@@ -1513,173 +1426,19 @@ Es werden nur relevante Änderungen am Zustand übernommen</td>
                 <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
                     <span class="nc">Text</span><span class="p">(</span><span class="s">"Map Operator"</span><span class="p">)</span>
                 <span class="p">}</span>
-            <span class="p">}</span>
-
-            <span class="c1">// Filter Operator Button</span>
-            <span class="nf">item</span> <span class="p">{</span>
-                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="kd">val</span> <span class="py">originalValues</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">addAll</span><span class="p">(</span><span class="n">originalValues</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">()</span> <span class="p">})</span>
-                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getFilteredObservable</span><span class="p">()</span>
-                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">())</span> <span class="p">}</span>
-                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
-                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
-                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Filter Operator"</span><span class="p">)</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-
-            <span class="c1">// Zip Operator Button</span>
-            <span class="nf">item</span> <span class="p">{</span>
-                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="kd">val</span> <span class="py">observable1</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="s">"A"</span><span class="p">,</span> <span class="s">"B"</span><span class="p">,</span> <span class="s">"C"</span><span class="p">)</span>
-                    <span class="kd">val</span> <span class="py">observable2</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">addAll</span><span class="p">(</span><span class="n">observable1</span><span class="p">.</span><span class="nf">zip</span><span class="p">(</span><span class="n">observable2</span><span class="p">)</span> <span class="p">{</span> <span class="n">s</span><span class="p">,</span> <span class="n">i</span> <span class="p">-&gt;</span> <span class="s">"$s and $i"</span> <span class="p">})</span>
-                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getZippedObservable</span><span class="p">()</span>
-                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
-                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
-                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
-                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Zip Operator"</span><span class="p">)</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-
-            <span class="c1">// Interval Operator Button</span>
-            <span class="nf">item</span> <span class="p">{</span>
-                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s">"Generating interval values"</span><span class="p">)</span>
-                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getIntervalObservable</span><span class="p">()</span>
-                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">())</span> <span class="p">}</span>
-                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
-                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
-                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Interval Operator"</span><span class="p">)</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-
-            <span class="c1">// Take Operator Button</span>
-            <span class="nf">item</span> <span class="p">{</span>
-                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="kd">val</span> <span class="py">originalValues</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">addAll</span><span class="p">(</span><span class="n">originalValues</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">()</span> <span class="p">})</span>
-                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getTakeObservable</span><span class="p">()</span>
-                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">())</span> <span class="p">}</span>
-                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
-                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
-                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Take Operator"</span><span class="p">)</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-
-            <span class="c1">// Take + Filter Operator Button</span>
-            <span class="nf">item</span> <span class="p">{</span>
-                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="kd">val</span> <span class="py">originalValues</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">addAll</span><span class="p">(</span><span class="n">originalValues</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">()</span> <span class="p">})</span>
-                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getTakeFilteredObservable</span><span class="p">()</span>
-                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">())</span> <span class="p">}</span>
-                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
-                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
-                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Take + Filter Operator"</span><span class="p">)</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-
-            <span class="c1">// Change Operator Button</span>
-            <span class="nf">item</span> <span class="p">{</span>
-                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="kd">val</span> <span class="py">originalValues</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">addAll</span><span class="p">(</span><span class="n">originalValues</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">()</span> <span class="p">})</span>
-                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getChangedObservable</span><span class="p">()</span>
-                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">())</span> <span class="p">}</span>
-                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
-                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
-                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Change Operator"</span><span class="p">)</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre>
+            <span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">RxJavaViewModel.java</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">at.htl.leonding.feature.example</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">javax.inject.Inject</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.inject.Singleton</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">io.reactivex.rxjava3.core.Observable</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.concurrent.TimeUnit</span><span class="o">;</span>
-
-<span class="nd">@Singleton</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RxJavaViewModel</span> <span class="o">{</span>
-
-    <span class="nd">@Inject</span>
-    <span class="kd">public</span> <span class="nf">RxJavaViewModel</span><span class="o">()</span> <span class="o">{}</span>
-
-    <span class="c1">// Map Operator</span>
+<pre class="rouge highlight"><code data-lang="java">    <span class="c1">// Map Operator</span>
     <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="nf">getMappedObservable</span><span class="o">()</span> <span class="o">{</span>
         <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="s">"Apple"</span><span class="o">,</span> <span class="s">"Banana"</span><span class="o">,</span> <span class="s">"Cherry"</span><span class="o">)</span>
                 <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">String:</span><span class="o">:</span><span class="n">toUpperCase</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="c1">// Filter Operator</span>
-    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">getFilteredObservable</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
-                <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">number</span> <span class="o">-&gt;</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="c1">// Zip Operator</span>
-    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="nf">getZippedObservable</span><span class="o">()</span> <span class="o">{</span>
-        <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">observable1</span> <span class="o">=</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="s">"A"</span><span class="o">,</span> <span class="s">"B"</span><span class="o">,</span> <span class="s">"C"</span><span class="o">);</span>
-        <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">observable2</span> <span class="o">=</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
-        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">zip</span><span class="o">(</span><span class="n">observable1</span><span class="o">,</span> <span class="n">observable2</span><span class="o">,</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">i</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">s</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="c1">// Interval Operator</span>
-    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">Long</span><span class="o">&gt;</span> <span class="nf">getIntervalObservable</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">interval</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="nc">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">)</span>
-                <span class="o">.</span><span class="na">take</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="c1">// Take Operator</span>
-    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">getTakeObservable</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">)</span>
-                <span class="o">.</span><span class="na">take</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="c1">// Take + Filter Operator</span>
-    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">getTakeFilteredObservable</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">6</span><span class="o">,</span> <span class="mi">7</span><span class="o">,</span> <span class="mi">8</span><span class="o">,</span> <span class="mi">9</span><span class="o">,</span> <span class="mi">10</span><span class="o">)</span>
-                <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">number</span> <span class="o">-&gt;</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span>
-                <span class="o">.</span><span class="na">take</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="c1">// Change Operator (map)</span>
-    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">getChangedObservable</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
-                <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">number</span> <span class="o">-&gt;</span> <span class="n">number</span> <span class="o">*</span> <span class="mi">10</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
+    <span class="o">}</span></code></pre>
 </div>
 </div>
-</div>
-</details>
-</div>
-<div class="sect4">
-<h5 id="_alle_rx_methoden"><a class="anchor" href="#_alle_rx_methoden"></a>Alle rx-Methoden:</h5>
-<details>
-<summary class="title">map</summary>
-<div class="content">
 <div class="imageblock">
 <div class="content">
 <img src="images/map.png" alt="map">
@@ -1697,6 +1456,35 @@ Es werden nur relevante Änderungen am Zustand übernommen</td>
 <details>
 <summary class="title">filter</summary>
 <div class="content">
+<div class="listingblock">
+<div class="title">RxJavaView.kt</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="kotlin">            <span class="c1">// Filter Operator Button</span>
+            <span class="nf">item</span> <span class="p">{</span>
+                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
+                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+                    <span class="kd">val</span> <span class="py">originalValues</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">addAll</span><span class="p">(</span><span class="n">originalValues</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">()</span> <span class="p">})</span>
+                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getFilteredObservable</span><span class="p">()</span>
+                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">())</span> <span class="p">}</span>
+                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
+                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
+                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Filter Operator"</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">RxJavaViewModel.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="c1">// Filter Operator</span>
+    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">getFilteredObservable</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">number</span> <span class="o">-&gt;</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="images/filter.png" alt="filter">
@@ -1714,6 +1502,37 @@ Es werden nur relevante Änderungen am Zustand übernommen</td>
 <details>
 <summary class="title">zip</summary>
 <div class="content">
+<div class="listingblock">
+<div class="title">RxJavaView.kt</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="kotlin">            <span class="c1">// Zip Operator Button</span>
+            <span class="nf">item</span> <span class="p">{</span>
+                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
+                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+                    <span class="kd">val</span> <span class="py">observable1</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="s">"A"</span><span class="p">,</span> <span class="s">"B"</span><span class="p">,</span> <span class="s">"C"</span><span class="p">)</span>
+                    <span class="kd">val</span> <span class="py">observable2</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">addAll</span><span class="p">(</span><span class="n">observable1</span><span class="p">.</span><span class="nf">zip</span><span class="p">(</span><span class="n">observable2</span><span class="p">)</span> <span class="p">{</span> <span class="n">s</span><span class="p">,</span> <span class="n">i</span> <span class="p">-&gt;</span> <span class="s">"$s and $i"</span> <span class="p">})</span>
+                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getZippedObservable</span><span class="p">()</span>
+                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
+                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
+                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
+                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Zip Operator"</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">RxJavaViewModel.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="c1">// Zip Operator</span>
+    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="nf">getZippedObservable</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">observable1</span> <span class="o">=</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="s">"A"</span><span class="o">,</span> <span class="s">"B"</span><span class="o">,</span> <span class="s">"C"</span><span class="o">);</span>
+        <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">observable2</span> <span class="o">=</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">zip</span><span class="o">(</span><span class="n">observable1</span><span class="o">,</span> <span class="n">observable2</span><span class="o">,</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">i</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">s</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="images/zip.png" alt="zip">
@@ -1731,6 +1550,34 @@ Es werden nur relevante Änderungen am Zustand übernommen</td>
 <details>
 <summary class="title">interval</summary>
 <div class="content">
+<div class="listingblock">
+<div class="title">RxJavaView.kt</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="kotlin">            <span class="c1">// Interval Operator Button</span>
+            <span class="nf">item</span> <span class="p">{</span>
+                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
+                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s">"Generating interval values"</span><span class="p">)</span>
+                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getIntervalObservable</span><span class="p">()</span>
+                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">())</span> <span class="p">}</span>
+                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
+                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
+                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Interval Operator"</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">RxJavaViewModel.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="c1">// Interval Operator</span>
+    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">Long</span><span class="o">&gt;</span> <span class="nf">getIntervalObservable</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">interval</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="nc">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">take</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="images/interval.png" alt="interval">
@@ -1748,6 +1595,35 @@ Es werden nur relevante Änderungen am Zustand übernommen</td>
 <details>
 <summary class="title">take</summary>
 <div class="content">
+<div class="listingblock">
+<div class="title">RxJavaView.kt</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="kotlin">            <span class="c1">// Take Operator Button</span>
+            <span class="nf">item</span> <span class="p">{</span>
+                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
+                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+                    <span class="kd">val</span> <span class="py">originalValues</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">addAll</span><span class="p">(</span><span class="n">originalValues</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">()</span> <span class="p">})</span>
+                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getTakeObservable</span><span class="p">()</span>
+                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">())</span> <span class="p">}</span>
+                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
+                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
+                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Take Operator"</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">RxJavaViewModel.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="c1">// Take Operator</span>
+    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">getTakeObservable</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">take</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="images/take.png" alt="take">
@@ -2104,53 +1980,28 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 </li>
 </ul>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="images/viewmodel.png" alt="viewmodel">
+</div>
+</div>
 </div>
 <div class="sect4">
 <h5 id="_example_2"><a class="anchor" href="#_example_2"></a>example</h5>
-<div class="listingblock">
-<div class="title">example.component.html</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Im example befinden sich verschiedene Operatoren von RxJs</p>
+</li>
+</ul>
+</div>
+<details>
+<summary class="title">map</summary>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="o">&lt;</span><span class="nx">div</span> <span class="kd">class</span><span class="o">=</span><span class="dl">"</span><span class="s2">container</span><span class="dl">"</span><span class="o">&gt;</span>
-  <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">RxJS</span> <span class="nx">Operators</span> <span class="nx">Demonstration</span><span class="o">&lt;</span><span class="sr">/h2</span><span class="err">&gt;
-</span>
-  <span class="c">&lt;!--</span> <span class="nx">Button</span> <span class="k">for</span> <span class="nx">each</span> <span class="kd">function</span> <span class="o">--&gt;</span>
-  <span class="o">&lt;</span><span class="nf">button </span><span class="p">(</span><span class="nx">click</span><span class="p">)</span><span class="o">=</span><span class="dl">"</span><span class="s2">demonstrateMap()</span><span class="dl">"</span><span class="o">&gt;</span><span class="nx">map</span><span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="nf">button </span><span class="p">(</span><span class="nx">click</span><span class="p">)</span><span class="o">=</span><span class="dl">"</span><span class="s2">demonstrateFilter()</span><span class="dl">"</span><span class="o">&gt;</span><span class="nx">filter</span><span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="nf">button </span><span class="p">(</span><span class="nx">click</span><span class="p">)</span><span class="o">=</span><span class="dl">"</span><span class="s2">demonstrateConcatMap()</span><span class="dl">"</span><span class="o">&gt;</span><span class="nx">concatMap</span><span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="nf">button </span><span class="p">(</span><span class="nx">click</span><span class="p">)</span><span class="o">=</span><span class="dl">"</span><span class="s2">demonstrateTake()</span><span class="dl">"</span><span class="o">&gt;</span><span class="nx">take</span><span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="nf">button </span><span class="p">(</span><span class="nx">click</span><span class="p">)</span><span class="o">=</span><span class="dl">"</span><span class="s2">demonstrateFirst()</span><span class="dl">"</span><span class="o">&gt;</span><span class="nx">first</span><span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
-</span>  <span class="o">&lt;</span><span class="nf">button </span><span class="p">(</span><span class="nx">click</span><span class="p">)</span><span class="o">=</span><span class="dl">"</span><span class="s2">demonstrateLast()</span><span class="dl">"</span><span class="o">&gt;</span><span class="nx">last</span><span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
-</span>
-  <span class="o">&lt;</span><span class="nx">div</span> <span class="kd">class</span><span class="o">=</span><span class="dl">"</span><span class="s2">output</span><span class="dl">"</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;&lt;</span><span class="nx">strong</span><span class="o">&gt;</span><span class="nx">Aktuelle</span> <span class="nx">Methode</span><span class="p">:</span><span class="o">&lt;</span><span class="sr">/strong&gt; {{ currentMethod }}&lt;/</span><span class="nx">p</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;&lt;</span><span class="nx">strong</span><span class="o">&gt;</span><span class="nx">Verwendete</span> <span class="nx">Parameter</span><span class="p">:</span><span class="o">&lt;</span><span class="sr">/strong&gt; {{ currentParameters }}&lt;/</span><span class="nx">p</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;&lt;</span><span class="nx">strong</span><span class="o">&gt;</span><span class="nx">Before</span><span class="p">:</span><span class="o">&lt;</span><span class="sr">/strong&gt; {{ before }}&lt;/</span><span class="nx">p</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;&lt;</span><span class="nx">strong</span><span class="o">&gt;</span><span class="nx">After</span><span class="p">:</span><span class="o">&lt;</span><span class="sr">/strong&gt; {{ after }}&lt;/</span><span class="nx">p</span><span class="o">&gt;</span>
-  <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
-</span><span class="o">&lt;</span><span class="sr">/div&gt;</span></code></pre>
-</div>
-</div>
 <div class="listingblock">
 <div class="title">example.component.ts</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">Component</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">map</span><span class="p">,</span> <span class="nx">filter</span><span class="p">,</span> <span class="nx">debounceTime</span><span class="p">,</span> <span class="nx">mergeMap</span><span class="p">,</span> <span class="nx">switchMap</span><span class="p">,</span> <span class="nx">take</span><span class="p">,</span> <span class="nx">concatMap</span><span class="p">,</span> <span class="nx">first</span><span class="p">,</span> <span class="nx">last</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">rxjs/operators</span><span class="dl">'</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">Observable</span><span class="p">,</span> <span class="k">of</span><span class="p">,</span> <span class="nx">Subject</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">rxjs</span><span class="dl">'</span><span class="p">;</span>
-
-<span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
-  <span class="na">selector</span><span class="p">:</span> <span class="dl">'</span><span class="s1">app-example</span><span class="dl">'</span><span class="p">,</span>
-  <span class="na">standalone</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-  <span class="na">imports</span><span class="p">:</span> <span class="p">[],</span>
-  <span class="na">templateUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./example.component.html</span><span class="dl">'</span><span class="p">,</span>
-  <span class="na">styleUrls</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">./example.component.css</span><span class="dl">'</span><span class="p">]</span>
-<span class="p">})</span>
-<span class="k">export</span> <span class="kd">class</span> <span class="nc">ExampleComponent</span> <span class="p">{</span>
-  <span class="nl">before</span><span class="p">:</span> <span class="kr">string</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
-  <span class="nl">after</span><span class="p">:</span> <span class="kr">string</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
-  <span class="nl">currentMethod</span><span class="p">:</span> <span class="kr">string</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
-  <span class="nl">currentParameters</span><span class="p">:</span> <span class="kr">string</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
-
-  <span class="nf">demonstrateMap</span><span class="p">()</span> <span class="p">{</span>
+<pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateMap</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">map</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">value =&gt; value * 2</span><span class="dl">'</span><span class="p">;</span>
     <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
@@ -2161,9 +2012,23 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 
     <span class="k">this</span><span class="p">.</span><span class="nx">before</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Vorher: [1, 2, 3, 4, 5]</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">after</span> <span class="o">=</span> <span class="s2">`Nachher: [</span><span class="p">${</span><span class="nx">results</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="p">)}</span><span class="s2">]`</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="nf">demonstrateFilter</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/map.png" alt="map">
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">filter</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">example.component.ts</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateFilter</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">filter</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">value =&gt; value % 2 === 0</span><span class="dl">'</span><span class="p">;</span>
     <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
@@ -2174,8 +2039,23 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 
     <span class="k">this</span><span class="p">.</span><span class="nx">before</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Vorher: [1, 2, 3, 4, 5]</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">after</span> <span class="o">=</span> <span class="s2">`Nachher: [</span><span class="p">${</span><span class="nx">results</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="p">)}</span><span class="s2">]`</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="nf">demonstrateTake</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/filter.png" alt="filter">
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">take</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">example.component.ts</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateTake</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">take</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">3</span><span class="dl">'</span><span class="p">;</span>
     <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
@@ -2186,8 +2066,23 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 
     <span class="k">this</span><span class="p">.</span><span class="nx">before</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Vorher: [1, 2, 3, 4, 5]</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">after</span> <span class="o">=</span> <span class="s2">`Nachher: [</span><span class="p">${</span><span class="nx">results</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="p">)}</span><span class="s2">]`</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="nf">demonstrateConcatMap</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/take.png" alt="take">
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">concatMap</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">example.component.ts</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateConcatMap</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">concatMap</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">value =&gt; of(`${value}1`, `${value}2`)</span><span class="dl">'</span><span class="p">;</span>
     <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="dl">'</span><span class="s1">A</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">B</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">C</span><span class="dl">'</span><span class="p">);</span>
@@ -2198,51 +2093,9 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 
     <span class="k">this</span><span class="p">.</span><span class="nx">before</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Vorher: [A, B, C]</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">after</span> <span class="o">=</span> <span class="s2">`Nachher: [</span><span class="p">${</span><span class="nx">results</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="p">)}</span><span class="s2">]`</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="nf">demonstrateFirst</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">first</span><span class="dl">'</span><span class="p">;</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Kein Parameter</span><span class="dl">'</span><span class="p">;</span>
-    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
-    <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
-      <span class="nf">first</span><span class="p">()</span>
-    <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
-
-    <span class="k">this</span><span class="p">.</span><span class="nx">before</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Vorher: [1, 2, 3, 4, 5]</span><span class="dl">'</span><span class="p">;</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">after</span> <span class="o">=</span> <span class="s2">`Nachher: [</span><span class="p">${</span><span class="nx">results</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="p">)}</span><span class="s2">]`</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="nf">demonstrateLast</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">last</span><span class="dl">'</span><span class="p">;</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Kein Parameter</span><span class="dl">'</span><span class="p">;</span>
-    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
-    <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
-      <span class="nf">last</span><span class="p">()</span>
-    <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
-
-    <span class="k">this</span><span class="p">.</span><span class="nx">before</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Vorher: [1, 2, 3, 4, 5]</span><span class="dl">'</span><span class="p">;</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">after</span> <span class="o">=</span> <span class="s2">`Nachher: [</span><span class="p">${</span><span class="nx">results</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="p">)}</span><span class="s2">]`</span><span class="p">;</span>
-  <span class="p">}</span>
-
-<span class="p">}</span></code></pre>
+  <span class="p">}</span></code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-für die Erklärung für filter, map und take siehe Abschnitt 5.3.3. Feature / Alle rx-Methoden
-</td>
-</tr>
-</table>
-</div>
-<details>
-<summary class="title">concatMap</summary>
-<div class="content">
 <div class="imageblock">
 <div class="content">
 <img src="images/concat.png" alt="concat">
@@ -2260,13 +2113,170 @@ für die Erklärung für filter, map und take siehe Abschnitt 5.3.3. Feature / A
 </div>
 </div>
 </details>
+<details>
+<summary class="title">first</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">example.component.ts</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateFirst</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">first</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Kein Parameter</span><span class="dl">'</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+      <span class="nf">first</span><span class="p">()</span>
+    <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">before</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Vorher: [1, 2, 3, 4, 5]</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">after</span> <span class="o">=</span> <span class="s2">`Nachher: [</span><span class="p">${</span><span class="nx">results</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="p">)}</span><span class="s2">]`</span><span class="p">;</span>
+  <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/first.png" alt="first">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>holt sich den ersten Wert der Observable</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">last</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">example.component.ts</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateLast</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">last</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Kein Parameter</span><span class="dl">'</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+      <span class="nf">last</span><span class="p">()</span>
+    <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">before</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Vorher: [1, 2, 3, 4, 5]</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">after</span> <span class="o">=</span> <span class="s2">`Nachher: [</span><span class="p">${</span><span class="nx">results</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="p">)}</span><span class="s2">]`</span><span class="p">;</span>
+  <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/last.png" alt="last">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>holt sich den letzten Wert der Observable</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_quelle"><a class="anchor" href="#_quelle"></a>7. Quelle</h2>
+<h2 id="_glossar"><a class="anchor" href="#_glossar"></a>7. Glossar</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>ReactiveX (Rx): API für asynchrone und eventbasierte Programmierung mit Observables, das Pull- und Push-Prinzipien kombiniert.</p>
+</li>
+<li>
+<p>Asynchron: Arbeitsweise, bei der Prozesse nicht blockiert werden und parallel laufen können, z. B. bei HTTP-Requests.</p>
+</li>
+<li>
+<p>Observable: Datenquelle, die asynchrone Datenströme bereitstellt und Werte/Ereignisse an Observer sendet.</p>
+</li>
+<li>
+<p>Observer (Subscriber): Konsument eines Observables, der auf gesendete Werte (next), Fehler (error) oder den Abschluss (complete) reagiert.</p>
+</li>
+<li>
+<p>Pull-Verfahren: Observer entscheidet, ob er sich bei einem Observable registriert.</p>
+</li>
+<li>
+<p>Push-Verfahren: Observable sendet Daten aktiv an registrierte Observer.</p>
+</li>
+<li>
+<p>BehaviorSubject: RxJava-Subjekt, das den letzten und zukünftige Werte an Observer sendet.</p>
+</li>
+<li>
+<p>PublishSubject: RxJava-Subjekt, das nur zukünftige Werte an Observer sendet.</p>
+</li>
+<li>
+<p>MVVM (Model-View-ViewModel): Architektur, die Daten (Model), Logik (ViewModel) und Darstellung (View) trennt.</p>
+</li>
+<li>
+<p>Drei Prinzipien (Redux)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Single Source of Truth: Der Zustand der Anwendung wird zentral gespeichert.</p>
+</li>
+<li>
+<p>State is Read-Only: Änderungen am Zustand erfolgen nur durch Actions.</p>
+</li>
+<li>
+<p>Changes are Made with Pure Functions: Änderungen haben keine Seiteneffekte haben und werden durch Parameter bestimmt</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Immer: Bibliothek für unveränderlichen Zustand</p>
+</li>
+<li>
+<p>Rx-Operatoren:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>map: Transformiert jedes Element eines Observables basierend auf einer Funktion.
+Beispiel: Zahlen verdoppeln.</p>
+</li>
+<li>
+<p>filter: Filtert Elemente basierend auf einer Bedingung.
+Beispiel: Nur gerade Zahlen durchlassen.</p>
+</li>
+<li>
+<p>take: Nimmt nur eine bestimmte Anzahl von Elementen aus dem Stream.</p>
+</li>
+<li>
+<p>zip: Kombiniert mehrere Observables zu einem Stream von Paaren.
+Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
+</li>
+<li>
+<p>interval: Erzeugt fortlaufende Werte in einem festen Zeitintervall.</p>
+</li>
+<li>
+<p>concatMap: Führt asynchrone Operationen hintereinander aus.</p>
+</li>
+<li>
+<p>first: Gibt das erste Element eines Streams zurück.</p>
+</li>
+<li>
+<p>last: Gibt das letzte Element eines Streams zurück.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quelle"><a class="anchor" href="#_quelle"></a>8. Quelle</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -2299,7 +2309,7 @@ für die Erklärung für filter, map und take siehe Abschnitt 5.3.3. Feature / A
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-12 23:06:59 UTC
+Last updated 2025-01-13 08:57:56 UTC
 </div>
 </div>
 </body>
