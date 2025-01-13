@@ -2317,6 +2317,74 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 </div>
 </div>
 </details>
+<details>
+<summary class="title">max</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">example.component.ts</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateMax</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">max</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Kein Parameter</span><span class="dl">'</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+      <span class="nf">max</span><span class="p">()</span>
+    <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">before</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Vorher: [42, -1, 3]</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">after</span> <span class="o">=</span> <span class="s2">`Nachher: [</span><span class="p">${</span><span class="nx">results</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="p">)}</span><span class="s2">]`</span><span class="p">;</span>
+  <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/max.png" alt="max">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Sucht die maximale Zahl im Observable</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">find</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">example.component.ts</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateFind</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">find</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">value =&gt; value % 5 === 0</span><span class="dl">'</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+      <span class="nf">find</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">value</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="o">!</span><span class="p">));</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">before</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Vorher: [3, 9, 15, 20]</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">after</span> <span class="o">=</span> <span class="s2">`Nachher: [</span><span class="p">${</span><span class="nx">results</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="p">)}</span><span class="s2">]`</span><span class="p">;</span>
+  <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/find.png" alt="find">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Gibt das erste Element zurück, das eine bestimmte Bedingung erfüllt.</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
 </div>
 </div>
 </div>
@@ -2416,6 +2484,12 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 <li>
 <p>pairwise: Gibt die letzten zwei aufeinanderfolgenden Werte als Paare aus.</p>
 </li>
+<li>
+<p>max: Gibt den größten Wert aus einem Stream zurück.</p>
+</li>
+<li>
+<p>find: Gibt das erste Element zurück, das eine bestimmte Bedingung erfüllt.</p>
+</li>
 </ul>
 </div>
 </li>
@@ -2457,7 +2531,7 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-13 11:08:54 UTC
+Last updated 2025-01-13 11:30:57 UTC
 </div>
 </div>
 </body>
