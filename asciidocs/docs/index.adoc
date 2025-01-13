@@ -14,7 +14,7 @@ ifndef::backend[:backend: html5]
 
 ReactiveX (Reactive Extensions) ist eine API für asynchrone und eventbasierte Programmierung mithilfe von **Observables**.
 Das Hauptproblem, das ReactiveX löst, ist der Umgang mit asynchronen Datenströmen durch die Kombination von Pull- und
-Push-Verfahren, um eine verständliche, flexible und fehlerresistente Verarbeitung zu ermöglichen.
+Push-Verfahren.
 
 === Asynchron
 
