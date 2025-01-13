@@ -238,8 +238,15 @@ Intern sorgt Immer dafür, dass der ursprüngliche Zustand unverändert bleibt, 
 
 <.> die Objekte werden in JSON umwandelt und zurück
 <.> führt die Aufgaben im Main-Thread aus
-<.> die Methode produce(...) sorgt dafür, dass die Änderungen sicher und kontrolliert vorgenommen wird.
-Es werden nur relevante Änderungen am Zustand übernommen
+<.> die Methode produce(...) sorgt dafür, dass:
+1. Der aktuelle Zustand aus dem `pipe` (`BehaviorSubject`) **tief kopiert** wird
+2. Die übergebene **Änderungsfunktion (`recipe`)** auf diesen **Klon** angewendet wird, um gezielt Änderungen vorzunehmen.
+3. Der **alte** und der **neue Zustand** werden **verglichen**:
+* Falls sich der Zustand **geändert** hat, wird der neue Zustand über den **`resultConsumer`** (meist `pipe.onNext`) weitergegeben.
+* Falls **keine Änderung** erfolgt, wird eine Warnung (`"produce() without change"`) im Log ausgegeben.
+
+.produce()
+image::produce.png[]
 
 .Behavior Subject
 image::behavior-subject.png[]
