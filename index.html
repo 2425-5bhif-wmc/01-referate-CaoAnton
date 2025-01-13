@@ -1075,16 +1075,44 @@ Intern sorgt Immer dafür, dass der ursprüngliche Zustand unverändert bleibt, 
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>die Methode produce(&#8230;&#8203;) sorgt dafür, dass die Änderungen sicher und kontrolliert vorgenommen wird.
-Es werden nur relevante Änderungen am Zustand übernommen</td>
+<td>die Methode produce(&#8230;&#8203;) sorgt dafür, dass:
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Der aktuelle Zustand aus dem <code>pipe</code> (<code>BehaviorSubject</code>) <strong>tief kopiert</strong> wird</p>
+</li>
+<li>
+<p>Die übergebene <strong>Änderungsfunktion (<code>recipe</code>)</strong> auf diesen <strong>Klon</strong> angewendet wird, um gezielt Änderungen vorzunehmen.</p>
+</li>
+<li>
+<p>Der <strong>alte</strong> und der <strong>neue Zustand</strong> werden <strong>verglichen</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Falls sich der Zustand <strong>geändert</strong> hat, wird der neue Zustand über den <strong><code>resultConsumer</code></strong> (meist <code>pipe.onNext</code>) weitergegeben.</p>
+</li>
+<li>
+<p>Falls <strong>keine Änderung</strong> erfolgt, wird eine Warnung (<code>"produce() without change"</code>) im Log ausgegeben.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div></td>
 </tr>
 </table>
 </div>
 <div class="imageblock">
 <div class="content">
+<img src="images/produce.png" alt="produce">
+</div>
+<div class="title">Figure 1. produce()</div>
+</div>
+<div class="imageblock">
+<div class="content">
 <img src="images/behavior-subject.png" alt="behavior subject">
 </div>
-<div class="title">Figure 1. Behavior Subject</div>
+<div class="title">Figure 2. Behavior Subject</div>
 </div>
 </div>
 </details>
@@ -1228,7 +1256,7 @@ Es werden nur relevante Änderungen am Zustand übernommen</td>
 <div class="content">
 <img src="images/viewmodel.png" alt="viewmodel">
 </div>
-<div class="title">Figure 2. Ablauf</div>
+<div class="title">Figure 3. Ablauf</div>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1239,7 +1267,7 @@ Es werden nur relevante Änderungen am Zustand übernommen</td>
 <div class="content">
 <img src="images/publish-subject.png" alt="publish subject">
 </div>
-<div class="title">Figure 3. BehaviorSubject vs. PublishSubject</div>
+<div class="title">Figure 4. BehaviorSubject vs. PublishSubject</div>
 </div>
 </div>
 </details>
@@ -2541,7 +2569,7 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-13 21:46:44 UTC
+Last updated 2025-01-13 23:17:55 UTC
 </div>
 </div>
 </body>
