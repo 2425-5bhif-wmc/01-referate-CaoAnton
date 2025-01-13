@@ -15,6 +15,7 @@ export class ExampleComponent {
   currentMethod: string = '';
   currentParameters: string = '';
 
+  // tag::angular-map[]
   demonstrateMap() {
     this.currentMethod = 'map';
     this.currentParameters = 'value => value * 2';
@@ -27,7 +28,9 @@ export class ExampleComponent {
     this.before = 'Vorher: [1, 2, 3, 4, 5]';
     this.after = `Nachher: [${results.join(', ')}]`;
   }
+  // end::angular-map[]
 
+  // tag::angular-filter[]
   demonstrateFilter() {
     this.currentMethod = 'filter';
     this.currentParameters = 'value => value % 2 === 0';
@@ -40,6 +43,9 @@ export class ExampleComponent {
     this.before = 'Vorher: [1, 2, 3, 4, 5]';
     this.after = `Nachher: [${results.join(', ')}]`;
   }
+  // end::angular-filter[]
+
+  // tag::angular-take[]
   demonstrateTake() {
     this.currentMethod = 'take';
     this.currentParameters = '3';
@@ -52,6 +58,9 @@ export class ExampleComponent {
     this.before = 'Vorher: [1, 2, 3, 4, 5]';
     this.after = `Nachher: [${results.join(', ')}]`;
   }
+  // end::angular-take[]
+
+  // tag::angular-concat[]
   demonstrateConcatMap() {
     this.currentMethod = 'concatMap';
     this.currentParameters = 'value => of(`${value}1`, `${value}2`)';
@@ -64,7 +73,9 @@ export class ExampleComponent {
     this.before = 'Vorher: [A, B, C]';
     this.after = `Nachher: [${results.join(', ')}]`;
   }
+  // end::angular-concat[]
 
+  // tag::angular-first[]
   demonstrateFirst() {
     this.currentMethod = 'first';
     this.currentParameters = 'Kein Parameter';
@@ -77,6 +88,9 @@ export class ExampleComponent {
     this.before = 'Vorher: [1, 2, 3, 4, 5]';
     this.after = `Nachher: [${results.join(', ')}]`;
   }
+  // end::angular-first[]
+
+  // tag::angular-last[]
   demonstrateLast() {
     this.currentMethod = 'last';
     this.currentParameters = 'Kein Parameter';
@@ -89,5 +103,6 @@ export class ExampleComponent {
     this.before = 'Vorher: [1, 2, 3, 4, 5]';
     this.after = `Nachher: [${results.join(', ')}]`;
   }
+  // end::angular-last[]
 
 }

@@ -12,11 +12,9 @@ ifndef::backend[:backend: html5]
 
 == ReactiveX
 
-include::../../android-mvvm/app/src/main/java/at/htl/leonding/util/immer/Immer.java[]
-
-
 ReactiveX (Reactive Extensions) ist eine API für asynchrone und eventbasierte Programmierung mithilfe von **Observables**.
-Das Hauptproblem, das ReactiveX löst, ist der Umgang mit asynchronen Datenströmen in einer verständlichen, flexiblen und fehlerresistenten Weise.
+Das Hauptproblem, das ReactiveX löst, ist der Umgang mit asynchronen Datenströmen durch die Kombination von Pull- und
+Push-Verfahren, um eine verständliche, flexible und fehlerresistente Verarbeitung zu ermöglichen.
 
 === Asynchron
 
@@ -45,6 +43,16 @@ Eigenschaften des Observers:
 - **next:** Sendet Daten.
 - **error:** Signalisiert einen Fehler.
 - **complete:** Signalisiert das Ende des Streams.
+
+==== Pull- und Push-Verfahren im Zusammenhang mit Observables
+
+ReactiveX kombiniert Pull- und Push-Prinzipien:
+
+- **Pull:** Ein Observer (Subscriber) entscheidet, ob er sich für ein Observable registrieren möchte.
+Dadurch hat der Konsument die Kontrolle darüber, welche Datenquellen ihn interessieren.
+- **Push:** Sobald ein Observer sich registriert hat, sendet das Observable Daten (Events) aktiv an den Observer,
+ohne dass der Observer diese explizit anfordern muss.
+
 
 Beispiel:
 
@@ -183,11 +191,12 @@ https://redux.js.org/understanding/thinking-in-redux/three-principles[Three Prin
 ==== State is Read-Only
 
 * Der Zustand kann nicht direkt geändert werden. Änderungen erfolgen nur durch das Auslösen von Actions.
+* Actions beschreiben, **was geändert werden soll**, ohne die Details der Implementierung zu enthalten.
 
 ==== Changes are Made with Pure Functions
 
-* hat keine Seiteneffekte
-* der Funktionswert bestimmt sich nur durch die Parameter
+* hat keine Seiteneffekte -> greift nicht auf externe Ressourcen (z. B. Datenbanken) zu und hat keine unerwarteten Auswirkungen.
+* der Funktionswert bestimmt sich nur durch die Parameter -> Sie gibt immer denselben Rückgabewert für dieselben Eingabewerte zurück.
 
 === Projekt
 
@@ -221,6 +230,10 @@ image::deep-copy.jpg[]
 ----
 include::../../android-mvvm/app/src/main/java/at/htl/leonding/util/immer/Immer.java[]
 ----
+
+**Immer** ist eine JavaScript-Bibliothek, die das Arbeiten mit unveränderlichen (immutable) Zuständen vereinfacht.
+Mit Immer kannst du Zustände so bearbeiten, als ob sie veränderbar wären, indem du direkt Änderungen daran vornimmst.
+Intern sorgt Immer dafür, dass der ursprüngliche Zustand unverändert bleibt, indem es eine Kopie erstellt und nur diese aktualisiert.
 
 <.> die Objekte werden in JSON umwandelt und zurück
 <.> führt die Aufgaben im Main-Thread aus
@@ -336,27 +349,24 @@ image::android-project-feature.png[]
 
 ===== Example
 
+* Im example befinden sich verschiedene Operatoren von RxJava
+
+.map
 [%collapsible]
 ====
 
 .RxJavaView.kt
 [source, kotlin]
 ----
-include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaView.kt[]
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaView.kt[tag=android-map]
 ----
 
 .RxJavaViewModel.java
 [source, java]
 ----
-include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaViewModel.java[]
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaViewModel.java[tag=android-map-java]
 ----
-====
 
-===== Alle rx-Methoden:
-
-.map
-[%collapsible]
-====
 image::map.png[]
 * transformiert jedes Element der Observable nach einer angegebenen Funktion
 ====
@@ -365,6 +375,19 @@ image::map.png[]
 .filter
 [%collapsible]
 ====
+
+.RxJavaView.kt
+[source, kotlin]
+----
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaView.kt[tag=android-filter]
+----
+
+.RxJavaViewModel.java
+[source, java]
+----
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaViewModel.java[tag=android-filter-java]
+----
+
 image::filter.png[]
 * filtert die Elemente einer Observable basierend auf einer Bedingung
 ====
@@ -373,6 +396,19 @@ image::filter.png[]
 .zip
 [%collapsible]
 ====
+
+.RxJavaView.kt
+[source, kotlin]
+----
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaView.kt[tag=android-zip]
+----
+
+.RxJavaViewModel.java
+[source, java]
+----
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaViewModel.java[tag=android-zip-java]
+----
+
 image::zip.png[]
 * kombiniert mehrere Observables und erstellt neue Paare von Elementen
 ====
@@ -381,6 +417,19 @@ image::zip.png[]
 .interval
 [%collapsible]
 ====
+
+.RxJavaView.kt
+[source, kotlin]
+----
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaView.kt[tag=android-interval]
+----
+
+.RxJavaViewModel.java
+[source, java]
+----
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaViewModel.java[tag=android-interval-java]
+----
+
 image::interval.png[]
 * erzeugt fortlaufende Werte in einem festen Zeitintervall
 ====
@@ -388,6 +437,19 @@ image::interval.png[]
 .take
 [%collapsible]
 ====
+
+.RxJavaView.kt
+[source, kotlin]
+----
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaView.kt[tag=android-take]
+----
+
+.RxJavaViewModel.java
+[source, java]
+----
+include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaViewModel.java[tag=android-take-java]
+----
+
 image::take.png[]
 * nimmt nur eine bestimmte Anzahl von Elementen
 ====
@@ -500,29 +562,116 @@ include::../../rxjs-demo/src/app/components/todo/todo.component.ts[]
 
 * holt sich wie beim vorherigen `Android-Beispiel` die todos
 
+
+image::viewmodel.png[]
+
 ===== example
 
-.example.component.html
-[source, typescript]
-----
-include::../../rxjs-demo/src/app/components/example/example.component.html[]
-----
+* Im example befinden sich verschiedene Operatoren von RxJs
 
+.map
+[%collapsible]
+====
 .example.component.ts
 [source, typescript]
 ----
-include::../../rxjs-demo/src/app/components/example/example.component.ts[]
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-map]
+----
+image::map.png[]
+====
+
+.filter
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-filter]
+----
+image::filter.png[]
+====
+
+.take
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-take]
 ----
 
-NOTE: für die Erklärung für filter, map und take siehe Abschnitt 5.3.3. Feature / Alle rx-Methoden
+image::take.png[]
+====
 
 .concatMap
 [%collapsible]
 ====
+
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-concat]
+----
+
 image::concat.png[]
 * concatMap verarbeitet jeden Wert nacheinander.
 * Für jeden Wert von ['A', 'B', 'C'] wird ein neues Observable mit zwei Werten nacheinander erzeugt (A1, A2).
 ====
+
+.first
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-first]
+----
+
+image::first.png[]
+* holt sich den ersten Wert der Observable
+====
+
+.last
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-last]
+----
+
+image::last.png[]
+* holt sich den letzten Wert der Observable
+====
+
+== Glossar
+
+* ReactiveX (Rx): API für asynchrone und eventbasierte Programmierung mit Observables, das Pull- und Push-Prinzipien kombiniert.
+* Asynchron: Arbeitsweise, bei der Prozesse nicht blockiert werden und parallel laufen können, z. B. bei HTTP-Requests.
+* Observable: Datenquelle, die asynchrone Datenströme bereitstellt und Werte/Ereignisse an Observer sendet.
+* Observer (Subscriber): Konsument eines Observables, der auf gesendete Werte (next), Fehler (error) oder den Abschluss (complete) reagiert.
+* Pull-Verfahren: Observer entscheidet, ob er sich bei einem Observable registriert.
+* Push-Verfahren: Observable sendet Daten aktiv an registrierte Observer.
+* BehaviorSubject: RxJava-Subjekt, das den letzten und zukünftige Werte an Observer sendet.
+* PublishSubject: RxJava-Subjekt, das nur zukünftige Werte an Observer sendet.
+* MVVM (Model-View-ViewModel): Architektur, die Daten (Model), Logik (ViewModel) und Darstellung (View) trennt.
+* Drei Prinzipien (Redux)
+** Single Source of Truth: Der Zustand der Anwendung wird zentral gespeichert.
+** State is Read-Only: Änderungen am Zustand erfolgen nur durch Actions.
+** Changes are Made with Pure Functions: Änderungen haben keine Seiteneffekte haben und werden durch Parameter bestimmt
+* Immer: Bibliothek für unveränderlichen Zustand
+* Rx-Operatoren:
+** map: Transformiert jedes Element eines Observables basierend auf einer Funktion.
+Beispiel: Zahlen verdoppeln.
+** filter: Filtert Elemente basierend auf einer Bedingung.
+Beispiel: Nur gerade Zahlen durchlassen.
+** take: Nimmt nur eine bestimmte Anzahl von Elementen aus dem Stream.
+** zip: Kombiniert mehrere Observables zu einem Stream von Paaren.
+Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.
+** interval: Erzeugt fortlaufende Werte in einem festen Zeitintervall.
+** concatMap: Führt asynchrone Operationen hintereinander aus.
+** first: Gibt das erste Element eines Streams zurück.
+** last: Gibt das letzte Element eines Streams zurück.
 
 == Quelle
 

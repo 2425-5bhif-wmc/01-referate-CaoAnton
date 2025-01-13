@@ -60,6 +60,7 @@ class RxJavaView @Inject constructor(private val rxJavaViewModel: RxJavaViewMode
                 }
             }
 
+            // tag::android-map[]
             // Map Operator Button
             item {
                 Button(onClick = {
@@ -74,6 +75,9 @@ class RxJavaView @Inject constructor(private val rxJavaViewModel: RxJavaViewMode
                     Text("Map Operator")
                 }
             }
+            // end::android-map[]
+
+            // tag::android-filter[]
 
             // Filter Operator Button
             item {
@@ -89,7 +93,10 @@ class RxJavaView @Inject constructor(private val rxJavaViewModel: RxJavaViewMode
                     Text("Filter Operator")
                 }
             }
+            // end::android-filter[]
 
+
+            // tag::android-zip[]
             // Zip Operator Button
             item {
                 Button(onClick = {
@@ -105,7 +112,9 @@ class RxJavaView @Inject constructor(private val rxJavaViewModel: RxJavaViewMode
                     Text("Zip Operator")
                 }
             }
+            // end::android-zip[]
 
+            // tag::android-interval[]
             // Interval Operator Button
             item {
                 Button(onClick = {
@@ -119,7 +128,9 @@ class RxJavaView @Inject constructor(private val rxJavaViewModel: RxJavaViewMode
                     Text("Interval Operator")
                 }
             }
+            // end::android-interval[]
 
+            // tag::android-take[]
             // Take Operator Button
             item {
                 Button(onClick = {
@@ -134,6 +145,7 @@ class RxJavaView @Inject constructor(private val rxJavaViewModel: RxJavaViewMode
                     Text("Take Operator")
                 }
             }
+            // end::android-take[]
 
             // Take + Filter Operator Button
             item {

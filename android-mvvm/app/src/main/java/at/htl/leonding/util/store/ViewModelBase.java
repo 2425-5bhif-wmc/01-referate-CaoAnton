@@ -29,5 +29,5 @@ public abstract class ViewModelBase<T> {
     }
 
     /** map the "big" model to our "small" viewmodel */
-    protected abstract T toViewModel(Model model); // <.>
+    protected abstract T toViewModel(Model model);
 }
