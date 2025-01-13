@@ -140,8 +140,9 @@ Es befinden sich im Repository zwei Beispiele mit ReactiveX:
 * Angular mit RxJS
 * Android mit RxJava
 
-Um Daten zu bekommen, wurde eine Fake-REST-API von https://jsonplaceholder.typicode.com/[jsonplaceholder] verwendet. Sie
-gibt ToDos zurück und die Struktur sieht so aus:
+Beide Projekte demonstrieren die Rx-Operatoren von ReactiveX und als weiteres Beispiel werden Daten als **ToDo** von
+https://jsonplaceholder.typicode.com/[jsonplaceholder] geholt. Außerdem wird die Single Source of Truth (SSoT) Prinzip
+angewendet. So sieht die folgende Struktur der ToDos aus:
 
 [plantuml]
 ----
@@ -766,3 +767,6 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.
 - https://www.digitalocean.com/community/tutorials/android-mvvm-design-pattern
 - https://immerjs.github.io/immer/
 - https://redux.js.org/understanding/thinking-in-redux/three-principles
+- https://github.com/reactor/reactor-core
+- https://smallrye.io/smallrye-mutiny/latest/
+- https://vertx.io/
