@@ -644,6 +644,59 @@ image::last.png[]
 * holt sich den letzten Wert der Observable
 ====
 
+.skip
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-skip]
+----
+
+image::skip.png[]
+* Überspringt die ersten n Werte eines Observables und gibt erst danach die restlichen Werte aus.
+====
+
+.distinct
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-distinct]
+----
+
+image::distinct.jpg[]
+* Gibt nur einzigartige Werte aus und filtert doppelte Einträge aus dem Observable.
+====
+
+.startWith
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-startwith]
+----
+
+image::startWith.png[]
+* fügt zuerst einen definierten Startwert, bevor die eigentlichen Werte des Observables ausgegeben werden.
+====
+
+.pairwise
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-pairwise]
+----
+
+image::pairwise.png[]
+* Gibt die letzten zwei aufeinanderfolgenden Werte als Paare aus
+====
+
+
 == Glossar
 
 * ReactiveX (Rx): API für asynchrone und eventbasierte Programmierung mit Observables, das Pull- und Push-Prinzipien kombiniert.
@@ -672,6 +725,10 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.
 ** concatMap: Führt asynchrone Operationen hintereinander aus.
 ** first: Gibt das erste Element eines Streams zurück.
 ** last: Gibt das letzte Element eines Streams zurück.
+** skip: Überspringt die ersten n Werte und gibt danach die restlichen Werte aus.
+** distinct: Gibt nur einzigartige Werte aus und filtert doppelte Einträge.
+** startWith: fügt zuerst einen definierten Startwert, bevor die restlichen Werte folgen.
+** pairwise: Gibt die letzten zwei aufeinanderfolgenden Werte als Paare aus.
 
 == Quelle
 

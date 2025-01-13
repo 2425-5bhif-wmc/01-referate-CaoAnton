@@ -1,5 +1,17 @@
 import { Component } from '@angular/core';
-import {map, filter, debounceTime, mergeMap, switchMap, take, concatMap, first, last} from 'rxjs/operators';
+import {
+  map,
+  filter,
+  debounceTime,
+  mergeMap,
+  switchMap,
+  take,
+  concatMap,
+  first,
+  last,
+  distinct,
+  skip, pairwise, startWith
+} from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
 
 @Component({
@@ -104,5 +116,66 @@ export class ExampleComponent {
     this.after = `Nachher: [${results.join(', ')}]`;
   }
   // end::angular-last[]
+
+  // tag::angular-skip[]
+  demonstrateSkip() {
+    this.currentMethod = 'skip';
+    this.currentParameters = '3';
+    const source$ = of('a', 'b', 'c', 'd', 'e')
+    const results: string[] = [];
+    source$.pipe(
+      skip(3)
+    ).subscribe(value => results.push(value));
+
+    this.before = 'Vorher: [a, b, c, d, e]';
+    this.after = `Nachher: [${results.join(', ')}]`;
+  }
+  // end::angular-skip[]
+
+  // tag::angular-distinct[]
+  demonstrateDistinct() {
+    this.currentMethod = 'distinct';
+    this.currentParameters = 'Kein Parameter';
+    const source$ = of(1, 1, 2, 2, 3, 3);
+    const results: number[] = [];
+    source$.pipe(
+      distinct()
+    ).subscribe(value => results.push(value));
+
+    this.before = 'Vorher: [1, 1, 2, 2, 3, 3]';
+    this.after = `Nachher: [${results.join(', ')}]`;
+  }
+  // end::angular-distinct[]
+
+  // tag::angular-startwith[]
+  demonstrateStartWith() {
+    this.currentMethod = 'startWith';
+    this.currentParameters = `'s'`;
+    const source$ = of('a', 'b', 'c');
+    const results: string[] = [];
+    source$.pipe(
+      startWith('s')
+    ).subscribe(value => results.push(value));
+
+    this.before = 'Vorher: [a, b, c]';
+    this.after = `Nachher: [${results.join(', ')}]`;
+  }
+  // end::angular-startwith[]
+
+
+  // tag::angular-pairwise[]
+  demonstratePairwise() {
+    this.currentMethod = 'pairwise';
+    this.currentParameters = 'Kein Parameter';
+    const source$ = of('a', 'b', 'c', 'd', 'e');
+    const results: string[] = [];
+    source$.pipe(
+      pairwise()
+    ).subscribe(([prev, curr]) => results.push(`[${prev}, ${curr}]`));
+
+    this.before = 'Vorher: [a, b, c, d, e]';
+    this.after = `Nachher: [${results.join(', ')}]`;
+  }
+  // end::angular-pairwise[]
 
 }
