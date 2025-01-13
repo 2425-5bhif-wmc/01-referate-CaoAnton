@@ -2181,6 +2181,142 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 </div>
 </div>
 </details>
+<details>
+<summary class="title">skip</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">example.component.ts</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateSkip</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">skip</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">3</span><span class="dl">'</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">b</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">c</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">d</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">e</span><span class="dl">'</span><span class="p">)</span>
+    <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">string</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+      <span class="nf">skip</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">before</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Vorher: [a, b, c, d, e]</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">after</span> <span class="o">=</span> <span class="s2">`Nachher: [</span><span class="p">${</span><span class="nx">results</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="p">)}</span><span class="s2">]`</span><span class="p">;</span>
+  <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/skip.png" alt="skip">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Überspringt die ersten n Werte eines Observables und gibt erst danach die restlichen Werte aus.</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">distinct</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">example.component.ts</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateDistinct</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">distinct</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Kein Parameter</span><span class="dl">'</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+      <span class="nf">distinct</span><span class="p">()</span>
+    <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">before</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Vorher: [1, 1, 2, 2, 3, 3]</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">after</span> <span class="o">=</span> <span class="s2">`Nachher: [</span><span class="p">${</span><span class="nx">results</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="p">)}</span><span class="s2">]`</span><span class="p">;</span>
+  <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/distinct.jpg" alt="distinct">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Gibt nur einzigartige Werte aus und filtert doppelte Einträge aus dem Observable.</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">startWith</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">example.component.ts</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateStartWith</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">startWith</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="s2">`'s'`</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">b</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">c</span><span class="dl">'</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">string</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+      <span class="nf">startWith</span><span class="p">(</span><span class="dl">'</span><span class="s1">s</span><span class="dl">'</span><span class="p">)</span>
+    <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">before</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Vorher: [a, b, c]</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">after</span> <span class="o">=</span> <span class="s2">`Nachher: [</span><span class="p">${</span><span class="nx">results</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="p">)}</span><span class="s2">]`</span><span class="p">;</span>
+  <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/startWith.png" alt="startWith">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>fügt zuerst einen definierten Startwert, bevor die eigentlichen Werte des Observables ausgegeben werden.</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">pairwise</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">example.component.ts</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstratePairwise</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">pairwise</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Kein Parameter</span><span class="dl">'</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">b</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">c</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">d</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">e</span><span class="dl">'</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">string</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+      <span class="nf">pairwise</span><span class="p">()</span>
+    <span class="p">).</span><span class="nf">subscribe</span><span class="p">(([</span><span class="nx">prev</span><span class="p">,</span> <span class="nx">curr</span><span class="p">])</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="s2">`[</span><span class="p">${</span><span class="nx">prev</span><span class="p">}</span><span class="s2">, </span><span class="p">${</span><span class="nx">curr</span><span class="p">}</span><span class="s2">]`</span><span class="p">));</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">before</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Vorher: [a, b, c, d, e]</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">after</span> <span class="o">=</span> <span class="s2">`Nachher: [</span><span class="p">${</span><span class="nx">results</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="p">)}</span><span class="s2">]`</span><span class="p">;</span>
+  <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/pairwise.png" alt="pairwise">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Gibt die letzten zwei aufeinanderfolgenden Werte als Paare aus</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
 </div>
 </div>
 </div>
@@ -2268,6 +2404,18 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 <li>
 <p>last: Gibt das letzte Element eines Streams zurück.</p>
 </li>
+<li>
+<p>skip: Überspringt die ersten n Werte und gibt danach die restlichen Werte aus.</p>
+</li>
+<li>
+<p>distinct: Gibt nur einzigartige Werte aus und filtert doppelte Einträge.</p>
+</li>
+<li>
+<p>startWith: fügt zuerst einen definierten Startwert, bevor die restlichen Werte folgen.</p>
+</li>
+<li>
+<p>pairwise: Gibt die letzten zwei aufeinanderfolgenden Werte als Paare aus.</p>
+</li>
 </ul>
 </div>
 </li>
@@ -2309,7 +2457,7 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-13 08:57:56 UTC
+Last updated 2025-01-13 11:08:54 UTC
 </div>
 </div>
 </body>
