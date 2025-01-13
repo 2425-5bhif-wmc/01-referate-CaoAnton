@@ -696,6 +696,31 @@ image::pairwise.png[]
 * Gibt die letzten zwei aufeinanderfolgenden Werte als Paare aus
 ====
 
+.max
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-max]
+----
+
+image::max.png[]
+* Sucht die maximale Zahl im Observable
+====
+
+.find
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-find]
+----
+
+image::find.png[]
+* Gibt das erste Element zurück, das eine bestimmte Bedingung erfüllt.
+====
 
 == Glossar
 
@@ -729,6 +754,8 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.
 ** distinct: Gibt nur einzigartige Werte aus und filtert doppelte Einträge.
 ** startWith: fügt zuerst einen definierten Startwert, bevor die restlichen Werte folgen.
 ** pairwise: Gibt die letzten zwei aufeinanderfolgenden Werte als Paare aus.
+** max: Gibt den größten Wert aus einem Stream zurück.
+** find: Gibt das erste Element zurück, das eine bestimmte Bedingung erfüllt.
 
 == Quelle
 

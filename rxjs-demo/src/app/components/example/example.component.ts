@@ -10,7 +10,7 @@ import {
   first,
   last,
   distinct,
-  skip, pairwise, startWith
+  skip, pairwise, startWith, max, find, delay
 } from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
 
@@ -178,4 +178,33 @@ export class ExampleComponent {
   }
   // end::angular-pairwise[]
 
+  // tag::angular-max[]
+  demonstrateMax() {
+    this.currentMethod = 'max';
+    this.currentParameters = 'Kein Parameter';
+    const source$ = of(42, -1, 3);
+    const results: number[] = [];
+    source$.pipe(
+      max()
+    ).subscribe(value => results.push(value));
+
+    this.before = 'Vorher: [42, -1, 3]';
+    this.after = `Nachher: [${results.join(', ')}]`;
+  }
+  // end::angular-max[]
+
+  // tag::angular-find[]
+  demonstrateFind() {
+    this.currentMethod = 'find';
+    this.currentParameters = 'value => value % 5 === 0';
+    const source$ = of(3, 9, 15, 20);
+    const results: number[] = [];
+    source$.pipe(
+      find(value => value % 5 === 0)
+    ).subscribe(value => results.push(value!));
+
+    this.before = 'Vorher: [3, 9, 15, 20]';
+    this.after = `Nachher: [${results.join(', ')}]`;
+  }
+  // end::angular-find[]
 }
