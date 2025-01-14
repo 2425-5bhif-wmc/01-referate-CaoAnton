@@ -221,6 +221,12 @@ image::android-project-util.png[]
 
 image::deep-copy.jpg[]
 
+* Deep Copy: ein Object wird geklont, ohne die Referenzen des alten Objekts zu übertragen. Es ist sehr
+ressourcenaufwendig, da durch jede Referenz auf ein anderes Objekt das andere Objekt selbst tief kopiert werden muss.
+
+* Shallow Copy: erstellt nur ein neues Objekt mit den Werten des alten Objekts, verwendet dabei die gleichen Referenzen
+wie das alte Objekt auf weitere Objekte
+
 ====
 
 .immer
@@ -265,6 +271,12 @@ include::../../android-mvvm/app/src/main/java/at/htl/leonding/util/store/StoreBa
 
 * Basisklasse für Store
 * Verwaltet den Zustand
+
+<.> produce():
+1. onNext holt sich den neuen Zustand im BehaviorSubject (pipe).
+2. klont sich den aktuellen Zustand und das recipe wird angewendet
+3. Vergleich den alten und neuen Zustand
+4. veröffentlicht den neuen Zustand mit onNext, wenn sich etwas geändert hat
 
 .ViewModelBase.java
 [source, java]

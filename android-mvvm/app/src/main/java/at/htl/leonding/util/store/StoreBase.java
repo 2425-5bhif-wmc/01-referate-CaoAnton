@@ -31,7 +31,7 @@ public class StoreBase<T> {
      * @param recipe
      * The function that receives a clone of the current model and applies its changes to it.
      */
-    public void apply(Consumer<T> recipe) {
+    public void apply(Consumer<T> recipe) { // <.>
         Consumer<T> onNext = nextState -> pipe.onNext(nextState);
         immer.produce(pipe, recipe, onNext);
     }
