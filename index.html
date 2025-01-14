@@ -998,6 +998,18 @@ Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 <img src="images/deep-copy.jpg" alt="deep copy">
 </div>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>Deep Copy: ein Object wird geklont, ohne die Referenzen des alten Objekts zu übertragen. Es ist sehr
+ressourcenaufwendig, da durch jede Referenz auf ein anderes Objekt das andere Objekt selbst tief kopiert werden muss.</p>
+</li>
+<li>
+<p>Shallow Copy: erstellt nur ein neues Objekt mit den Werten des alten Objekts, verwendet dabei die gleichen Referenzen
+wie das alte Objekt auf weitere Objekte</p>
+</li>
+</ul>
+</div>
 </div>
 </details>
 <details>
@@ -1155,7 +1167,7 @@ Intern sorgt Immer dafür, dass der ursprüngliche Zustand unverändert bleibt, 
      * @param recipe
      * The function that receives a clone of the current model and applies its changes to it.
      */</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">apply</span><span class="o">(</span><span class="nc">Consumer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">recipe</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">apply</span><span class="o">(</span><span class="nc">Consumer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">recipe</span><span class="o">)</span> <span class="o">{</span> <i class="conum" data-value="1"></i><b>(1)</b>
         <span class="nc">Consumer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">onNext</span> <span class="o">=</span> <span class="n">nextState</span> <span class="o">-&gt;</span> <span class="n">pipe</span><span class="o">.</span><span class="na">onNext</span><span class="o">(</span><span class="n">nextState</span><span class="o">);</span>
         <span class="n">immer</span><span class="o">.</span><span class="na">produce</span><span class="o">(</span><span class="n">pipe</span><span class="o">,</span> <span class="n">recipe</span><span class="o">,</span> <span class="n">onNext</span><span class="o">);</span>
     <span class="o">}</span>
@@ -1171,6 +1183,30 @@ Intern sorgt Immer dafür, dass der ursprüngliche Zustand unverändert bleibt, 
 <p>Verwaltet den Zustand</p>
 </li>
 </ul>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>produce():
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>onNext holt sich den neuen Zustand im BehaviorSubject (pipe).</p>
+</li>
+<li>
+<p>klont sich den aktuellen Zustand und das recipe wird angewendet</p>
+</li>
+<li>
+<p>Vergleich den alten und neuen Zustand</p>
+</li>
+<li>
+<p>veröffentlicht den neuen Zustand mit onNext, wenn sich etwas geändert hat</p>
+</li>
+</ol>
+</div></td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
 <div class="title">ViewModelBase.java</div>
@@ -2033,9 +2069,9 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 <pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateMap</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">map</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">value =&gt; value * 2</span><span class="dl">'</span><span class="p">;</span>
-    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">source</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
     <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+    <span class="nx">source</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
       <span class="nf">map</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">value</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
     <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
 
@@ -2060,9 +2096,9 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 <pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateFilter</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">filter</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">value =&gt; value % 2 === 0</span><span class="dl">'</span><span class="p">;</span>
-    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">source</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
     <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+    <span class="nx">source</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
       <span class="nf">filter</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">value</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
     <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
 
@@ -2087,9 +2123,9 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 <pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateTake</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">take</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">3</span><span class="dl">'</span><span class="p">;</span>
-    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">source</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
     <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+    <span class="nx">source</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
       <span class="nf">take</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
     <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
 
@@ -2114,9 +2150,9 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 <pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateConcatMap</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">concatMap</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">value =&gt; of(`${value}1`, `${value}2`)</span><span class="dl">'</span><span class="p">;</span>
-    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="dl">'</span><span class="s1">A</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">B</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">C</span><span class="dl">'</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">source</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="dl">'</span><span class="s1">A</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">B</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">C</span><span class="dl">'</span><span class="p">);</span>
     <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">string</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+    <span class="nx">source</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
       <span class="nf">concatMap</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="k">of</span><span class="p">(</span><span class="s2">`</span><span class="p">${</span><span class="nx">value</span><span class="p">}</span><span class="s2">1`</span><span class="p">,</span> <span class="s2">`</span><span class="p">${</span><span class="nx">value</span><span class="p">}</span><span class="s2">2`</span><span class="p">))</span>
     <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
 
@@ -2151,9 +2187,9 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 <pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateFirst</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">first</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Kein Parameter</span><span class="dl">'</span><span class="p">;</span>
-    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">source</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
     <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+    <span class="nx">source</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
       <span class="nf">first</span><span class="p">()</span>
     <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
 
@@ -2185,9 +2221,9 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 <pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateLast</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">last</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Kein Parameter</span><span class="dl">'</span><span class="p">;</span>
-    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">source</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
     <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+    <span class="nx">source</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
       <span class="nf">last</span><span class="p">()</span>
     <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
 
@@ -2219,9 +2255,9 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 <pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateSkip</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">skip</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">3</span><span class="dl">'</span><span class="p">;</span>
-    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">b</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">c</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">d</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">e</span><span class="dl">'</span><span class="p">)</span>
+    <span class="kd">const</span> <span class="nx">source</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">b</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">c</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">d</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">e</span><span class="dl">'</span><span class="p">)</span>
     <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">string</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+    <span class="nx">source</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
       <span class="nf">skip</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
     <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
 
@@ -2253,9 +2289,9 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 <pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateDistinct</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">distinct</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Kein Parameter</span><span class="dl">'</span><span class="p">;</span>
-    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">source</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
     <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+    <span class="nx">source</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
       <span class="nf">distinct</span><span class="p">()</span>
     <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
 
@@ -2287,9 +2323,9 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 <pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateStartWith</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">startWith</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="s2">`'s'`</span><span class="p">;</span>
-    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">b</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">c</span><span class="dl">'</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">source</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">b</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">c</span><span class="dl">'</span><span class="p">);</span>
     <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">string</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+    <span class="nx">source</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
       <span class="nf">startWith</span><span class="p">(</span><span class="dl">'</span><span class="s1">s</span><span class="dl">'</span><span class="p">)</span>
     <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
 
@@ -2321,9 +2357,9 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 <pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstratePairwise</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">pairwise</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Kein Parameter</span><span class="dl">'</span><span class="p">;</span>
-    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">b</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">c</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">d</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">e</span><span class="dl">'</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">source</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">b</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">c</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">d</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">e</span><span class="dl">'</span><span class="p">);</span>
     <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">string</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+    <span class="nx">source</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
       <span class="nf">pairwise</span><span class="p">()</span>
     <span class="p">).</span><span class="nf">subscribe</span><span class="p">(([</span><span class="nx">prev</span><span class="p">,</span> <span class="nx">curr</span><span class="p">])</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="s2">`[</span><span class="p">${</span><span class="nx">prev</span><span class="p">}</span><span class="s2">, </span><span class="p">${</span><span class="nx">curr</span><span class="p">}</span><span class="s2">]`</span><span class="p">));</span>
 
@@ -2355,9 +2391,9 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 <pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateMax</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">max</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Kein Parameter</span><span class="dl">'</span><span class="p">;</span>
-    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">source</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
     <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+    <span class="nx">source</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
       <span class="nf">max</span><span class="p">()</span>
     <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
 
@@ -2389,9 +2425,9 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 <pre class="rouge highlight"><code data-lang="typescript">  <span class="nf">demonstrateFind</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentMethod</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">find</span><span class="dl">'</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">currentParameters</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">value =&gt; value % 5 === 0</span><span class="dl">'</span><span class="p">;</span>
-    <span class="kd">const</span> <span class="nx">source$</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">source</span> <span class="o">=</span> <span class="k">of</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
     <span class="kd">const</span> <span class="nx">results</span><span class="p">:</span> <span class="kr">number</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
-    <span class="nx">source$</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
+    <span class="nx">source</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
       <span class="nf">find</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">value</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span>
     <span class="p">).</span><span class="nf">subscribe</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">value</span><span class="o">!</span><span class="p">));</span>
 
@@ -2569,7 +2605,7 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-14 08:28:48 UTC
+Last updated 2025-01-14 12:05:25 UTC
 </div>
 </div>
 </body>
