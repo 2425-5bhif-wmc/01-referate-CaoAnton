@@ -571,7 +571,7 @@ include::../../rxjs-demo/src/app/components/todo/todo.component.ts[]
 * holt sich wie beim vorherigen `Android-Beispiel` die todos
 
 
-image::viewmodel.png[]
+image::pipe.png[]
 
 ===== example
 
