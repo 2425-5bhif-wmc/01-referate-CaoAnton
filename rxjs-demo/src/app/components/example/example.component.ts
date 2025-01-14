@@ -31,9 +31,9 @@ export class ExampleComponent {
   demonstrateMap() {
     this.currentMethod = 'map';
     this.currentParameters = 'value => value * 2';
-    const source$ = of(1, 2, 3, 4, 5);
+    const source = of(1, 2, 3, 4, 5);
     const results: number[] = [];
-    source$.pipe(
+    source.pipe(
       map(value => value * 2)
     ).subscribe(value => results.push(value));
 
@@ -46,9 +46,9 @@ export class ExampleComponent {
   demonstrateFilter() {
     this.currentMethod = 'filter';
     this.currentParameters = 'value => value % 2 === 0';
-    const source$ = of(1, 2, 3, 4, 5);
+    const source = of(1, 2, 3, 4, 5);
     const results: number[] = [];
-    source$.pipe(
+    source.pipe(
       filter(value => value % 2 === 0)
     ).subscribe(value => results.push(value));
 
@@ -61,9 +61,9 @@ export class ExampleComponent {
   demonstrateTake() {
     this.currentMethod = 'take';
     this.currentParameters = '3';
-    const source$ = of(1, 2, 3, 4, 5);
+    const source = of(1, 2, 3, 4, 5);
     const results: number[] = [];
-    source$.pipe(
+    source.pipe(
       take(3)
     ).subscribe(value => results.push(value));
 
@@ -76,9 +76,9 @@ export class ExampleComponent {
   demonstrateConcatMap() {
     this.currentMethod = 'concatMap';
     this.currentParameters = 'value => of(`${value}1`, `${value}2`)';
-    const source$ = of('A', 'B', 'C');
+    const source = of('A', 'B', 'C');
     const results: string[] = [];
-    source$.pipe(
+    source.pipe(
       concatMap(value => of(`${value}1`, `${value}2`))
     ).subscribe(value => results.push(value));
 
@@ -91,9 +91,9 @@ export class ExampleComponent {
   demonstrateFirst() {
     this.currentMethod = 'first';
     this.currentParameters = 'Kein Parameter';
-    const source$ = of(1, 2, 3, 4, 5);
+    const source = of(1, 2, 3, 4, 5);
     const results: number[] = [];
-    source$.pipe(
+    source.pipe(
       first()
     ).subscribe(value => results.push(value));
 
@@ -106,9 +106,9 @@ export class ExampleComponent {
   demonstrateLast() {
     this.currentMethod = 'last';
     this.currentParameters = 'Kein Parameter';
-    const source$ = of(1, 2, 3, 4, 5);
+    const source = of(1, 2, 3, 4, 5);
     const results: number[] = [];
-    source$.pipe(
+    source.pipe(
       last()
     ).subscribe(value => results.push(value));
 
@@ -121,9 +121,9 @@ export class ExampleComponent {
   demonstrateSkip() {
     this.currentMethod = 'skip';
     this.currentParameters = '3';
-    const source$ = of('a', 'b', 'c', 'd', 'e')
+    const source = of('a', 'b', 'c', 'd', 'e')
     const results: string[] = [];
-    source$.pipe(
+    source.pipe(
       skip(3)
     ).subscribe(value => results.push(value));
 
@@ -136,9 +136,9 @@ export class ExampleComponent {
   demonstrateDistinct() {
     this.currentMethod = 'distinct';
     this.currentParameters = 'Kein Parameter';
-    const source$ = of(1, 1, 2, 2, 3, 3);
+    const source = of(1, 1, 2, 2, 3, 3);
     const results: number[] = [];
-    source$.pipe(
+    source.pipe(
       distinct()
     ).subscribe(value => results.push(value));
 
@@ -151,9 +151,9 @@ export class ExampleComponent {
   demonstrateStartWith() {
     this.currentMethod = 'startWith';
     this.currentParameters = `'s'`;
-    const source$ = of('a', 'b', 'c');
+    const source = of('a', 'b', 'c');
     const results: string[] = [];
-    source$.pipe(
+    source.pipe(
       startWith('s')
     ).subscribe(value => results.push(value));
 
@@ -167,9 +167,9 @@ export class ExampleComponent {
   demonstratePairwise() {
     this.currentMethod = 'pairwise';
     this.currentParameters = 'Kein Parameter';
-    const source$ = of('a', 'b', 'c', 'd', 'e');
+    const source = of('a', 'b', 'c', 'd', 'e');
     const results: string[] = [];
-    source$.pipe(
+    source.pipe(
       pairwise()
     ).subscribe(([prev, curr]) => results.push(`[${prev}, ${curr}]`));
 
@@ -182,9 +182,9 @@ export class ExampleComponent {
   demonstrateMax() {
     this.currentMethod = 'max';
     this.currentParameters = 'Kein Parameter';
-    const source$ = of(42, -1, 3);
+    const source = of(42, -1, 3);
     const results: number[] = [];
-    source$.pipe(
+    source.pipe(
       max()
     ).subscribe(value => results.push(value));
 
@@ -197,9 +197,9 @@ export class ExampleComponent {
   demonstrateFind() {
     this.currentMethod = 'find';
     this.currentParameters = 'value => value % 5 === 0';
-    const source$ = of(3, 9, 15, 20);
+    const source = of(3, 9, 15, 20);
     const results: number[] = [];
-    source$.pipe(
+    source.pipe(
       find(value => value % 5 === 0)
     ).subscribe(value => results.push(value!));
 
