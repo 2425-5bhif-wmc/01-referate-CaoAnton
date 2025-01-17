@@ -7,11 +7,11 @@ import {TodoService} from "../../services/todo.service";
 
 @Component({
   selector: 'app-todo',
-  standalone: true,
   imports: [
     AsyncPipe
   ],
   templateUrl: './todo.component.html',
+  standalone: true,
   styleUrl: './todo.component.css'
 })
 export class TodoComponent {

@@ -6,9 +6,9 @@ import {TodoService} from "../../services/todo.service";
 
 @Component({
   selector: 'app-register',
-  standalone: true,
   imports: [],
   templateUrl: './register.component.html',
+  standalone: true,
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {

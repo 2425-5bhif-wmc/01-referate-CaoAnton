@@ -16,9 +16,9 @@ import { Observable, of, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-example',
-  standalone: true,
   imports: [],
   templateUrl: './example.component.html',
+  standalone: true,
   styleUrls: ['./example.component.css']
 })
 export class ExampleComponent {
