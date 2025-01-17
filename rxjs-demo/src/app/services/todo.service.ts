@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {Todo} from "../model/todo";
 import {set} from "../model/model";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {StoreService} from "./store.service";
 import {lastValueFrom} from "rxjs";
 

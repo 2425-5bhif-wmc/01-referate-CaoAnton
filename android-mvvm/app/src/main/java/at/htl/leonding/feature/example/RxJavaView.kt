@@ -173,7 +173,7 @@ class RxJavaView @Inject constructor(private val rxJavaViewModel: RxJavaViewMode
                         .subscribe { afterResults.add(it.toString()) }
                         .also { compositeDisposable.add(it) }
                 }, modifier = Modifier.fillMaxWidth()) {
-                    Text("Change Operator")
+                    Text("Map Operator")
                 }
             }
         }
