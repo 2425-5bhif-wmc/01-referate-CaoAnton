@@ -1,4 +1,4 @@
-= Reactive mit Angular und Android
+= ReactiveX mit Angular und Android
 Anton Cao
 1.0, {docdate}
 ifndef::sourcedir[:sourcedir: ../src/main/java]
@@ -10,11 +10,11 @@ ifndef::backend[:backend: html5]
 :source-highlighter: rouge
 :docinfo: shared
 
-== Was ist reactive?
+== ReactiveX
 
-In der reaktiven Programmierung beschäftigt man sich mit **Datenströmen** und die **Observable**. Bei der reaktiven
-Programmierung sagen wir an, was passiert, wenn wir etwas in unserem Datenstrom beobachten.
-Reaktives Programmieren ist asynchron, da die Daten noch nicht im Datenstrom bekannt sind.
+ReactiveX (Reactive Extensions) ist eine API für asynchrone und eventbasierte Programmierung mithilfe von **Observables**.
+Das Hauptproblem, das ReactiveX löst, ist der Umgang mit asynchronen Datenströmen durch die Kombination von Pull- und
+Push-Verfahren.
 
 === Asynchron
 
@@ -101,16 +101,16 @@ done
 
 image::observable-exmaple.png[]
 
-== Reactive-Frameworks
+== Alternative
+
+Es gibt verschiedene Alternativen zu ReactiveX, die ähnliche Funktionalitäten für asynchrone Programmierung bieten:
 
 - **https://github.com/reactor/reactor-core[Reactor Core]**: wird häufig in Java Spring verwendet
-- **https://reactivex.io/[ReactiveX]**: wird häufig für Javascript verwendet
 - **https://smallrye.io/smallrye-mutiny/latest/[Mutiny]**: wird primär in Quarkus verwendet
 - **https://vertx.io/[Vert.x]**: für Java oder Kotlin verwendet
 
 == Quarkus Mutiny vs andere reaktive API
 
-== Signals
 
 Quarkus verwendet primär die Mutiny-API für reaktive Applikationen. Viele der eingebauten Extensions
 verlangen Typen wie **Uni** oder **Multi**. Es würde dann zum Konflikt zwischen den Typen von anderen reaktiven API wie

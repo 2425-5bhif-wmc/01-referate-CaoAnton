@@ -8,6 +8,20 @@ export interface Model { // <.>
   readonly todos: Todo[]
 }
 
+export const initial: Model =
+{
+  name: "Dave",
+  email: "Lewakaslehna",
+  todos: [
+    {
+      userId: 69,
+      id: 3000,
+      title: "Hello davedii",
+      completed: false,
+    }
+  ]
+}
+
 const initialState: Model = { // <.>
   name: "John",
   email: "Pork",

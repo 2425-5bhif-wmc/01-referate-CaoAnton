@@ -2,15 +2,12 @@ import { Component } from '@angular/core';
 import {
   map,
   filter,
-  debounceTime,
-  mergeMap,
-  switchMap,
   take,
   concatMap,
   first,
   last,
   distinct,
-  skip, pairwise, startWith, max, find, delay
+  skip, pairwise, startWith, max, find
 } from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
 
