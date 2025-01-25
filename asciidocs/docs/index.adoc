@@ -14,27 +14,24 @@ ifndef::backend[:backend: html5]
 
 In der reaktiven Programmierung beschäftigt man sich mit **Datenströmen** und die **Observable**. Bei der reaktiven
 Programmierung sagen wir an, was passiert, wenn wir etwas in unserem Datenstrom beobachten.
-Reaktives Programmieren ist asynchron, da die Daten noch nicht im Datenstrom bekannt sind.
 
-=== Asynchron
+== Angular
 
-image::asynchron.png[]
+Es gibt mehrere Möglichkeiten, in Angular reaktiv zu arbeiten:
 
-Bei der **synchronen** Weise werden sie hintereinander ausgeführt. Das heißt, nachdem der Prozess A eine I/O Operation
-(z.B. HTTP-Request) sendet, wird sozusagen die Anwendung **blockiert**. Der Prozess A wartet, bis der Prozess B eine
-Antwort sendet. In der Zeit führt der Prozess A keine weiteren Aufgaben durch.
-
-Bei der **asynchronen** Weise wird der Prozess A nicht blockiert, nachdem er eine I/O Operation gesendet hat. In der
-Zwischenzeit führt der Prozess A seine nächsten Aufgaben durch, währenddessen Prozess B seine Aufgaben durchführt.
+1. **Observable:** Für die Verarbeitung asynchroner Datenströme wie Ereignisse, Benutzereingaben oder API-Antworten.
+2. **Signals:** Für synchrones, reaktives State-Management.
+3. **BehaviorSubject/Subject (RxJS):** Für die Verarbeitung und Weitergabe von Daten innerhalb eines Streams, oft für State-Management oder Sharing von Streams verwendet.
 
 === Observable
 
-Ein Observable ist ein Objekt, das asynchrone Datenströme bereitstellt. Es repräsentiert eine Quelle, die im Laufe
-der Zeit Daten (z. B. Ereignisse, API-Antworten oder Benutzereingaben) senden kann.
+Ein Observable ist ein Objekt, das asynchrone Datenströme bereitstellt. Es repräsentiert eine Quelle, die im Laufe der Zeit
+Daten (z. B. Ereignisse, API-Antworten oder Benutzereingaben) senden kann.
 
 Nicht zu verwechseln mit **Observer** (Subscriber)!
-Ein Observer ist ein Objekt, das auf die Daten reagiert, die von einem Observable gesendet werden.
-Es definiert, wie mit den gesendeten Daten umgegangen wird.
+Ein Observer ist ein Objekt, das auf die Daten reagiert, die von einem Observable gesendet werden. Es definiert, wie mit den gesendeten Daten umgegangen wird.
+
+
 
 image::observable.jpg[]
 
@@ -48,14 +45,10 @@ Eigenschaften des Observers:
 
 ReactiveX kombiniert Pull- und Push-Prinzipien:
 
-- **Pull:** Ein Observer (Subscriber) entscheidet, ob er sich für ein Observable registrieren möchte.
-Dadurch hat der Konsument die Kontrolle darüber, welche Datenquellen ihn interessieren.
-- **Push:** Sobald ein Observer sich registriert hat, sendet das Observable Daten (Events) aktiv an den Observer,
-ohne dass der Observer diese explizit anfordern muss.
+- **Pull:** Ein Observer (Subscriber) entscheidet, ob er sich für ein Observable registrieren möchte. Dadurch hat der Konsument die Kontrolle darüber, welche Datenquellen ihn interessieren.
+- **Push:** Sobald ein Observer sich registriert hat, sendet das Observable Daten (Events) aktiv an den Observer, ohne dass der Observer diese explizit anfordern muss.
 
-
-Beispiel:
-
+.Beispiel:
 [source, typescript]
 ----
 import { Observable } from 'rxjs';
@@ -99,7 +92,59 @@ done
 ----
 ====
 
-image::observable-exmaple.png[]
+image::observable-example.png[]
+
+=== Signals
+
+Signals sind eine moderne Alternative zu Observables in Angular. Sie bieten einen reaktiven
+Ansatz für das Management und die Aktualisierung von Daten. Obwohl Signals keine Asynchronität bieten,
+sind sie reaktiv, da sie automatisch Abhängigkeiten verfolgen und Änderungen propagieren. Das bedeutet,
+dass jede Änderung eines Signals alle abhängigen Berechnungen oder UI-Komponenten sofort aktualisiert.
+
+Eigenschaften von Signals:
+
+- **Synchronität:** Signals arbeiten synchron und aktualisieren die Werte direkt.
+- **Abhängigkeits-Tracking:** Sie verfolgen automatisch Abhängigkeiten, sodass Änderungen an einem Signal alle abhängigen Komponenten oder Berechnungen automatisch aktualisieren.
+- **Einfache API:** Signals haben eine intuitive API, die weniger Boilerplate-Code erfordert.
+
+.Beispiel für ein Signal:
+[source, typescript]
+----
+import { signal, computed } from '@angular/core';
+
+const count = signal(0);
+const doubled = computed(() => count() * 2);
+
+count.update(value => value + 1);
+console.log(count()); // Ausgabe: 1
+console.log(doubled()); // Ausgabe: 2
+----
+
+=== Observable vs. Signals
+
+==== Vergleich nach Anwendungsfällen
+
+|===
+| Eigenschaft              | Observable                     | Signals
+
+| **Synchronität**        | Asynchron                     | Synchron
+| **Abhängigkeits-Tracking** | Manuell durch Subscription    | Automatisch
+| **Komplexität**         | Höher, erfordert mehr Boilerplate | Niedriger, einfache API
+| **Anwendungsfälle**     | Datenströme, Ereignissteuerung | Reaktives State-Management
+| **Performance**         | Kann Overhead erzeugen         | Effizient durch Synchronität
+|===
+
+==== Beste Verwendungsmöglichkeiten
+
+- **Observable:**
+- Perfekt für die Verarbeitung von asynchronen Datenströmen wie API-Antworten, Benutzereingaben und Websocket-Nachrichten.
+- Ideal für Szenarien, in denen die Datenquelle kontinuierlich oder verzögert Daten liefert.
+- Bietet eine breite Palette von Operators, um Streams zu manipulieren und komplexe Datenflüsse zu handhaben.
+
+- **Signals:**
+- Hervorragend geeignet für synchrones State-Management in Angular-Anwendungen.
+- Ideal für UI-Komponenten, bei denen Änderungen sofort und automatisch reflektiert werden müssen.
+- Weniger Overhead, wenn die Daten synchron verarbeitet werden können und keine komplexen asynchronen Prozesse erforderlich sind.
 
 == Reactive-Frameworks
 
@@ -110,7 +155,7 @@ image::observable-exmaple.png[]
 
 == Quarkus Mutiny vs andere reaktive API
 
-== Signals
+
 
 Quarkus verwendet primär die Mutiny-API für reaktive Applikationen. Viele der eingebauten Extensions
 verlangen Typen wie **Uni** oder **Multi**. Es würde dann zum Konflikt zwischen den Typen von anderen reaktiven API wie
