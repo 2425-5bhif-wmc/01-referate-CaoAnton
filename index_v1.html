@@ -556,7 +556,7 @@ pre.rouge .gs {
 <div class="details">
 <span id="author" class="author">Anton Cao</span><br>
 <span id="revnumber">version 1.0,</span>
-<span id="revdate">2025-01-21</span>
+<span id="revdate">2025-01-27</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -1844,20 +1844,13 @@ Benutzereingaben und Ereignisse zu verwalten.</p>
 <span class="p">{</span>
   <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Dave</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Lewakaslehna</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">todos</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">{</span>
-      <span class="na">userId</span><span class="p">:</span> <span class="mi">69</span><span class="p">,</span>
-      <span class="na">id</span><span class="p">:</span> <span class="mi">3000</span><span class="p">,</span>
-      <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Hello davedii</span><span class="dl">"</span><span class="p">,</span>
-      <span class="na">completed</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
-    <span class="p">}</span>
-  <span class="p">]</span>
+  <span class="na">todos</span><span class="p">:</span> <span class="p">[],</span>
 <span class="p">}</span>
 
 <span class="kd">const</span> <span class="nx">initialState</span><span class="p">:</span> <span class="nx">Model</span> <span class="o">=</span> <span class="p">{</span> <i class="conum" data-value="2"></i><b>(2)</b>
   <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">John</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Pork</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">todos</span><span class="p">:</span> <span class="p">[]</span>
+  <span class="na">todos</span><span class="p">:</span> <span class="p">[],</span>
 <span class="p">}</span>
 <span class="k">export</span> <span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BehaviorSubject</span><span class="o">&lt;</span><span class="nx">Model</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">initialState</span><span class="p">)</span> <i class="conum" data-value="3"></i><b>(3)</b>
 
@@ -2021,7 +2014,7 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 <div class="listingblock">
 <div class="title">todo.component.ts</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">inject</span><span class="p">,</span> <span class="nx">OnInit</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">inject</span><span class="p">,</span> <span class="nx">model</span><span class="p">,</span> <span class="nx">OnInit</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span><span class="nx">StoreService</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../../services/store.service</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span><span class="nx">distinctUntilChanged</span><span class="p">,</span> <span class="nx">map</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">rxjs</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span><span class="nx">Todo</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../../model</span><span class="dl">"</span><span class="p">;</span>
@@ -2030,14 +2023,14 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 
 <span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
   <span class="na">selector</span><span class="p">:</span> <span class="dl">'</span><span class="s1">app-todo</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">standalone</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
   <span class="na">imports</span><span class="p">:</span> <span class="p">[</span>
     <span class="nx">AsyncPipe</span>
   <span class="p">],</span>
   <span class="na">templateUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./todo.component.html</span><span class="dl">'</span><span class="p">,</span>
-  <span class="na">standalone</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
   <span class="na">styleUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./todo.component.css</span><span class="dl">'</span>
 <span class="p">})</span>
-<span class="k">export</span> <span class="kd">class</span> <span class="nc">TodoComponent</span> <span class="p">{</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nc">TodoComponent</span> <span class="k">implements</span> <span class="nx">OnInit</span> <span class="p">{</span>
   <span class="nx">todoService</span> <span class="o">=</span> <span class="nf">inject</span><span class="p">(</span><span class="nx">TodoService</span><span class="p">)</span>
   <span class="nx">viewModel</span> <span class="o">=</span> <span class="nf">inject</span><span class="p">(</span><span class="nx">StoreService</span><span class="p">)</span>
     <span class="p">.</span><span class="nx">store</span>
@@ -2047,6 +2040,9 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
     <span class="p">)</span>
   <span class="nf">loadTodos</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">todoService</span><span class="p">.</span><span class="nf">findAll</span><span class="p">()</span>
+  <span class="p">}</span>
+
+  <span class="nf">ngOnInit</span><span class="p">():</span> <span class="k">void</span> <span class="p">{</span>
   <span class="p">}</span>
 
 <span class="p">}</span></code></pre>
@@ -2619,7 +2615,7 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-21 15:55:00 UTC
+Last updated 2025-01-27 17:20:20 UTC
 </div>
 </div>
 </body>

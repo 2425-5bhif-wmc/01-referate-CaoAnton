@@ -556,35 +556,34 @@ pre.rouge .gs {
 <div class="details">
 <span id="author" class="author">Anton Cao</span><br>
 <span id="revnumber">version 1.0,</span>
-<span id="revdate">2025-01-21</span>
+<span id="revdate">2025-01-27</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_was_ist_reactive">1. Was ist reactive?</a>
+<li><a href="#_was_ist_reactive">1. Was ist reactive?</a></li>
+<li><a href="#_angular">2. Angular</a>
 <ul class="sectlevel2">
-<li><a href="#_asynchron">1.1. Asynchron</a></li>
-<li><a href="#_observable">1.2. Observable</a></li>
+<li><a href="#_observable">2.1. Observable</a></li>
+<li><a href="#_signals">2.2. Signals</a></li>
+<li><a href="#_observable_vs_signals">2.3. Observable vs. Signals</a></li>
 </ul>
 </li>
-<li><a href="#_reactive_frameworks">2. Reactive-Frameworks</a></li>
-<li><a href="#_quarkus_mutiny_vs_andere_reaktive_api">3. Quarkus Mutiny vs andere reaktive API</a></li>
-<li><a href="#_signals">4. Signals</a></li>
-<li><a href="#_beispiele_mit_reactivex">5. Beispiele mit ReactiveX</a></li>
-<li><a href="#_android_rxjava_demo">6. Android (rxjava-demo)</a>
+<li><a href="#_beispiele_mit_reactivex">3. Beispiele mit ReactiveX</a></li>
+<li><a href="#_android_rxjava_demo">4. Android (rxjava-demo)</a>
 <ul class="sectlevel2">
-<li><a href="#_android_mvvm">6.1. Android-MVVM</a></li>
-<li><a href="#_drei_prinzipien">6.2. Drei Prinzipien</a></li>
-<li><a href="#_projekt">6.3. Projekt</a></li>
+<li><a href="#_android_mvvm">4.1. Android-MVVM</a></li>
+<li><a href="#_drei_prinzipien">4.2. Drei Prinzipien</a></li>
+<li><a href="#_projekt">4.3. Projekt</a></li>
 </ul>
 </li>
-<li><a href="#_angular_rxjs_demo">7. Angular (rxjs-demo)</a>
+<li><a href="#_angular_rxjs_demo">5. Angular (rxjs-demo)</a>
 <ul class="sectlevel2">
-<li><a href="#_struktur_des_projekts">7.1. Struktur des Projekts</a></li>
+<li><a href="#_struktur_des_projekts">5.1. Struktur des Projekts</a></li>
 </ul>
 </li>
-<li><a href="#_glossar">8. Glossar</a></li>
-<li><a href="#_quelle">9. Quelle</a></li>
+<li><a href="#_glossar">6. Glossar</a></li>
+<li><a href="#_quelle">7. Quelle</a></li>
 </ul>
 </div>
 </div>
@@ -593,37 +592,39 @@ pre.rouge .gs {
 <h2 id="_was_ist_reactive"><a class="anchor" href="#_was_ist_reactive"></a>1. Was ist reactive?</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In der reaktiven Programmierung beschäftigt man sich mit <strong>Datenströmen</strong> und die <strong>Observable</strong>. Bei der reaktiven
-Programmierung sagen wir an, was passiert, wenn wir etwas in unserem Datenstrom beobachten.
-Reaktives Programmieren ist asynchron, da die Daten noch nicht im Datenstrom bekannt sind.</p>
+<p>In der reaktiven Programmierung beschäftigt man sich mit <strong>Datenströmen</strong>. Bei der reaktiven
+Programmierung sagen wir an, was passiert, wenn wir etwas in unserem Datenstrom beobachten.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_angular"><a class="anchor" href="#_angular"></a>2. Angular</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Es gibt mehrere Möglichkeiten, in Angular reaktiv zu arbeiten:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Observable:</strong> Für die Verarbeitung asynchroner Datenströme wie Ereignisse, Benutzereingaben oder API-Antworten.</p>
+</li>
+<li>
+<p><strong>Signals:</strong> Für synchrones, reaktives State-Management.</p>
+</li>
+<li>
+<p><strong>BehaviorSubject/Subject (RxJS):</strong> Für die Verarbeitung und Weitergabe von Daten innerhalb eines Streams, oft für State-Management oder Sharing von Streams verwendet.</p>
+</li>
+</ol>
 </div>
 <div class="sect2">
-<h3 id="_asynchron"><a class="anchor" href="#_asynchron"></a>1.1. Asynchron</h3>
-<div class="imageblock">
-<div class="content">
-<img src="images/asynchron.png" alt="asynchron">
-</div>
-</div>
+<h3 id="_observable"><a class="anchor" href="#_observable"></a>2.1. Observable</h3>
 <div class="paragraph">
-<p>Bei der <strong>synchronen</strong> Weise werden sie hintereinander ausgeführt. Das heißt, nachdem der Prozess A eine I/O Operation
-(z.B. HTTP-Request) sendet, wird sozusagen die Anwendung <strong>blockiert</strong>. Der Prozess A wartet, bis der Prozess B eine
-Antwort sendet. In der Zeit führt der Prozess A keine weiteren Aufgaben durch.</p>
-</div>
-<div class="paragraph">
-<p>Bei der <strong>asynchronen</strong> Weise wird der Prozess A nicht blockiert, nachdem er eine I/O Operation gesendet hat. In der
-Zwischenzeit führt der Prozess A seine nächsten Aufgaben durch, währenddessen Prozess B seine Aufgaben durchführt.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_observable"><a class="anchor" href="#_observable"></a>1.2. Observable</h3>
-<div class="paragraph">
-<p>Ein Observable ist ein Objekt, das asynchrone Datenströme bereitstellt. Es repräsentiert eine Quelle, die im Laufe
-der Zeit Daten (z. B. Ereignisse, API-Antworten oder Benutzereingaben) senden kann.</p>
+<p>Ein Observable ist ein Objekt, das asynchrone Datenströme bereitstellt. Es repräsentiert eine Quelle, die im Laufe der Zeit
+Daten (z. B. Ereignisse, API-Antworten oder Benutzereingaben) senden kann.</p>
 </div>
 <div class="paragraph">
 <p>Nicht zu verwechseln mit <strong>Observer</strong> (Subscriber)!
-Ein Observer ist ein Objekt, das auf die Daten reagiert, die von einem Observable gesendet werden.
-Es definiert, wie mit den gesendeten Daten umgegangen wird.</p>
+Ein Observer ist ein Objekt, das auf die Daten reagiert, die von einem Observable gesendet werden. Es definiert, wie mit den gesendeten Daten umgegangen wird.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -647,26 +648,22 @@ Es definiert, wie mit den gesendeten Daten umgegangen wird.</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_pull_und_push_verfahren_im_zusammenhang_mit_observables"><a class="anchor" href="#_pull_und_push_verfahren_im_zusammenhang_mit_observables"></a>1.2.1. Pull- und Push-Verfahren im Zusammenhang mit Observables</h4>
+<h4 id="_pull_und_push_verfahren_im_zusammenhang_mit_observables"><a class="anchor" href="#_pull_und_push_verfahren_im_zusammenhang_mit_observables"></a>2.1.1. Pull- und Push-Verfahren im Zusammenhang mit Observables</h4>
 <div class="paragraph">
 <p>ReactiveX kombiniert Pull- und Push-Prinzipien:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Pull:</strong> Ein Observer (Subscriber) entscheidet, ob er sich für ein Observable registrieren möchte.
-Dadurch hat der Konsument die Kontrolle darüber, welche Datenquellen ihn interessieren.</p>
+<p><strong>Pull:</strong> Ein Observer (Subscriber) entscheidet, ob er sich für ein Observable registrieren möchte. Dadurch hat der Konsument die Kontrolle darüber, welche Datenquellen ihn interessieren.</p>
 </li>
 <li>
-<p><strong>Push:</strong> Sobald ein Observer sich registriert hat, sendet das Observable Daten (Events) aktiv an den Observer,
-ohne dass der Observer diese explizit anfordern muss.</p>
+<p><strong>Push:</strong> Sobald ein Observer sich registriert hat, sendet das Observable Daten (Events) aktiv an den Observer, ohne dass der Observer diese explizit anfordern muss.</p>
 </li>
 </ul>
 </div>
-<div class="paragraph">
-<p>Beispiel:</p>
-</div>
 <div class="listingblock">
+<div class="title">Beispiel:</div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">Observable</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">rxjs</span><span class="dl">'</span><span class="p">;</span>
 
@@ -713,48 +710,54 @@ done</pre>
 </details>
 <div class="imageblock">
 <div class="content">
-<img src="images/observable-exmaple.png" alt="observable exmaple">
+<img src="images/observable-example.png" alt="observable example">
 </div>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_signals"><a class="anchor" href="#_signals"></a>2.2. Signals</h3>
+<div class="paragraph">
+<p>Signals sind eine moderne Alternative zu Observables in Angular. Sie bieten einen reaktiven
+Ansatz für das Management und die Aktualisierung von Daten. Obwohl Signals keine Asynchronität bieten,
+sind sie reaktiv, da sie automatisch Abhängigkeiten verfolgen und Änderungen propagieren. Das bedeutet,
+dass jede Änderung eines Signals alle abhängigen Berechnungen oder UI-Komponenten sofort aktualisiert.</p>
 </div>
+<div class="paragraph">
+<p>Eigenschaften von Signals:</p>
 </div>
-<div class="sect1">
-<h2 id="_reactive_frameworks"><a class="anchor" href="#_reactive_frameworks"></a>2. Reactive-Frameworks</h2>
-<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p><strong><a href="https://github.com/reactor/reactor-core">Reactor Core</a></strong>: wird häufig in Java Spring verwendet</p>
+<p><strong>Synchronität:</strong> Signals arbeiten synchron und aktualisieren die Werte direkt.</p>
 </li>
 <li>
-<p><strong><a href="https://reactivex.io/">ReactiveX</a></strong>: wird häufig für Javascript verwendet</p>
+<p><strong>Abhängigkeits-Tracking:</strong> Sie verfolgen automatisch Abhängigkeiten, sodass Änderungen an einem Signal alle
+abhängigen Komponenten oder Berechnungen automatisch aktualisieren.</p>
 </li>
 <li>
-<p><strong><a href="https://smallrye.io/smallrye-mutiny/latest/">Mutiny</a></strong>: wird primär in Quarkus verwendet</p>
-</li>
-<li>
-<p><strong><a href="https://vertx.io/">Vert.x</a></strong>: für Java oder Kotlin verwendet</p>
+<p><strong>Einfache API:</strong> Signals haben eine intuitive API, die weniger Boilerplate-Code erfordert.</p>
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_quarkus_mutiny_vs_andere_reaktive_api"><a class="anchor" href="#_quarkus_mutiny_vs_andere_reaktive_api"></a>3. Quarkus Mutiny vs andere reaktive API</h2>
-<div class="sectionbody">
+<div class="listingblock">
+<div class="title">Beispiel für ein Signal:</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">signal</span><span class="p">,</span> <span class="nx">computed</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
 
+<span class="kd">const</span> <span class="nx">count</span> <span class="o">=</span> <span class="nf">signal</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">doubled</span> <span class="o">=</span> <span class="nf">computed</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nf">count</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span><span class="p">);</span>
+
+<span class="nx">count</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">value</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nf">count</span><span class="p">());</span> <span class="c1">// Ausgabe: 1</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nf">doubled</span><span class="p">());</span> <span class="c1">// Ausgabe: 2</span></code></pre>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_signals"><a class="anchor" href="#_signals"></a>4. Signals</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Quarkus verwendet primär die Mutiny-API für reaktive Applikationen. Viele der eingebauten Extensions
-verlangen Typen wie <strong>Uni</strong> oder <strong>Multi</strong>. Es würde dann zum Konflikt zwischen den Typen von anderen reaktiven API wie
-<strong>RxJava</strong> kommen. <a href="https://quarkus.io/guides/mutiny-primer">Quarkus Mutiny</a></p>
 </div>
+<div class="sect2">
+<h3 id="_observable_vs_signals"><a class="anchor" href="#_observable_vs_signals"></a>2.3. Observable vs. Signals</h3>
+<div class="sect3">
+<h4 id="_vergleich_nach_anwendungsfällen"><a class="anchor" href="#_vergleich_nach_anwendungsfällen"></a>2.3.1. Vergleich nach Anwendungsfällen</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -763,48 +766,76 @@ verlangen Typen wie <strong>Uni</strong> oder <strong>Multi</strong>. Es würde 
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Merkmal</th>
-<th class="tableblock halign-left valign-top">Mutiny</th>
-<th class="tableblock halign-left valign-top">RxJava</th>
+<th class="tableblock halign-left valign-top">Eigenschaft</th>
+<th class="tableblock halign-left valign-top">Observable</th>
+<th class="tableblock halign-left valign-top">Signals</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Single-Item Stream</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Uni&lt;T&gt;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Single&lt;T&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Synchronität</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Asynchron</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Synchron</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multi-Item Stream</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Multi&lt;T&gt;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Observable&lt;T&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Abhängigkeits-Tracking</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Manuell durch Subscription</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Automatisch</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Ressourcenverbrauch</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Gering (optimiert für Quarkus)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Höher, allgemeiner Einsatz</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Komplexität</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Höher, erfordert mehr Boilerplate</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Niedriger, einfache API</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Integration</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Nahtlos mit Quarkus Extensions</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Framework-unabhängig</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anwendungsfälle</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Datenströme, Ereignissteuerung</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reaktives State-Management</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Zielsetzung</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud-native, reaktive Microservices</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Allgemeine reaktive Programmierung</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Sprachunterstützung</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Java, Kotlin</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Performance</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Kann Overhead erzeugen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Effizient durch Synchronität</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+<div class="sect3">
+<h4 id="_beste_verwendungsmöglichkeiten"><a class="anchor" href="#_beste_verwendungsmöglichkeiten"></a>2.3.2. Beste Verwendungsmöglichkeiten</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Observable:</strong></p>
+</li>
+<li>
+<p>Perfekt für die Verarbeitung von asynchronen Datenströmen wie API-Antworten, Benutzereingaben und Websocket-Nachrichten.</p>
+</li>
+<li>
+<p>Ideal für Szenarien, in denen die Datenquelle kontinuierlich oder verzögert Daten liefert.</p>
+</li>
+<li>
+<p>Bietet eine breite Palette von Operators, um Streams zu manipulieren und komplexe Datenflüsse zu handhaben.</p>
+</li>
+<li>
+<p><strong>Signals:</strong></p>
+</li>
+<li>
+<p>Hervorragend geeignet für synchrones State-Management in Angular-Anwendungen.</p>
+</li>
+<li>
+<p>Ideal für UI-Komponenten, bei denen Änderungen sofort und automatisch reflektiert werden müssen.</p>
+</li>
+<li>
+<p>Weniger Overhead, wenn die Daten synchron verarbeitet werden können und keine komplexen asynchronen Prozesse erforderlich sind.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="sect1">
-<h2 id="_beispiele_mit_reactivex"><a class="anchor" href="#_beispiele_mit_reactivex"></a>5. Beispiele mit ReactiveX</h2>
+<h2 id="_beispiele_mit_reactivex"><a class="anchor" href="#_beispiele_mit_reactivex"></a>3. Beispiele mit ReactiveX</h2>
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
@@ -840,7 +871,7 @@ angewendet. So sieht die folgende Struktur der ToDos aus:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_android_rxjava_demo"><a class="anchor" href="#_android_rxjava_demo"></a>6. Android (rxjava-demo)</h2>
+<h2 id="_android_rxjava_demo"><a class="anchor" href="#_android_rxjava_demo"></a>4. Android (rxjava-demo)</h2>
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
@@ -852,7 +883,7 @@ angewendet. So sieht die folgende Struktur der ToDos aus:</p>
 Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 </div>
 <div class="sect2">
-<h3 id="_android_mvvm"><a class="anchor" href="#_android_mvvm"></a>6.1. Android-MVVM</h3>
+<h3 id="_android_mvvm"><a class="anchor" href="#_android_mvvm"></a>4.1. Android-MVVM</h3>
 <div class="imageblock">
 <div class="content">
 <img src="images/android-mvvm-pattern.png" alt="android mvvm pattern">
@@ -906,7 +937,7 @@ Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_drei_prinzipien"><a class="anchor" href="#_drei_prinzipien"></a>6.2. Drei Prinzipien</h3>
+<h3 id="_drei_prinzipien"><a class="anchor" href="#_drei_prinzipien"></a>4.2. Drei Prinzipien</h3>
 <div class="paragraph">
 <p><a href="https://redux.js.org/understanding/thinking-in-redux/three-principles">Three Principles</a></p>
 </div>
@@ -924,7 +955,7 @@ Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_single_source_of_truth"><a class="anchor" href="#_single_source_of_truth"></a>6.2.1. Single Source of Truth</h4>
+<h4 id="_single_source_of_truth"><a class="anchor" href="#_single_source_of_truth"></a>4.2.1. Single Source of Truth</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -934,7 +965,7 @@ Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_state_is_read_only"><a class="anchor" href="#_state_is_read_only"></a>6.2.2. State is Read-Only</h4>
+<h4 id="_state_is_read_only"><a class="anchor" href="#_state_is_read_only"></a>4.2.2. State is Read-Only</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -947,7 +978,7 @@ Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_changes_are_made_with_pure_functions"><a class="anchor" href="#_changes_are_made_with_pure_functions"></a>6.2.3. Changes are Made with Pure Functions</h4>
+<h4 id="_changes_are_made_with_pure_functions"><a class="anchor" href="#_changes_are_made_with_pure_functions"></a>4.2.3. Changes are Made with Pure Functions</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -961,7 +992,7 @@ Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_projekt"><a class="anchor" href="#_projekt"></a>6.3. Projekt</h3>
+<h3 id="_projekt"><a class="anchor" href="#_projekt"></a>4.3. Projekt</h3>
 <div class="imageblock">
 <div class="content">
 <img src="images/android-project.png" alt="android project">
@@ -981,7 +1012,7 @@ Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_util"><a class="anchor" href="#_util"></a>6.3.1. Util</h4>
+<h4 id="_util"><a class="anchor" href="#_util"></a>4.3.1. Util</h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/android-project-util.png" alt="android project util">
@@ -1346,7 +1377,7 @@ Intern sorgt Immer dafür, dass der ursprüngliche Zustand unverändert bleibt, 
 </details>
 </div>
 <div class="sect3">
-<h4 id="_model"><a class="anchor" href="#_model"></a>6.3.2. Model</h4>
+<h4 id="_model"><a class="anchor" href="#_model"></a>4.3.2. Model</h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/android-project-model.png" alt="android project model">
@@ -1457,7 +1488,7 @@ Intern sorgt Immer dafür, dass der ursprüngliche Zustand unverändert bleibt, 
 </details>
 </div>
 <div class="sect3">
-<h4 id="_feature"><a class="anchor" href="#_feature"></a>6.3.3. Feature</h4>
+<h4 id="_feature"><a class="anchor" href="#_feature"></a>4.3.3. Feature</h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/android-project-feature.png" alt="android project feature">
@@ -1809,7 +1840,7 @@ Intern sorgt Immer dafür, dass der ursprüngliche Zustand unverändert bleibt, 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_angular_rxjs_demo"><a class="anchor" href="#_angular_rxjs_demo"></a>7. Angular (rxjs-demo)</h2>
+<h2 id="_angular_rxjs_demo"><a class="anchor" href="#_angular_rxjs_demo"></a>5. Angular (rxjs-demo)</h2>
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
@@ -1821,14 +1852,14 @@ Intern sorgt Immer dafür, dass der ursprüngliche Zustand unverändert bleibt, 
 Benutzereingaben und Ereignisse zu verwalten.</p>
 </div>
 <div class="sect2">
-<h3 id="_struktur_des_projekts"><a class="anchor" href="#_struktur_des_projekts"></a>7.1. Struktur des Projekts</h3>
+<h3 id="_struktur_des_projekts"><a class="anchor" href="#_struktur_des_projekts"></a>5.1. Struktur des Projekts</h3>
 <div class="imageblock">
 <div class="content">
 <img src="images/angular-project.png" alt="angular project">
 </div>
 </div>
 <div class="sect3">
-<h4 id="_model_2"><a class="anchor" href="#_model_2"></a>7.1.1. Model</h4>
+<h4 id="_model_2"><a class="anchor" href="#_model_2"></a>5.1.1. Model</h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/angular-project-model.png" alt="angular project model">
@@ -1851,20 +1882,13 @@ Benutzereingaben und Ereignisse zu verwalten.</p>
 <span class="p">{</span>
   <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Dave</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Lewakaslehna</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">todos</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">{</span>
-      <span class="na">userId</span><span class="p">:</span> <span class="mi">69</span><span class="p">,</span>
-      <span class="na">id</span><span class="p">:</span> <span class="mi">3000</span><span class="p">,</span>
-      <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Hello davedii</span><span class="dl">"</span><span class="p">,</span>
-      <span class="na">completed</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
-    <span class="p">}</span>
-  <span class="p">]</span>
+  <span class="na">todos</span><span class="p">:</span> <span class="p">[],</span>
 <span class="p">}</span>
 
 <span class="kd">const</span> <span class="nx">initialState</span><span class="p">:</span> <span class="nx">Model</span> <span class="o">=</span> <span class="p">{</span> <i class="conum" data-value="2"></i><b>(2)</b>
   <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">John</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Pork</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">todos</span><span class="p">:</span> <span class="p">[]</span>
+  <span class="na">todos</span><span class="p">:</span> <span class="p">[],</span>
 <span class="p">}</span>
 <span class="k">export</span> <span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BehaviorSubject</span><span class="o">&lt;</span><span class="nx">Model</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">initialState</span><span class="p">)</span> <i class="conum" data-value="3"></i><b>(3)</b>
 
@@ -1922,7 +1946,7 @@ Model was geändert hat.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_services"><a class="anchor" href="#_services"></a>7.1.2. Services</h4>
+<h4 id="_services"><a class="anchor" href="#_services"></a>5.1.2. Services</h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/angular-project-service.png" alt="angular project service">
@@ -1991,7 +2015,7 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 </div>
 </div>
 <div class="sect3">
-<h4 id="_components"><a class="anchor" href="#_components"></a>7.1.3. Components</h4>
+<h4 id="_components"><a class="anchor" href="#_components"></a>5.1.3. Components</h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/angular-project-component.png" alt="angular project component">
@@ -2028,7 +2052,7 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 <div class="listingblock">
 <div class="title">todo.component.ts</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">inject</span><span class="p">,</span> <span class="nx">OnInit</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">inject</span><span class="p">,</span> <span class="nx">model</span><span class="p">,</span> <span class="nx">OnInit</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span><span class="nx">StoreService</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../../services/store.service</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span><span class="nx">distinctUntilChanged</span><span class="p">,</span> <span class="nx">map</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">rxjs</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span><span class="nx">Todo</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../../model</span><span class="dl">"</span><span class="p">;</span>
@@ -2037,14 +2061,14 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 
 <span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
   <span class="na">selector</span><span class="p">:</span> <span class="dl">'</span><span class="s1">app-todo</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">standalone</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
   <span class="na">imports</span><span class="p">:</span> <span class="p">[</span>
     <span class="nx">AsyncPipe</span>
   <span class="p">],</span>
   <span class="na">templateUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./todo.component.html</span><span class="dl">'</span><span class="p">,</span>
-  <span class="na">standalone</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
   <span class="na">styleUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./todo.component.css</span><span class="dl">'</span>
 <span class="p">})</span>
-<span class="k">export</span> <span class="kd">class</span> <span class="nc">TodoComponent</span> <span class="p">{</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nc">TodoComponent</span> <span class="k">implements</span> <span class="nx">OnInit</span> <span class="p">{</span>
   <span class="nx">todoService</span> <span class="o">=</span> <span class="nf">inject</span><span class="p">(</span><span class="nx">TodoService</span><span class="p">)</span>
   <span class="nx">viewModel</span> <span class="o">=</span> <span class="nf">inject</span><span class="p">(</span><span class="nx">StoreService</span><span class="p">)</span>
     <span class="p">.</span><span class="nx">store</span>
@@ -2054,6 +2078,9 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
     <span class="p">)</span>
   <span class="nf">loadTodos</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">todoService</span><span class="p">.</span><span class="nf">findAll</span><span class="p">()</span>
+  <span class="p">}</span>
+
+  <span class="nf">ngOnInit</span><span class="p">():</span> <span class="k">void</span> <span class="p">{</span>
   <span class="p">}</span>
 
 <span class="p">}</span></code></pre>
@@ -2477,7 +2504,7 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 </div>
 </div>
 <div class="sect1">
-<h2 id="_glossar"><a class="anchor" href="#_glossar"></a>8. Glossar</h2>
+<h2 id="_glossar"><a class="anchor" href="#_glossar"></a>6. Glossar</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -2584,7 +2611,7 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_quelle"><a class="anchor" href="#_quelle"></a>9. Quelle</h2>
+<h2 id="_quelle"><a class="anchor" href="#_quelle"></a>7. Quelle</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -2618,6 +2645,9 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 <li>
 <p><a href="https://vertx.io/" class="bare">https://vertx.io/</a></p>
 </li>
+<li>
+<p>reahttps://www.betterask.erni/introduction-to-angular-signals/</p>
+</li>
 </ul>
 </div>
 </div>
@@ -2626,7 +2656,7 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-21 15:55:00 UTC
+Last updated 2025-01-27 17:20:20 UTC
 </div>
 </div>
 </body>
