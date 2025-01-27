@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
 import { AppStateService } from '../../services/app-state.service';
+import { AsyncPipe, NgForOf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgForOf } from '@angular/common';
 
 @Component({
-  selector: 'app-signal',
-  templateUrl: './signal.component.html',
-  styleUrls: ['./signal.component.css'],
+  selector: 'app-rxjs',
+  templateUrl: './rxjs.component.html',
+  styleUrls: ['./rxjs.component.css'],
   imports: [
-    FormsModule,
+    AsyncPipe,
     NgForOf,
+    FormsModule,
   ],
 })
-export class SignalComponent {
+export class RxjsComponent {
   newTodoTitle = '';
-  todos = this.appState.todosSignals;
+  todos$ = this.appState.todos$;
 
   constructor(private appState: AppStateService) {}
 
@@ -24,12 +25,13 @@ export class SignalComponent {
 
   addTodo() {
     if (this.newTodoTitle.trim()) {
-      this.appState.addTodo({
+      const newTodo = {
         userId: 1,
         id: Date.now(),
         title: this.newTodoTitle.trim(),
         completed: false,
-      });
+      };
+      this.appState.addTodo(newTodo);
       this.newTodoTitle = '';
     }
   }

@@ -1,8 +1,8 @@
 <div>
-  <h3>Todos (Signal)</h3>
+  <h3>Todos (RxJS)</h3>
   <button (click)="loadTodos()">Load Todos</button>
   <ul>
-    <li *ngFor="let todo of todos()">
+    <li *ngFor="let todo of todos$ | async">
       <input
         type="checkbox"
         [checked]="todo.completed"

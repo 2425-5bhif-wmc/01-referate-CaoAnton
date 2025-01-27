@@ -12,7 +12,7 @@ ifndef::backend[:backend: html5]
 
 == Was ist reactive?
 
-In der reaktiven Programmierung beschäftigt man sich mit **Datenströmen** und die **Observable**. Bei der reaktiven
+In der reaktiven Programmierung beschäftigt man sich mit **Datenströmen**. Bei der reaktiven
 Programmierung sagen wir an, was passiert, wenn wir etwas in unserem Datenstrom beobachten.
 
 == Angular
@@ -104,7 +104,8 @@ dass jede Änderung eines Signals alle abhängigen Berechnungen oder UI-Komponen
 Eigenschaften von Signals:
 
 - **Synchronität:** Signals arbeiten synchron und aktualisieren die Werte direkt.
-- **Abhängigkeits-Tracking:** Sie verfolgen automatisch Abhängigkeiten, sodass Änderungen an einem Signal alle abhängigen Komponenten oder Berechnungen automatisch aktualisieren.
+- **Abhängigkeits-Tracking:** Sie verfolgen automatisch Abhängigkeiten, sodass Änderungen an einem Signal alle
+abhängigen Komponenten oder Berechnungen automatisch aktualisieren.
 - **Einfache API:** Signals haben eine intuitive API, die weniger Boilerplate-Code erfordert.
 
 .Beispiel für ein Signal:
@@ -145,33 +146,6 @@ console.log(doubled()); // Ausgabe: 2
 - Hervorragend geeignet für synchrones State-Management in Angular-Anwendungen.
 - Ideal für UI-Komponenten, bei denen Änderungen sofort und automatisch reflektiert werden müssen.
 - Weniger Overhead, wenn die Daten synchron verarbeitet werden können und keine komplexen asynchronen Prozesse erforderlich sind.
-
-== Reactive-Frameworks
-
-- **https://github.com/reactor/reactor-core[Reactor Core]**: wird häufig in Java Spring verwendet
-- **https://reactivex.io/[ReactiveX]**: wird häufig für Javascript verwendet
-- **https://smallrye.io/smallrye-mutiny/latest/[Mutiny]**: wird primär in Quarkus verwendet
-- **https://vertx.io/[Vert.x]**: für Java oder Kotlin verwendet
-
-== Quarkus Mutiny vs andere reaktive API
-
-
-
-Quarkus verwendet primär die Mutiny-API für reaktive Applikationen. Viele der eingebauten Extensions
-verlangen Typen wie **Uni** oder **Multi**. Es würde dann zum Konflikt zwischen den Typen von anderen reaktiven API wie
-**RxJava** kommen. https://quarkus.io/guides/mutiny-primer[Quarkus Mutiny]
-
-[cols="3,3,3", options="header"]
-|===
-|Merkmal                     |Mutiny                                     |RxJava
-
-|**Single-Item Stream**      |`Uni<T>`                                   |`Single<T>`
-|**Multi-Item Stream**       |`Multi<T>`                                 |`Observable<T>`
-|**Ressourcenverbrauch**     |Gering (optimiert für Quarkus)             |Höher, allgemeiner Einsatz
-|**Integration**             |Nahtlos mit Quarkus Extensions             |Framework-unabhängig
-|**Zielsetzung**             |Cloud-native, reaktive Microservices       |Allgemeine reaktive Programmierung
-|**Sprachunterstützung**     |Java                                       |Java, Kotlin
-|===
 
 == Beispiele mit ReactiveX
 
@@ -834,3 +808,4 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.
 - https://github.com/reactor/reactor-core
 - https://smallrye.io/smallrye-mutiny/latest/
 - https://vertx.io/
+- reahttps://www.betterask.erni/introduction-to-angular-signals/

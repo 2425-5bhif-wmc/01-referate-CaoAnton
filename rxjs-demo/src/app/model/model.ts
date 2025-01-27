@@ -12,20 +12,13 @@ export const initial: Model =
 {
   name: "Dave",
   email: "Lewakaslehna",
-  todos: [
-    {
-      userId: 69,
-      id: 3000,
-      title: "Hello davedii",
-      completed: false,
-    }
-  ]
+  todos: [],
 }
 
 const initialState: Model = { // <.>
   name: "John",
   email: "Pork",
-  todos: []
+  todos: [],
 }
 export const store = new BehaviorSubject<Model>(initialState) // <.>
 

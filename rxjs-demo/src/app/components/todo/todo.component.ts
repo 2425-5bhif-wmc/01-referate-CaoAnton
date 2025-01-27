@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, model, OnInit} from '@angular/core';
 import {StoreService} from "../../services/store.service";
 import {distinctUntilChanged, map} from "rxjs";
 import {Todo} from "../../model";
@@ -7,14 +7,14 @@ import {TodoService} from "../../services/todo.service";
 
 @Component({
   selector: 'app-todo',
+  standalone: true,
   imports: [
     AsyncPipe
   ],
   templateUrl: './todo.component.html',
-  standalone: true,
   styleUrl: './todo.component.css'
 })
-export class TodoComponent {
+export class TodoComponent implements OnInit {
   todoService = inject(TodoService)
   viewModel = inject(StoreService)
     .store
@@ -24,6 +24,9 @@ export class TodoComponent {
     )
   loadTodos() {
     this.todoService.findAll()
+  }
+
+  ngOnInit(): void {
   }
 
 }
