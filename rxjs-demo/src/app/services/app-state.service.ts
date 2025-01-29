@@ -11,25 +11,24 @@ import { initial } from '../model/model';
 export class AppStateService {
   // Single Source of Truth
   private stateSubject = new BehaviorSubject<Model>(initial);
-  readonly state$ = this.stateSubject.asObservable().pipe(shareReplay(1));
 
   // RxJS Observables (Selectors)
-  readonly todos$: Observable<Todo[]> = this.state$.pipe(
+  readonly todos: Observable<Todo[]> = this.stateSubject.pipe(
     map((state) => state.todos),
     distinctUntilChanged()
   );
-  readonly userName$: Observable<string> = this.state$.pipe(
+  readonly userName$: Observable<string> = this.stateSubject.pipe(
     map((state) => state.name),
     distinctUntilChanged()
   );
-  readonly userEmail$: Observable<string> = this.state$.pipe(
+  readonly userEmail$: Observable<string> = this.stateSubject.pipe(
     map((state) => state.email),
     distinctUntilChanged()
   );
-  readonly completedTodos$: Observable<Todo[]> = this.todos$.pipe(
+  readonly completedTodos$: Observable<Todo[]> = this.todos.pipe(
     map((todos) => todos.filter((todo) => todo.completed))
   );
-  readonly activeTodos$: Observable<Todo[]> = this.todos$.pipe(
+  readonly activeTodos$: Observable<Todo[]> = this.todos.pipe(
     map((todos) => todos.filter((todo) => !todo.completed))
   );
 

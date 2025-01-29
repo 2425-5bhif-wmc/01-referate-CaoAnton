@@ -8,19 +8,13 @@ export interface Model { // <.>
   readonly todos: Todo[]
 }
 
-export const initial: Model =
+export const initial: Model = // <.>
 {
   name: "Dave",
   email: "Lewakaslehna",
   todos: [],
 }
-
-const initialState: Model = { // <.>
-  name: "John",
-  email: "Pork",
-  todos: [],
-}
-export const store = new BehaviorSubject<Model>(initialState) // <.>
+export const store = new BehaviorSubject<Model>(initial) // <.>
 
 export function set(recipe: (model: Draft<Model>) => void){ // <.>
   const nextModel = produce(store.getValue(), recipe)

@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class RxjsComponent {
   newTodoTitle = '';
-  todos$ = this.appState.todos$;
+  todos = this.appState.todos;
 
   constructor(private appState: AppStateService) {}
 

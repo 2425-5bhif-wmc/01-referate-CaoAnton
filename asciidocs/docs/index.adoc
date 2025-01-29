@@ -130,7 +130,7 @@ was bedeutet, dass Angular nur die betroffenen Teile der UI aktualisiert.
 image::angular-signal.png[]
 
 
-**Probleme, die Signals lösen:**
+==== Probleme, die Signals lösen
 
 - Komplexität und Ineffizienz in Change Detection:
 
@@ -151,22 +151,21 @@ Entwickler müssen oft manuell steuern, welche Teile der Anwendung aktualisiert 
 .Beispiel für ein Signal:
 [source, typescript]
 ----
-import { signal, computed, effect } from '@angular/core';
+import { signal, effect } from '@angular/core';
 
 // Signal erstellen
-const counter = signal(0);
-
-// Computed Signal
-const doubleCounter = computed(() => counter() * 2);
+const counter = signal(0); // erstellt ein Signal mit einem Anfangswert 0
 
 // Effekt
-effect(() => {
+effect(() => { // <.>
   console.log('Counter hat sich geändert:', counter());
 });
 
 // Update des Signals
 counter.set(1);
 ----
+
+<.> effect: wird jedes Mal ausgeführt, wenn counter sich ändert.
 
 .Output
 [%collapsible]
@@ -177,9 +176,59 @@ Counter hat sich geändert: 1
 ----
 ====
 
-=== Observable vs. Signals
+==== Weitere wichtige Arten von Signals
 
-==== Vergleich nach Anwendungsfällen
+* **Computed Signals**: Ein Computed Signal berechnet automatisch einen neuen Wert, wenn sich ein anderes Signal ändert.
+
+.Computed Signals
+[source, typescript]
+----
+import { signal, computed } from '@angular/core';
+
+const count = signal(2);
+const squared = computed(() => count() * count());
+
+console.log(squared());
+count.set(3);
+console.log(squared());
+----
+
+.Output
+[%collapsible]
+====
+----
+4
+9
+----
+====
+
+* **Effects**: Ein Computed Signal berechnet automatisch einen neuen Wert, wenn sich ein anderes Signal ändert.
+
+.Computed Signals
+[source, typescript]
+----
+import { signal, effect } from '@angular/core';
+
+const name = signal('Candice');
+
+effect(() => {
+  console.log(`Hallo, ${name()}!`);
+});
+
+name.set('Oleg');
+
+----
+
+.Output
+[%collapsible]
+====
+----
+Hallo, Candice!
+Hallo, Oleg!
+----
+====
+
+=== Observable vs. Signals
 
 |===
 | Eigenschaft              | Observable                     | Signals
@@ -188,7 +237,8 @@ Counter hat sich geändert: 1
 | **Abhängigkeits-Tracking** | Manuell durch Subscription    | Automatisch
 | **Komplexität**         | Höher, erfordert mehr Boilerplate | Niedriger, einfache API
 | **Anwendungsfälle**     | Datenströme, Ereignissteuerung | Reaktives State-Management
-| **Performance**         | Kann Overhead erzeugen         | Effizient durch Synchronität
+| **Push vs. Pull**     | Push-basiert (Werte werden ausgesendet) | Pull-basiert (nur wenn nötig)
+
 |===
 
 ==== Beste Verwendungsmöglichkeiten
@@ -231,7 +281,7 @@ include::puml/todos.puml[]
 
 https://jsonplaceholder.typicode.com/todos
 
-== Android (rxjava-demo)
+== Android
 
 [plantuml]
 ----
