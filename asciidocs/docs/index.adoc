@@ -19,11 +19,15 @@ Programmierung sagen wir an, was passiert, wenn wir etwas in unserem Datenstrom 
 
 Es gibt mehrere Möglichkeiten, in Angular reaktiv zu arbeiten:
 
-1. **Observable:** Für die Verarbeitung asynchroner Datenströme wie Ereignisse, Benutzereingaben oder API-Antworten.
-2. **Signals:** Für synchrones, reaktives State-Management.
-3. **BehaviorSubject/Subject (RxJS):** Für die Verarbeitung und Weitergabe von Daten innerhalb eines Streams, oft für State-Management oder Sharing von Streams verwendet.
+1. **RxJS (Reactive Extensions for JavaScript):**: Sie ermöglicht die asynchrone Verarbeitung von Datenströmen und Ereignissen.
+2. **Signals:** Für synchrones, reaktives State-Management
 
-=== Observable
+=== RxJS
+
+RxJS ist die standardmäßig integrierte Bibliothek in Angular, die reaktive Programmierung auf Basis von Observables
+ermöglicht. Hier sind die zentralen Konzepte:
+
+==== Observable
 
 Ein Observable ist ein Objekt, das asynchrone Datenströme bereitstellt. Es repräsentiert eine Quelle, die im Laufe der Zeit
 Daten (z. B. Ereignisse, API-Antworten oder Benutzereingaben) senden kann.
@@ -42,8 +46,6 @@ Eigenschaften des Observers:
 - **complete:** Signalisiert das Ende des Streams.
 
 ==== Pull- und Push-Verfahren im Zusammenhang mit Observables
-
-ReactiveX kombiniert Pull- und Push-Prinzipien:
 
 - **Pull:** Ein Observer (Subscriber) entscheidet, ob er sich für ein Observable registrieren möchte. Dadurch hat der Konsument die Kontrolle darüber, welche Datenquellen ihn interessieren.
 - **Push:** Sobald ein Observer sich registriert hat, sendet das Observable Daten (Events) aktiv an den Observer, ohne dass der Observer diese explizit anfordern muss.
@@ -92,34 +94,88 @@ done
 ----
 ====
 
-image::observable-example.png[]
+image::observable-exmaple.png[]
+
+
+==== Subject
+
+Ein Subject in RxJS ist eine besondere Art von Observable, das gleichzeitig als Observer fungiert.
+Das bedeutet, dass ein Subject Werte empfangen und diese an seine Abonnenten weitergeben kann.
+
+Arten von Subject:
+
+===== Subject
+
+* gibt alle Werte nur an die Abonnenten weiter, die zum Zeitpunkt bereits abonniert sind
+* Spätere Abonnenten erhalten keine vorherigen Werte, sondern nur zukünftige Werte
+
+.https://medium.com/version-1/types-of-subjects-in-rxjs-124b6e2cf511[Subject]
+image::subject.png[]
+
+===== BehaviorSubject
+
+* speichert den letzten Wert und gibt ihn sofort an neue Abonnenten weiter.
+* Jeder neue Subscriber bekommt den zuletzt gespeicherten Wert, bevor er weitere Updates erhält.
+
+.https://medium.com/version-1/types-of-subjects-in-rxjs-124b6e2cf511[BehaviorSubject]
+image::behavior-subject.png[]
 
 === Signals
 
-Signals sind eine moderne Alternative zu Observables in Angular. Sie bieten einen reaktiven
-Ansatz für das Management und die Aktualisierung von Daten. Obwohl Signals keine Asynchronität bieten,
-sind sie reaktiv, da sie automatisch Abhängigkeiten verfolgen und Änderungen propagieren. Das bedeutet,
-dass jede Änderung eines Signals alle abhängigen Berechnungen oder UI-Komponenten sofort aktualisiert.
+Ein Signal in Angular ist eine reaktive Datenstruktur, die einen bestimmten Zustand hält und automatisch benachrichtigt,
+wenn sich dieser Zustand ändert. Es stellt eine explizite Abhängigkeit zwischen Daten und der Benutzeroberfläche her,
+was bedeutet, dass Angular nur die betroffenen Teile der UI aktualisiert.
 
-Eigenschaften von Signals:
+.https://www.betterask.erni/introduction-to-angular-signals/[Angular Signals]
+image::angular-signal.png[]
 
-- **Synchronität:** Signals arbeiten synchron und aktualisieren die Werte direkt.
-- **Abhängigkeits-Tracking:** Sie verfolgen automatisch Abhängigkeiten, sodass Änderungen an einem Signal alle
-abhängigen Komponenten oder Berechnungen automatisch aktualisieren.
-- **Einfache API:** Signals haben eine intuitive API, die weniger Boilerplate-Code erfordert.
+
+**Probleme, die Signals lösen:**
+
+- Komplexität und Ineffizienz in Change Detection:
+
+Angulars ursprüngliches Reaktivitätsmodell (z. B. mit Observables oder Input-Bindings)
+überprüft oft unnötig viele Komponenten und Templates, was die Performance belastet – besonders in komplexen Anwendungen.
+Change-Detection-System überprüft standardmäßig alles, auch wenn nur kleine Teile des Zustands geändert wurden.
+
+- Fehlende explizite Datenabhängigkeiten:
+
+RxJS-basierte Lösungen erfordern häufig Boilerplate-Code und manuelle Abhängigkeitsverkettungen,
+was die Verständlichkeit erschwert.
+
+
+- Mangel an granularer Reaktivität:
+
+Entwickler müssen oft manuell steuern, welche Teile der Anwendung aktualisiert werden, oder komplexe RxJS-Logik implementieren.
 
 .Beispiel für ein Signal:
 [source, typescript]
 ----
-import { signal, computed } from '@angular/core';
+import { signal, computed, effect } from '@angular/core';
 
-const count = signal(0);
-const doubled = computed(() => count() * 2);
+// Signal erstellen
+const counter = signal(0);
 
-count.update(value => value + 1);
-console.log(count()); // Ausgabe: 1
-console.log(doubled()); // Ausgabe: 2
+// Computed Signal
+const doubleCounter = computed(() => counter() * 2);
+
+// Effekt
+effect(() => {
+  console.log('Counter hat sich geändert:', counter());
+});
+
+// Update des Signals
+counter.set(1);
 ----
+
+.Output
+[%collapsible]
+====
+----
+Counter hat sich geändert: 0
+Counter hat sich geändert: 1
+----
+====
 
 === Observable vs. Signals
 
@@ -146,6 +202,11 @@ console.log(doubled()); // Ausgabe: 2
 - Hervorragend geeignet für synchrones State-Management in Angular-Anwendungen.
 - Ideal für UI-Komponenten, bei denen Änderungen sofort und automatisch reflektiert werden müssen.
 - Weniger Overhead, wenn die Daten synchron verarbeitet werden können und keine komplexen asynchronen Prozesse erforderlich sind.
+
+
+==== Beispiel
+
+
 
 == Beispiele mit ReactiveX
 
@@ -808,4 +869,5 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.
 - https://github.com/reactor/reactor-core
 - https://smallrye.io/smallrye-mutiny/latest/
 - https://vertx.io/
-- reahttps://www.betterask.erni/introduction-to-angular-signals/
+- https://www.betterask.erni/introduction-to-angular-signals/
+- https://dev.to/soumayaerradi/angular-signals-from-zero-to-hero-4j2d#:~:text=Angular%20Signals%20are%20reactive%20values,for%20managing%20local%20component%20state.
