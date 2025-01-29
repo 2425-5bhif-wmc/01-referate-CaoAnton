@@ -1,58 +1,31 @@
-import {computed, Injectable, signal} from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, distinctUntilChanged, shareReplay } from 'rxjs/operators';
-import { Model, Todo} from '../model';
+import { Model, Todo } from '../model';
 import { initial } from '../model/model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppStateService {
-  // Single Source of Truth
-  private stateSubject = new BehaviorSubject<Model>(initial);
+  // Single Source of Truth als Signal
+  private state = signal<Model>(initial);
 
-  // RxJS Observables (Selectors)
-  readonly todos: Observable<Todo[]> = this.stateSubject.pipe(
-    map((state) => state.todos),
-    distinctUntilChanged()
-  );
-  readonly userName$: Observable<string> = this.stateSubject.pipe(
-    map((state) => state.name),
-    distinctUntilChanged()
-  );
-  readonly userEmail$: Observable<string> = this.stateSubject.pipe(
-    map((state) => state.email),
-    distinctUntilChanged()
-  );
-  readonly completedTodos$: Observable<Todo[]> = this.todos.pipe(
-    map((todos) => todos.filter((todo) => todo.completed))
-  );
-  readonly activeTodos$: Observable<Todo[]> = this.todos.pipe(
-    map((todos) => todos.filter((todo) => !todo.completed))
-  );
-
-  // Signals (abgeleitet aus RxJS)
-  private stateSignal = signal(this.stateSubject.getValue());
-  readonly todosSignals = computed(() => this.stateSignal().todos);
-  readonly userNameSignal = computed(() => this.stateSignal().name);
-  readonly userEmailSignal = computed(() => this.stateSignal().email);
+  // Computed Signals für Selektoren
+  readonly todosSignals = computed(() => this.state().todos);
+  readonly userNameSignal = computed(() => this.state().name);
+  readonly userEmailSignal = computed(() => this.state().email);
   readonly completedTodosSignal = computed(() =>
-    this.stateSignal().todos.filter((todo) => todo.completed)
+    this.state().todos.filter((todo) => todo.completed)
   );
   readonly activeTodosSignal = computed(() =>
-    this.stateSignal().todos.filter((todo) => !todo.completed)
+    this.state().todos.filter((todo) => !todo.completed)
   );
 
-  constructor(private http: HttpClient) {
-    // Synchronisiere Signal bei Änderungen im BehaviorSubject
-    this.stateSubject.subscribe((state) => this.stateSignal.set(state));
-  }
+  constructor(private http: HttpClient) {}
 
   // Zustand aktualisieren
   private updateState(recipe: (state: Model) => Model) {
-    const newState = recipe(this.stateSubject.getValue());
-    this.stateSubject.next(newState);
+    this.state.set(recipe(this.state()));
   }
 
   updateUser(name: string, email: string) {
