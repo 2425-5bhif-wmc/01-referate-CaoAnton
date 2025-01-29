@@ -556,7 +556,7 @@ pre.rouge .gs {
 <div class="details">
 <span id="author" class="author">Anton Cao</span><br>
 <span id="revnumber">version 1.0,</span>
-<span id="revdate">2025-01-27</span>
+<span id="revdate">2025-01-29</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -564,7 +564,7 @@ pre.rouge .gs {
 <li><a href="#_was_ist_reactive">1. Was ist reactive?</a></li>
 <li><a href="#_angular">2. Angular</a>
 <ul class="sectlevel2">
-<li><a href="#_observable">2.1. Observable</a></li>
+<li><a href="#_rxjs">2.1. RxJS</a></li>
 <li><a href="#_signals">2.2. Signals</a></li>
 <li><a href="#_observable_vs_signals">2.3. Observable vs. Signals</a></li>
 </ul>
@@ -606,18 +606,21 @@ Programmierung sagen wir an, was passiert, wenn wir etwas in unserem Datenstrom 
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Observable:</strong> Für die Verarbeitung asynchroner Datenströme wie Ereignisse, Benutzereingaben oder API-Antworten.</p>
+<p><strong>RxJS (Reactive Extensions for JavaScript):</strong>: Sie ermöglicht die asynchrone Verarbeitung von Datenströmen und Ereignissen.</p>
 </li>
 <li>
-<p><strong>Signals:</strong> Für synchrones, reaktives State-Management.</p>
-</li>
-<li>
-<p><strong>BehaviorSubject/Subject (RxJS):</strong> Für die Verarbeitung und Weitergabe von Daten innerhalb eines Streams, oft für State-Management oder Sharing von Streams verwendet.</p>
+<p><strong>Signals:</strong> Für synchrones, reaktives State-Management</p>
 </li>
 </ol>
 </div>
 <div class="sect2">
-<h3 id="_observable"><a class="anchor" href="#_observable"></a>2.1. Observable</h3>
+<h3 id="_rxjs"><a class="anchor" href="#_rxjs"></a>2.1. RxJS</h3>
+<div class="paragraph">
+<p>RxJS ist die standardmäßig integrierte Bibliothek in Angular, die reaktive Programmierung auf Basis von Observables
+ermöglicht. Hier sind die zentralen Konzepte:</p>
+</div>
+<div class="sect3">
+<h4 id="_observable"><a class="anchor" href="#_observable"></a>2.1.1. Observable</h4>
 <div class="paragraph">
 <p>Ein Observable ist ein Objekt, das asynchrone Datenströme bereitstellt. Es repräsentiert eine Quelle, die im Laufe der Zeit
 Daten (z. B. Ereignisse, API-Antworten oder Benutzereingaben) senden kann.</p>
@@ -647,11 +650,9 @@ Ein Observer ist ein Objekt, das auf die Daten reagiert, die von einem Observabl
 </li>
 </ul>
 </div>
-<div class="sect3">
-<h4 id="_pull_und_push_verfahren_im_zusammenhang_mit_observables"><a class="anchor" href="#_pull_und_push_verfahren_im_zusammenhang_mit_observables"></a>2.1.1. Pull- und Push-Verfahren im Zusammenhang mit Observables</h4>
-<div class="paragraph">
-<p>ReactiveX kombiniert Pull- und Push-Prinzipien:</p>
 </div>
+<div class="sect3">
+<h4 id="_pull_und_push_verfahren_im_zusammenhang_mit_observables"><a class="anchor" href="#_pull_und_push_verfahren_im_zusammenhang_mit_observables"></a>2.1.2. Pull- und Push-Verfahren im Zusammenhang mit Observables</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -710,7 +711,55 @@ done</pre>
 </details>
 <div class="imageblock">
 <div class="content">
-<img src="images/observable-example.png" alt="observable example">
+<img src="images/observable-exmaple.png" alt="observable exmaple">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_subject"><a class="anchor" href="#_subject"></a>2.1.3. Subject</h4>
+<div class="paragraph">
+<p>Ein Subject in RxJS ist eine besondere Art von Observable, das gleichzeitig als Observer fungiert.
+Das bedeutet, dass ein Subject Werte empfangen und diese an seine Abonnenten weitergeben kann.</p>
+</div>
+<div class="paragraph">
+<p>Arten von Subject:</p>
+</div>
+<div class="sect4">
+<h5 id="_subject_2"><a class="anchor" href="#_subject_2"></a>Subject</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>gibt alle Werte nur an die Abonnenten weiter, die zum Zeitpunkt bereits abonniert sind</p>
+</li>
+<li>
+<p>Spätere Abonnenten erhalten keine vorherigen Werte, sondern nur zukünftige Werte</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/subject.png" alt="subject">
+</div>
+<div class="title">Figure 1. <a href="https://medium.com/version-1/types-of-subjects-in-rxjs-124b6e2cf511">Subject</a></div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_behaviorsubject"><a class="anchor" href="#_behaviorsubject"></a>BehaviorSubject</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>speichert den letzten Wert und gibt ihn sofort an neue Abonnenten weiter.</p>
+</li>
+<li>
+<p>Jeder neue Subscriber bekommt den zuletzt gespeicherten Wert, bevor er weitere Updates erhält.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/behavior-subject.png" alt="behavior subject">
+</div>
+<div class="title">Figure 2. <a href="https://medium.com/version-1/types-of-subjects-in-rxjs-124b6e2cf511">BehaviorSubject</a></div>
 </div>
 </div>
 </div>
@@ -718,41 +767,83 @@ done</pre>
 <div class="sect2">
 <h3 id="_signals"><a class="anchor" href="#_signals"></a>2.2. Signals</h3>
 <div class="paragraph">
-<p>Signals sind eine moderne Alternative zu Observables in Angular. Sie bieten einen reaktiven
-Ansatz für das Management und die Aktualisierung von Daten. Obwohl Signals keine Asynchronität bieten,
-sind sie reaktiv, da sie automatisch Abhängigkeiten verfolgen und Änderungen propagieren. Das bedeutet,
-dass jede Änderung eines Signals alle abhängigen Berechnungen oder UI-Komponenten sofort aktualisiert.</p>
+<p>Ein Signal in Angular ist eine reaktive Datenstruktur, die einen bestimmten Zustand hält und automatisch benachrichtigt,
+wenn sich dieser Zustand ändert. Es stellt eine explizite Abhängigkeit zwischen Daten und der Benutzeroberfläche her,
+was bedeutet, dass Angular nur die betroffenen Teile der UI aktualisiert.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/angular-signal.png" alt="angular signal">
+</div>
+<div class="title">Figure 3. <a href="https://www.betterask.erni/introduction-to-angular-signals/">Angular Signals</a></div>
 </div>
 <div class="paragraph">
-<p>Eigenschaften von Signals:</p>
+<p><strong>Probleme, die Signals lösen:</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Synchronität:</strong> Signals arbeiten synchron und aktualisieren die Werte direkt.</p>
-</li>
-<li>
-<p><strong>Abhängigkeits-Tracking:</strong> Sie verfolgen automatisch Abhängigkeiten, sodass Änderungen an einem Signal alle
-abhängigen Komponenten oder Berechnungen automatisch aktualisieren.</p>
-</li>
-<li>
-<p><strong>Einfache API:</strong> Signals haben eine intuitive API, die weniger Boilerplate-Code erfordert.</p>
+<p>Komplexität und Ineffizienz in Change Detection:</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Angulars ursprüngliches Reaktivitätsmodell (z. B. mit Observables oder Input-Bindings)
+überprüft oft unnötig viele Komponenten und Templates, was die Performance belastet – besonders in komplexen Anwendungen.
+Change-Detection-System überprüft standardmäßig alles, auch wenn nur kleine Teile des Zustands geändert wurden.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Fehlende explizite Datenabhängigkeiten:</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>RxJS-basierte Lösungen erfordern häufig Boilerplate-Code und manuelle Abhängigkeitsverkettungen,
+was die Verständlichkeit erschwert.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Mangel an granularer Reaktivität:</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Entwickler müssen oft manuell steuern, welche Teile der Anwendung aktualisiert werden, oder komplexe RxJS-Logik implementieren.</p>
 </div>
 <div class="listingblock">
 <div class="title">Beispiel für ein Signal:</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">signal</span><span class="p">,</span> <span class="nx">computed</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">signal</span><span class="p">,</span> <span class="nx">computed</span><span class="p">,</span> <span class="nx">effect</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
 
-<span class="kd">const</span> <span class="nx">count</span> <span class="o">=</span> <span class="nf">signal</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">doubled</span> <span class="o">=</span> <span class="nf">computed</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nf">count</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span><span class="p">);</span>
+<span class="c1">// Signal erstellen</span>
+<span class="kd">const</span> <span class="nx">counter</span> <span class="o">=</span> <span class="nf">signal</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 
-<span class="nx">count</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">value</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nf">count</span><span class="p">());</span> <span class="c1">// Ausgabe: 1</span>
-<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nf">doubled</span><span class="p">());</span> <span class="c1">// Ausgabe: 2</span></code></pre>
+<span class="c1">// Computed Signal</span>
+<span class="kd">const</span> <span class="nx">doubleCounter</span> <span class="o">=</span> <span class="nf">computed</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nf">counter</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span><span class="p">);</span>
+
+<span class="c1">// Effekt</span>
+<span class="nf">effect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Counter hat sich geändert:</span><span class="dl">'</span><span class="p">,</span> <span class="nf">counter</span><span class="p">());</span>
+<span class="p">});</span>
+
+<span class="c1">// Update des Signals</span>
+<span class="nx">counter</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span></code></pre>
 </div>
 </div>
+<details>
+<summary class="title">Output</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>Counter hat sich geändert: 0
+Counter hat sich geändert: 1</pre>
+</div>
+</div>
+</div>
+</details>
 </div>
 <div class="sect2">
 <h3 id="_observable_vs_signals"><a class="anchor" href="#_observable_vs_signals"></a>2.3. Observable vs. Signals</h3>
@@ -830,6 +921,10 @@ abhängigen Komponenten oder Berechnungen automatisch aktualisieren.</p>
 </li>
 </ul>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_beispiel"><a class="anchor" href="#_beispiel"></a>2.3.3. Beispiel</h4>
+
 </div>
 </div>
 </div>
@@ -1156,13 +1251,13 @@ Intern sorgt Immer dafür, dass der ursprüngliche Zustand unverändert bleibt, 
 <div class="content">
 <img src="images/produce.png" alt="produce">
 </div>
-<div class="title">Figure 1. produce()</div>
+<div class="title">Figure 4. produce()</div>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/behavior-subject.png" alt="behavior subject">
 </div>
-<div class="title">Figure 2. Behavior Subject</div>
+<div class="title">Figure 5. Behavior Subject</div>
 </div>
 </div>
 </details>
@@ -1330,7 +1425,7 @@ Intern sorgt Immer dafür, dass der ursprüngliche Zustand unverändert bleibt, 
 <div class="content">
 <img src="images/viewmodel.png" alt="viewmodel">
 </div>
-<div class="title">Figure 3. Ablauf</div>
+<div class="title">Figure 6. Ablauf</div>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1341,7 +1436,7 @@ Intern sorgt Immer dafür, dass der ursprüngliche Zustand unverändert bleibt, 
 <div class="content">
 <img src="images/publish-subject.png" alt="publish subject">
 </div>
-<div class="title">Figure 4. BehaviorSubject vs. PublishSubject</div>
+<div class="title">Figure 7. BehaviorSubject vs. PublishSubject</div>
 </div>
 </div>
 </details>
@@ -2646,7 +2741,10 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 <p><a href="https://vertx.io/" class="bare">https://vertx.io/</a></p>
 </li>
 <li>
-<p>reahttps://www.betterask.erni/introduction-to-angular-signals/</p>
+<p><a href="https://www.betterask.erni/introduction-to-angular-signals/" class="bare">https://www.betterask.erni/introduction-to-angular-signals/</a></p>
+</li>
+<li>
+<p><a href="https://dev.to/soumayaerradi/angular-signals-from-zero-to-hero-4j2d#:~:text=Angular%20Signals%20are%20reactive%20values,for%20managing%20local%20component%20state" class="bare">https://dev.to/soumayaerradi/angular-signals-from-zero-to-hero-4j2d#:~:text=Angular%20Signals%20are%20reactive%20values,for%20managing%20local%20component%20state</a>.</p>
 </li>
 </ul>
 </div>
@@ -2656,7 +2754,7 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-27 17:20:20 UTC
+Last updated 2025-01-29 10:39:30 UTC
 </div>
 </div>
 </body>
