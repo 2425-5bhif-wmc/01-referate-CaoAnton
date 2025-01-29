@@ -570,7 +570,7 @@ pre.rouge .gs {
 </ul>
 </li>
 <li><a href="#_beispiele_mit_reactivex">3. Beispiele mit ReactiveX</a></li>
-<li><a href="#_android_rxjava_demo">4. Android (rxjava-demo)</a>
+<li><a href="#_android">4. Android</a>
 <ul class="sectlevel2">
 <li><a href="#_android_mvvm">4.1. Android-MVVM</a></li>
 <li><a href="#_drei_prinzipien">4.2. Drei Prinzipien</a></li>
@@ -777,9 +777,8 @@ was bedeutet, dass Angular nur die betroffenen Teile der UI aktualisiert.</p>
 </div>
 <div class="title">Figure 3. <a href="https://www.betterask.erni/introduction-to-angular-signals/">Angular Signals</a></div>
 </div>
-<div class="paragraph">
-<p><strong>Probleme, die Signals lösen:</strong></p>
-</div>
+<div class="sect3">
+<h4 id="_probleme_die_signals_lösen"><a class="anchor" href="#_probleme_die_signals_lösen"></a>2.2.1. Probleme, die Signals lösen</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -816,22 +815,27 @@ was die Verständlichkeit erschwert.</p>
 <div class="listingblock">
 <div class="title">Beispiel für ein Signal:</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">signal</span><span class="p">,</span> <span class="nx">computed</span><span class="p">,</span> <span class="nx">effect</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">signal</span><span class="p">,</span> <span class="nx">effect</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
 
 <span class="c1">// Signal erstellen</span>
-<span class="kd">const</span> <span class="nx">counter</span> <span class="o">=</span> <span class="nf">signal</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-
-<span class="c1">// Computed Signal</span>
-<span class="kd">const</span> <span class="nx">doubleCounter</span> <span class="o">=</span> <span class="nf">computed</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nf">counter</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">counter</span> <span class="o">=</span> <span class="nf">signal</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="c1">// erstellt ein Signal mit einem Anfangswert 0</span>
 
 <span class="c1">// Effekt</span>
-<span class="nf">effect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="nf">effect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <i class="conum" data-value="1"></i><b>(1)</b>
   <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Counter hat sich geändert:</span><span class="dl">'</span><span class="p">,</span> <span class="nf">counter</span><span class="p">());</span>
 <span class="p">});</span>
 
 <span class="c1">// Update des Signals</span>
 <span class="nx">counter</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>effect: wird jedes Mal ausgeführt, wenn counter sich ändert.</td>
+</tr>
+</table>
 </div>
 <details>
 <summary class="title">Output</summary>
@@ -845,10 +849,75 @@ Counter hat sich geändert: 1</pre>
 </div>
 </details>
 </div>
+<div class="sect3">
+<h4 id="_weitere_wichtige_arten_von_signals"><a class="anchor" href="#_weitere_wichtige_arten_von_signals"></a>2.2.2. Weitere wichtige Arten von Signals</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Computed Signals</strong>: Ein Computed Signal berechnet automatisch einen neuen Wert, wenn sich ein anderes Signal ändert.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Computed Signals</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">signal</span><span class="p">,</span> <span class="nx">computed</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">count</span> <span class="o">=</span> <span class="nf">signal</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">squared</span> <span class="o">=</span> <span class="nf">computed</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nf">count</span><span class="p">()</span> <span class="o">*</span> <span class="nf">count</span><span class="p">());</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nf">squared</span><span class="p">());</span>
+<span class="nx">count</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nf">squared</span><span class="p">());</span></code></pre>
+</div>
+</div>
+<details>
+<summary class="title">Output</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>4
+9</pre>
+</div>
+</div>
+</div>
+</details>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Effects</strong>: Ein Computed Signal berechnet automatisch einen neuen Wert, wenn sich ein anderes Signal ändert.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Computed Signals</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">signal</span><span class="p">,</span> <span class="nx">effect</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">name</span> <span class="o">=</span> <span class="nf">signal</span><span class="p">(</span><span class="dl">'</span><span class="s1">Candice</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nf">effect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Hallo, </span><span class="p">${</span><span class="nf">name</span><span class="p">()}</span><span class="s2">!`</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">name</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="dl">'</span><span class="s1">Oleg</span><span class="dl">'</span><span class="p">);</span></code></pre>
+</div>
+</div>
+<details>
+<summary class="title">Output</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>Hallo, Candice!
+Hallo, Oleg!</pre>
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
 <div class="sect2">
 <h3 id="_observable_vs_signals"><a class="anchor" href="#_observable_vs_signals"></a>2.3. Observable vs. Signals</h3>
-<div class="sect3">
-<h4 id="_vergleich_nach_anwendungsfällen"><a class="anchor" href="#_vergleich_nach_anwendungsfällen"></a>2.3.1. Vergleich nach Anwendungsfällen</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -884,15 +953,14 @@ Counter hat sich geändert: 1</pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Reaktives State-Management</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Performance</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Kann Overhead erzeugen</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Effizient durch Synchronität</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Push vs. Pull</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Push-basiert (Werte werden ausgesendet)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pull-basiert (nur wenn nötig)</p></td>
 </tr>
 </tbody>
 </table>
-</div>
 <div class="sect3">
-<h4 id="_beste_verwendungsmöglichkeiten"><a class="anchor" href="#_beste_verwendungsmöglichkeiten"></a>2.3.2. Beste Verwendungsmöglichkeiten</h4>
+<h4 id="_beste_verwendungsmöglichkeiten"><a class="anchor" href="#_beste_verwendungsmöglichkeiten"></a>2.3.1. Beste Verwendungsmöglichkeiten</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -923,7 +991,7 @@ Counter hat sich geändert: 1</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_beispiel"><a class="anchor" href="#_beispiel"></a>2.3.3. Beispiel</h4>
+<h4 id="_beispiel"><a class="anchor" href="#_beispiel"></a>2.3.2. Beispiel</h4>
 
 </div>
 </div>
@@ -966,7 +1034,7 @@ angewendet. So sieht die folgende Struktur der ToDos aus:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_android_rxjava_demo"><a class="anchor" href="#_android_rxjava_demo"></a>4. Android (rxjava-demo)</h2>
+<h2 id="_android"><a class="anchor" href="#_android"></a>4. Android</h2>
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
@@ -1973,19 +2041,13 @@ Benutzereingaben und Ereignisse zu verwalten.</p>
   <span class="k">readonly</span> <span class="nx">todos</span><span class="p">:</span> <span class="nx">Todo</span><span class="p">[]</span>
 <span class="p">}</span>
 
-<span class="k">export</span> <span class="kd">const</span> <span class="nx">initial</span><span class="p">:</span> <span class="nx">Model</span> <span class="o">=</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">initial</span><span class="p">:</span> <span class="nx">Model</span> <span class="o">=</span> <i class="conum" data-value="2"></i><b>(2)</b>
 <span class="p">{</span>
   <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Dave</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Lewakaslehna</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">todos</span><span class="p">:</span> <span class="p">[],</span>
 <span class="p">}</span>
-
-<span class="kd">const</span> <span class="nx">initialState</span><span class="p">:</span> <span class="nx">Model</span> <span class="o">=</span> <span class="p">{</span> <i class="conum" data-value="2"></i><b>(2)</b>
-  <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">John</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Pork</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">todos</span><span class="p">:</span> <span class="p">[],</span>
-<span class="p">}</span>
-<span class="k">export</span> <span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BehaviorSubject</span><span class="o">&lt;</span><span class="nx">Model</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">initialState</span><span class="p">)</span> <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BehaviorSubject</span><span class="o">&lt;</span><span class="nx">Model</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">initial</span><span class="p">)</span> <i class="conum" data-value="3"></i><b>(3)</b>
 
 <span class="k">export</span> <span class="kd">function</span> <span class="nf">set</span><span class="p">(</span><span class="nx">recipe</span><span class="p">:</span> <span class="p">(</span><span class="nx">model</span><span class="p">:</span> <span class="nx">Draft</span><span class="o">&lt;</span><span class="nx">Model</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">){</span> <i class="conum" data-value="4"></i><b>(4)</b>
   <span class="kd">const</span> <span class="nx">nextModel</span> <span class="o">=</span> <span class="nf">produce</span><span class="p">(</span><span class="nx">store</span><span class="p">.</span><span class="nf">getValue</span><span class="p">(),</span> <span class="nx">recipe</span><span class="p">)</span>
@@ -2754,7 +2816,7 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-29 10:39:30 UTC
+Last updated 2025-01-29 18:14:07 UTC
 </div>
 </div>
 </body>
