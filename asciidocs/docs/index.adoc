@@ -36,7 +36,7 @@ Nicht zu verwechseln mit **Observer** (Subscriber)!
 Ein Observer ist ein Objekt, das auf die Daten reagiert, die von einem Observable gesendet werden. Es definiert, wie mit den gesendeten Daten umgegangen wird.
 
 
-
+.https://www.google.com/search?sca_esv=356fde0d7956eb37&sxsrf=AHTn8zrmiLmDUIx5g_u09pBNAnK_M6yGDA:1738267863637&q=observable&udm=2&fbs=ABzOT_DDfJxgmsKFIwrWKcoyw2Rf7ED7CYyDAoRz3agYVnoe8UVw8adpCRzSzq6xx654mB9ZXOWW5sdp8hhZ_9duogg-WTP8RUlY1ayXgyQ5tQ4gFBMyxh0LSduE41gFfoddllXXHdP81sxoMtPSnlTYPgeF19oEG3YGQ_IjvSnGjiqDXu8hblo&sa=X&ved=2ahUKEwjPkaW0oJ6LAxX4VPEDHfQdBBUQtKgLegQIDRAB&biw=2073&bih=1067&dpr=0.9#vhid=ueO02TbqNPIOIM&vssid=mosaic[Observable]
 image::observable.jpg[]
 
 Eigenschaften des Observers:
@@ -144,7 +144,7 @@ RxJS-basierte Lösungen erfordern häufig Boilerplate-Code und manuelle Abhängi
 was die Verständlichkeit erschwert.
 
 
-- Mangel an granularer Reaktivität:
+- Komplexität:
 
 Entwickler müssen oft manuell steuern, welche Teile der Anwendung aktualisiert werden, oder komplexe RxJS-Logik implementieren.
 
@@ -202,9 +202,9 @@ console.log(squared());
 ----
 ====
 
-* **Effects**: Ein Computed Signal berechnet automatisch einen neuen Wert, wenn sich ein anderes Signal ändert.
+* **Effects**: Ein Effect reagiert auf Signal-Änderungen und führt eine Aktion aus.
 
-.Computed Signals
+.Effect
 [source, typescript]
 ----
 import { signal, effect } from '@angular/core';
@@ -263,31 +263,16 @@ Hallo, Oleg!
 | Eigenschaft              | Observable                     | Signals
 
 | **Synchronität**        | Asynchron                     | Synchron
-| **Abhängigkeits-Tracking** | Manuell durch Subscription    | Automatisch
 | **Komplexität**         | Höher, erfordert mehr Boilerplate | Niedriger, einfache API
 | **Anwendungsfälle**     | Datenströme, Ereignissteuerung | Reaktives State-Management
 | **Push vs. Pull**     | Push-basiert (Werte werden ausgesendet) | Pull-basiert (nur wenn nötig)
 
 |===
 
-==== Beste Verwendungsmöglichkeiten
-
-- **Observable:**
-- Perfekt für die Verarbeitung von asynchronen Datenströmen wie API-Antworten, Benutzereingaben und Websocket-Nachrichten.
-- Ideal für Szenarien, in denen die Datenquelle kontinuierlich oder verzögert Daten liefert.
-- Bietet eine breite Palette von Operators, um Streams zu manipulieren und komplexe Datenflüsse zu handhaben.
-
-- **Signals:**
-- Hervorragend geeignet für synchrones State-Management in Angular-Anwendungen.
-- Ideal für UI-Komponenten, bei denen Änderungen sofort und automatisch reflektiert werden müssen.
-- Weniger Overhead, wenn die Daten synchron verarbeitet werden können und keine komplexen asynchronen Prozesse erforderlich sind.
-
-
 === Signals mit Single Source of Truth
 
-In diesem Repository befindet sich ein Angular-Projekt, das die Verwendung von Signals und RxJS demonstriert. Ziel ist 7
-es, beide Ansätze zu vergleichen und zu zeigen, wie man mit dem Prinzip der Single Source of Truth (SSOT) den
-globalen Zustand der Anwendung verwaltet. Mithilfe von Angular Signals wird der Zustand der Anwendung als SSOT gehalten.
+In diesem Repository befindet sich ein Angular-Projekt, das die Verwendung von Signals. Ziel ist
+es, wie man mit dem Prinzip der Single Source of Truth (SSOT) den globalen Zustand der Anwendung mittels Signals lösen kann.
 
 ==== Was ist Single Source of Truth?
 
@@ -703,7 +688,7 @@ include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/todo/ToDoC
         CompletableFuture.supplyAsync(() -> toDoClient.all(0, 40)).thenAccept(setToDos);
     }
 
-    public void addToDo(ToDo toDo) { // <.>
+    public void addToDo(ToDo toDo) {
 
         store.apply(model -> {
             ToDo[] newToDos = new ToDo[model.toDos.length + 1];
@@ -743,6 +728,10 @@ image::mvvm.png[]
 * Push-Verfahren: Observable sendet Daten aktiv an registrierte Observer.
 * BehaviorSubject: RxJava-Subjekt, das den letzten und zukünftige Werte an Observer sendet.
 * PublishSubject: RxJava-Subjekt, das nur zukünftige Werte an Observer sendet.
+* Signal: Reaktive Quelle von Zustandsänderungen.
+** Computed Signal: Dynamisch berechneter Wert basierend auf anderen Signals.
+** Effect Signal: Signal, das Seiteneffekte bei Änderungen auslöst.
+** Linked Signal: Signal, das von anderen Signals abhängt und sich mit deren Änderungen aktualisiert.
 * MVVM (Model-View-ViewModel): Architektur, die Daten (Model), Logik (ViewModel) und Darstellung (View) trennt.
 * Drei Prinzipien (Redux)
 ** Single Source of Truth: Der Zustand der Anwendung wird zentral gespeichert.
