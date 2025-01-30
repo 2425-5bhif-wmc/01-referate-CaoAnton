@@ -6,6 +6,7 @@ export interface Model { // <.>
   readonly name: string
   readonly email: string
   readonly todos: Todo[]
+  readonly todosLoaded: boolean;
 }
 
 export const initial: Model = // <.>
@@ -13,6 +14,7 @@ export const initial: Model = // <.>
   name: "Dave",
   email: "Lewakaslehna",
   todos: [],
+  todosLoaded: false
 }
 export const store = new BehaviorSubject<Model>(initial) // <.>
 

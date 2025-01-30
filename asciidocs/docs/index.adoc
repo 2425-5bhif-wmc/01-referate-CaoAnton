@@ -228,6 +228,35 @@ Hallo, Oleg!
 ----
 ====
 
+* **LinkedSignals**: Ein Linked Signal ermöglicht, verschiedene Signale miteinander zu verknüpfen,
+sodass Änderungen in einem Signal automatisch an ein anderes weitergegeben werden.
+
+.Computed Signals
+[source, typescript]
+----
+import { signal, linked } from '@angular/core';
+
+const source = signal(10);
+const linkedSignal = linked({
+  get: () => source(),     // Liest den Wert von `source`
+  set: (value) => source.set(value) // Setzt den Wert in `source`
+});
+
+console.log(linkedSignal()); // 10
+linkedSignal.set(20);        // Ändert auch `source`
+console.log(source());       // 20
+
+----
+
+.Output
+[%collapsible]
+====
+----
+Hallo, Candice!
+Hallo, Oleg!
+----
+====
+
 === Observable vs. Signals
 
 |===
@@ -252,6 +281,9 @@ Hallo, Oleg!
 - Hervorragend geeignet für synchrones State-Management in Angular-Anwendungen.
 - Ideal für UI-Komponenten, bei denen Änderungen sofort und automatisch reflektiert werden müssen.
 - Weniger Overhead, wenn die Daten synchron verarbeitet werden können und keine komplexen asynchronen Prozesse erforderlich sind.
+
+
+=== Signals mit Single Source of Truth
 
 
 ==== Beispiel

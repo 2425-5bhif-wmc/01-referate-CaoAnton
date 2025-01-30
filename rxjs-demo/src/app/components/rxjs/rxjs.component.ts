@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { AppStateService } from '../../services/app-state.service';
 import { AsyncPipe, NgForOf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,15 +16,15 @@ import {toObservable} from "@angular/core/rxjs-interop";
     FormsModule,
   ],
 })
-export class RxjsComponent {
+export class RxjsComponent implements OnInit{
   newTodoTitle = '';
-  todos: Observable<Todo[]>; // Observable statt Signal
+  todos: Observable<Todo[]>;
 
   constructor(private appState: AppStateService) {
     this.todos = toObservable(this.appState.todosSignals);
   }
 
-  loadTodos() {
+  ngOnInit() {
     this.appState.loadTodos();
   }
 

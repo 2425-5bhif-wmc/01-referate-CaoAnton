@@ -60,13 +60,18 @@ export class AppStateService {
   }
 
   loadTodos() {
-    this.http
-      .get<Todo[]>('https://jsonplaceholder.typicode.com/todos?_limit=20')
-      .subscribe((todos) => {
-        this.updateState((state) => ({
-          ...state,
-          todos,
-        }));
-      });
+    console.log('Lädt Todos?', this.state().todosLoaded);
+
+    if (!this.state().todosLoaded) {
+      this.http
+        .get<Todo[]>('https://jsonplaceholder.typicode.com/todos?_limit=20')
+        .subscribe((todos) => {
+          this.updateState((state) => ({
+            ...state,
+            todos,
+            todosLoaded: true, // ✅ Speichere den Status im State!
+          }));
+        });
+    }
   }
 }

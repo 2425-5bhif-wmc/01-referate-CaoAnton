@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { AppStateService } from '../../services/app-state.service';
 import { FormsModule } from '@angular/forms';
 import { NgForOf } from '@angular/common';
@@ -12,16 +12,15 @@ import { NgForOf } from '@angular/common';
     NgForOf,
   ],
 })
-export class SignalComponent {
+export class SignalComponent implements OnInit{
   newTodoTitle = '';
   todos = this.appState.todosSignals;
 
   constructor(private appState: AppStateService) {}
 
-  loadTodos() {
+  ngOnInit() {
     this.appState.loadTodos();
   }
-
   addTodo() {
     if (this.newTodoTitle.trim()) {
       this.appState.addTodo({
