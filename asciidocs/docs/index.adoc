@@ -536,7 +536,7 @@ um asynchrone Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu ver
 
 === Android-MVVM
 
-.https://medium.com/@dheerubhadoria/android-mvvm-how-to-use-mvvm-in-android-example-7dec84a1fb73[Android-MVVM]
+.https://cs193p.sites.stanford.edu/sites/g/files/sbiybj16636/files/media/file/l2.pdf[Android-MVVM]
 image::android-mvvm-pattern.png[]
 
 * Model:
@@ -589,16 +589,6 @@ image::android-project-util.png[]
 [%collapsible]
 ====
 * dient zur Serialisierung und Deserialisierung von Objekten nach JSON und zurück.
-* führt auch tiefe Klonoperationen aus.
-
-image::deep-copy.jpg[]
-
-* Deep Copy: ein Object wird geklont, ohne die Referenzen des alten Objekts zu übertragen. Es ist sehr
-ressourcenaufwendig, da durch jede Referenz auf ein anderes Objekt das andere Objekt selbst tief kopiert werden muss.
-
-* Shallow Copy: erstellt nur ein neues Objekt mit den Werten des alten Objekts, verwendet dabei die gleichen Referenzen
-wie das alte Objekt auf weitere Objekte
-
 ====
 
 .immer
@@ -625,7 +615,7 @@ Intern sorgt Immer dafür, dass der ursprüngliche Zustand unverändert bleibt, 
 .produce()
 image::produce.png[]
 
-.Behavior Subject
+.https://medium.com/version-1/types-of-subjects-in-rxjs-124b6e2cf511[Behavior Subject]
 image::behavior-subject.png[]
 
 ====
@@ -670,7 +660,6 @@ include::../../android-mvvm/app/src/main/java/at/htl/leonding/util/store/StoreBa
 
 image::android-project-model.png[]
 
-
 .Model.java
 [%collapsible]
 ====
@@ -690,138 +679,11 @@ include::../../android-mvvm/app/src/main/java/at/htl/leonding/model/Store.java[]
 ----
 ====
 
-.ToDo.java
-[%collapsible]
-====
-[source, java]
-----
-include::../../android-mvvm/app/src/main/java/at/htl/leonding/model/ToDo.java[]
-----
-====
-
-.UIState.java
-[%collapsible]
-====
-[source, java]
-----
-include::../../android-mvvm/app/src/main/java/at/htl/leonding/model/UIState.java[]
-----
-====
-
-
 ==== Feature
 
 image::android-project-feature.png[]
 
-* Fokus auf example und todo
-
-===== Example
-
-* Im example befinden sich verschiedene Operatoren von RxJava
-
-.map
-[%collapsible]
-====
-
-.RxJavaView.kt
-[source, kotlin]
-----
-include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaView.kt[tag=android-map]
-----
-
-.RxJavaViewModel.java
-[source, java]
-----
-include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaViewModel.java[tag=android-map-java]
-----
-
-image::map.png[]
-* transformiert jedes Element der Observable nach einer angegebenen Funktion
-====
-
-
-.filter
-[%collapsible]
-====
-
-.RxJavaView.kt
-[source, kotlin]
-----
-include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaView.kt[tag=android-filter]
-----
-
-.RxJavaViewModel.java
-[source, java]
-----
-include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaViewModel.java[tag=android-filter-java]
-----
-
-image::filter.png[]
-* filtert die Elemente einer Observable basierend auf einer Bedingung
-====
-
-
-.zip
-[%collapsible]
-====
-
-.RxJavaView.kt
-[source, kotlin]
-----
-include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaView.kt[tag=android-zip]
-----
-
-.RxJavaViewModel.java
-[source, java]
-----
-include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaViewModel.java[tag=android-zip-java]
-----
-
-image::zip.png[]
-* kombiniert mehrere Observables und erstellt neue Paare von Elementen
-====
-
-
-.interval
-[%collapsible]
-====
-
-.RxJavaView.kt
-[source, kotlin]
-----
-include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaView.kt[tag=android-interval]
-----
-
-.RxJavaViewModel.java
-[source, java]
-----
-include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaViewModel.java[tag=android-interval-java]
-----
-
-image::interval.png[]
-* erzeugt fortlaufende Werte in einem festen Zeitintervall
-====
-
-.take
-[%collapsible]
-====
-
-.RxJavaView.kt
-[source, kotlin]
-----
-include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaView.kt[tag=android-take]
-----
-
-.RxJavaViewModel.java
-[source, java]
-----
-include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/example/RxJavaViewModel.java[tag=android-take-java]
-----
-
-image::take.png[]
-* nimmt nur eine bestimmte Anzahl von Elementen
-====
-
+Wir legen unser Fokus auf todo
 
 ===== todo
 
@@ -834,8 +696,22 @@ include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/todo/ToDoC
 ----
 
 [source, java]
+.ToDoService
 ----
-include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/todo/ToDoService.java[]
+    public void getAll() { // <.>
+        Consumer<ToDo[]> setToDos = todos -> store.apply(model -> model.toDos = todos);
+        CompletableFuture.supplyAsync(() -> toDoClient.all(0, 40)).thenAccept(setToDos);
+    }
+
+    public void addToDo(ToDo toDo) { // <.>
+
+        store.apply(model -> {
+            ToDo[] newToDos = new ToDo[model.toDos.length + 1];
+            System.arraycopy(model.toDos, 0, newToDos, 0, model.toDos.length);
+            newToDos[model.toDos.length] = toDo;
+            model.toDos = newToDos;
+        });
+    }
 ----
 <.> getAll()
 
@@ -843,8 +719,19 @@ include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/todo/ToDoS
 * Die apply-Methode wird verwendet, um den toDos-Wert des Models im Store zu setzen.
 * es wird asynchron mit der CompletableFuture die all-Methode im Client aufgerufen
 * wenn er erfolgreich die Daten holen konnte, wird er im `store` gespeichert
+
 ====
 
+===== Ablauf eines Erstellen eines Todos
+
+image::mvvm.png[]
+
+1. in der View wird eine neue Todo erstellt
+2. Dadurch löst er eine Action aus, die dann den Service aufruft
+3. Der Service gibt den Store die aktuelle Version und das jeweilige Rezept mit
+4. der Store erstellt anhand des Rezept das neue Modell, welches dann schließlich im Model gespeichert wird
+5. Modell informiert die Viewmodel, dass sich was geändert hat
+6. Die Viewmodel veröffentlicht die neue Version und die View holt sich dann den Datenstrom ab
 
 == Glossar
 
