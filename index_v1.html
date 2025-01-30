@@ -556,7 +556,7 @@ pre.rouge .gs {
 <div class="details">
 <span id="author" class="author">Anton Cao</span><br>
 <span id="revnumber">version 1.0,</span>
-<span id="revdate">2025-01-29</span>
+<span id="revdate">2025-01-30</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -1838,6 +1838,7 @@ Benutzereingaben und Ereignisse zu verwalten.</p>
   <span class="k">readonly</span> <span class="nx">name</span><span class="p">:</span> <span class="kr">string</span>
   <span class="k">readonly</span> <span class="nx">email</span><span class="p">:</span> <span class="kr">string</span>
   <span class="k">readonly</span> <span class="nx">todos</span><span class="p">:</span> <span class="nx">Todo</span><span class="p">[]</span>
+  <span class="k">readonly</span> <span class="nx">todosLoaded</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="k">export</span> <span class="kd">const</span> <span class="nx">initial</span><span class="p">:</span> <span class="nx">Model</span> <span class="o">=</span> <i class="conum" data-value="2"></i><b>(2)</b>
@@ -1845,6 +1846,7 @@ Benutzereingaben und Ereignisse zu verwalten.</p>
   <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Dave</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Lewakaslehna</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">todos</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="na">todosLoaded</span><span class="p">:</span> <span class="kc">false</span>
 <span class="p">}</span>
 <span class="k">export</span> <span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BehaviorSubject</span><span class="o">&lt;</span><span class="nx">Model</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">initial</span><span class="p">)</span> <i class="conum" data-value="3"></i><b>(3)</b>
 
@@ -2609,7 +2611,7 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-29 18:14:07 UTC
+Last updated 2025-01-30 10:26:59 UTC
 </div>
 </div>
 </body>

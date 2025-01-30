@@ -556,7 +556,7 @@ pre.rouge .gs {
 <div class="details">
 <span id="author" class="author">Anton Cao</span><br>
 <span id="revnumber">version 1.0,</span>
-<span id="revdate">2025-01-29</span>
+<span id="revdate">2025-01-30</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -567,6 +567,7 @@ pre.rouge .gs {
 <li><a href="#_rxjs">2.1. RxJS</a></li>
 <li><a href="#_signals">2.2. Signals</a></li>
 <li><a href="#_observable_vs_signals">2.3. Observable vs. Signals</a></li>
+<li><a href="#_signals_mit_single_source_of_truth">2.4. Signals mit Single Source of Truth</a></li>
 </ul>
 </li>
 <li><a href="#_beispiele_mit_reactivex">3. Beispiele mit ReactiveX</a></li>
@@ -914,6 +915,41 @@ Hallo, Oleg!</pre>
 </div>
 </div>
 </details>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>LinkedSignals</strong>: Ein Linked Signal ermöglicht, verschiedene Signale miteinander zu verknüpfen,
+sodass Änderungen in einem Signal automatisch an ein anderes weitergegeben werden.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Computed Signals</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">signal</span><span class="p">,</span> <span class="nx">linked</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">source</span> <span class="o">=</span> <span class="nf">signal</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">linkedSignal</span> <span class="o">=</span> <span class="nf">linked</span><span class="p">({</span>
+  <span class="na">get</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nf">source</span><span class="p">(),</span>     <span class="c1">// Liest den Wert von `source`</span>
+  <span class="na">set</span><span class="p">:</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">source</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="c1">// Setzt den Wert in `source`</span>
+<span class="p">});</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nf">linkedSignal</span><span class="p">());</span> <span class="c1">// 10</span>
+<span class="nx">linkedSignal</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>        <span class="c1">// Ändert auch `source`</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nf">source</span><span class="p">());</span>       <span class="c1">// 20</span></code></pre>
+</div>
+</div>
+<details>
+<summary class="title">Output</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>Hallo, Candice!
+Hallo, Oleg!</pre>
+</div>
+</div>
+</div>
+</details>
 </div>
 </div>
 <div class="sect2">
@@ -990,8 +1026,11 @@ Hallo, Oleg!</pre>
 </ul>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_signals_mit_single_source_of_truth"><a class="anchor" href="#_signals_mit_single_source_of_truth"></a>2.4. Signals mit Single Source of Truth</h3>
 <div class="sect3">
-<h4 id="_beispiel"><a class="anchor" href="#_beispiel"></a>2.3.2. Beispiel</h4>
+<h4 id="_beispiel"><a class="anchor" href="#_beispiel"></a>2.4.1. Beispiel</h4>
 
 </div>
 </div>
@@ -2039,6 +2078,7 @@ Benutzereingaben und Ereignisse zu verwalten.</p>
   <span class="k">readonly</span> <span class="nx">name</span><span class="p">:</span> <span class="kr">string</span>
   <span class="k">readonly</span> <span class="nx">email</span><span class="p">:</span> <span class="kr">string</span>
   <span class="k">readonly</span> <span class="nx">todos</span><span class="p">:</span> <span class="nx">Todo</span><span class="p">[]</span>
+  <span class="k">readonly</span> <span class="nx">todosLoaded</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="k">export</span> <span class="kd">const</span> <span class="nx">initial</span><span class="p">:</span> <span class="nx">Model</span> <span class="o">=</span> <i class="conum" data-value="2"></i><b>(2)</b>
@@ -2046,6 +2086,7 @@ Benutzereingaben und Ereignisse zu verwalten.</p>
   <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Dave</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Lewakaslehna</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">todos</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="na">todosLoaded</span><span class="p">:</span> <span class="kc">false</span>
 <span class="p">}</span>
 <span class="k">export</span> <span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BehaviorSubject</span><span class="o">&lt;</span><span class="nx">Model</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">initial</span><span class="p">)</span> <i class="conum" data-value="3"></i><b>(3)</b>
 
@@ -2816,7 +2857,7 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-29 18:14:07 UTC
+Last updated 2025-01-30 10:26:59 UTC
 </div>
 </div>
 </body>
