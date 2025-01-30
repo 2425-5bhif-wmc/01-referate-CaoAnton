@@ -2,38 +2,30 @@ import { Injectable, signal, computed, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Model, Todo } from '../model';
 import { initial } from '../model/model';
+import {StoreService} from "./store.service";
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppStateService {
+  private readonly API_URL = 'https://jsonplaceholder.typicode.com/todos?_limit=20';
+
   // Single Source of Truth als Signal
-  private state = signal<Model>(initial);
+  // <.>
+  private state = inject(StoreService).store
 
   // Computed Signals für Selektoren
+  //<.>
   readonly todosSignals = computed(() => this.state().todos);
-  readonly userNameSignal = computed(() => this.state().name);
-  readonly userEmailSignal = computed(() => this.state().email);
-  readonly completedTodosSignal = computed(() =>
-    this.state().todos.filter((todo) => todo.completed)
-  );
-  readonly activeTodosSignal = computed(() =>
-    this.state().todos.filter((todo) => !todo.completed)
-  );
+  readonly firstName = computed(() => this.state().firstName);
+  readonly lastName = computed(() => this.state().lastName);
 
   constructor(private http: HttpClient) {}
 
   // Zustand aktualisieren
-  private updateState(recipe: (state: Model) => Model) {
-    this.state.set(recipe(this.state()));
-  }
-
-  updateUser(name: string, email: string) {
-    this.updateState((state) => ({
-      ...state,
-      name,
-      email,
-    }));
+  // <.>
+  updateState(recipe: (state: Model) => Model) {
+    this.state.update(recipe);
   }
 
   addTodo(todo: Todo) {
@@ -60,16 +52,14 @@ export class AppStateService {
   }
 
   loadTodos() {
-    console.log('Lädt Todos?', this.state().todosLoaded);
-
     if (!this.state().todosLoaded) {
       this.http
-        .get<Todo[]>('https://jsonplaceholder.typicode.com/todos?_limit=20')
+        .get<Todo[]>(this.API_URL)
         .subscribe((todos) => {
           this.updateState((state) => ({
             ...state,
             todos,
-            todosLoaded: true, // ✅ Speichere den Status im State!
+            todosLoaded: true,
           }));
         });
     }

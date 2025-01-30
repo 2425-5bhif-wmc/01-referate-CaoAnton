@@ -1,24 +1,18 @@
-import {BehaviorSubject} from "rxjs";
-import {Draft, produce} from "immer";
 import {Todo} from "./todo";
+import {signal} from "@angular/core";
 
-export interface Model { // <.>
-  readonly name: string
-  readonly email: string
+export interface Model {
+  readonly firstName: string
+  readonly lastName: string
   readonly todos: Todo[]
   readonly todosLoaded: boolean;
 }
 
-export const initial: Model = // <.>
+export const initial: Model =
 {
-  name: "Dave",
-  email: "Lewakaslehna",
+  firstName: "Candice",
+  lastName: "Oleg",
   todos: [],
   todosLoaded: false
 }
-export const store = new BehaviorSubject<Model>(initial) // <.>
-
-export function set(recipe: (model: Draft<Model>) => void){ // <.>
-  const nextModel = produce(store.getValue(), recipe)
-  store.next(nextModel)
-}
+export const store = signal<Model>(initial); // <.>

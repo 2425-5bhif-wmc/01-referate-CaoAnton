@@ -1,23 +1,22 @@
-<h1>Hello {{ store.value.name }} {{ store.value.email }}!</h1>
+<h1>Hello {{ firstName() }} {{ lastName()}}!</h1>
 <form>
   <fieldset>
     <label>
       First name
       <input #name
-             value="{{ store.value.name }}"
+             value="{{ firstName() }}"
              placeholder="First name"
              autocomplete="given-name"
-             (keyup)="onNameChanged(name.value)"
+             (input)="onFirstNameChanged(name.value)"
       />
     </label>
     <label>
       Email
-      <input #email
-             type="email"
-             value="{{ store.value.email }}"
-             placeholder="Email"
-             autocomplete="email"
-             (keyup)="onEmailChanged(email.value)"
+      <input #last
+             value="{{ lastName() }}"
+             placeholder="lastName"
+             autocomplete="lastName"
+             (input)="onLastNameChanged(last.value)"
       />
     </label>
   </fieldset>

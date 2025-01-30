@@ -1,7 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {RouterLink, RouterOutlet} from '@angular/router';
-import {StoreService} from "./services/store.service";
-import {TodoService} from "./services/todo.service";
 import {AppStateService} from "./services/app-state.service";
 
 

@@ -285,47 +285,258 @@ Hallo, Oleg!
 
 === Signals mit Single Source of Truth
 
+In diesem Repository befindet sich ein Angular-Projekt, das die Verwendung von Signals und RxJS demonstriert. Ziel ist 7
+es, beide Ansätze zu vergleichen und zu zeigen, wie man mit dem Prinzip der Single Source of Truth (SSOT) den
+globalen Zustand der Anwendung verwaltet. Mithilfe von Angular Signals wird der Zustand der Anwendung als SSOT gehalten.
+
+==== Was ist Single Source of Truth?
+
+Das Single Source of Truth-Prinzip bedeutet, dass der gesamte Zustand einer Anwendung an einer einzigen Stelle verwaltet
+wird. Anstatt dass verschiedene Komponenten ihren eigenen Zustand halten, greifen sie auf eine zentrale Datenquelle (
+State Management Service) zu.
+
+**Zweck & Vorteile:**
+
+* Konsistenz: Alle Komponenten beziehen ihre Daten aus derselben Quelle → weniger Inkonsistenzen.
+* Vorhersagbarkeit: Änderungen am Zustand sind leicht nachzuvollziehen → weniger Bugs.
+* Effiziente Updates: Änderungen folgen automatisch an alle betroffenen Komponenten → bessere Performance.
+
+.https://medium.com/@2muchcoffee/angular-state-management-a-must-have-for-large-scale-angular-apps-8b98e5a761c7[Single Source Of Truth Angular]
+image::state-management.png[]
 
 ==== Beispiel
 
+image::angular-project.png[]
 
-
-== Beispiele mit ReactiveX
-
-[plantuml]
+.Model
+[%collapsible]
+====
+.model.ts
+[source, typescript]
 ----
-include::puml/architecture.puml[]
+include::../../rxjs-demo/src/app/model/model.ts[]
+----
+<.> die Single Source of Truth
+
+====
+
+
+.Service
+[%collapsible]
+====
+
+.store.service.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/services/store.service.ts[]
 ----
 
-Es befinden sich im Repository zwei Beispiele mit ReactiveX:
-
-* Angular mit RxJS
-* Android mit RxJava
-
-Beide Projekte demonstrieren die Rx-Operatoren von ReactiveX und als weiteres Beispiel werden Daten als **ToDo** von
-https://jsonplaceholder.typicode.com/[jsonplaceholder] geholt. Außerdem wird die Single Source of Truth (SSoT) Prinzip
-angewendet. So sieht die folgende Struktur der ToDos aus:
-
-[plantuml]
+.app-state.service.ts
+[source, typescript]
 ----
-include::puml/todos.puml[]
+include::../../rxjs-demo/src/app/services/app-state.service.ts[]
 ----
 
-https://jsonplaceholder.typicode.com/todos
+**AppStateService** dient zum Verwalten der ganzen State (Zustand) auf Basis der SSOT, z.B. einfügen, löschen etc...
+
+<.> es wird sich der store geholt (SSOT)
+<.> wird automatisch aktualisiert, wenn sich state ändert.
+<.> mit recipe -> die den Zustand verändert und ein neues Model-Objekt zurückgibt.
+====
+
+.Components
+[%collapsible]
+====
+.signal.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/signal/signal.component.ts[]
+----
+* holt sich vom AppStateService die Methoden für das Einfügen, Löschen, etc...
+====
+
+===== Beispiel Vorgang eines Löschens von einem Todo
+
+image::vorgang-delete.png[]
+
+1. Situation: Der Benuter klickt auf den "Delete Button" in der Component (Component)
+2. Es wird eine Action ausgelöst, da er die Methode deleteTodo() aufgerufen hat (Action)
+3. Die AppStateService ruft in der deleteTodo() die updateState() auf. (AppStateService)
+4. Mittels der Methode updateState erzeugt einen neuen Zustand, indem das Todo aus state.todos entfernt wird (Reducer)
+5. der Store wird aktualisiert -> alle Komponente, die todosSignals() verwenden, erhalten automatisch den neuen Zustand. (Store)
+6. Der Selector passt die UI an -> computed()-Signal erkennt die Änderung und informiert die Component automatisch. (Selector)
+Das gelöschte Todo verschwindet aus der UI ohne manuelles Refresh. (Component)
+
+**Fluss des Löschen in der Grafik:**
+
+Component -> Action -> AppStateService -> Reducer -> Store -> Selector ->Component aktualisiert sich automatisch.
+
+===== Verschiedene RxJS-Operatoren
+
+.map
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-map]
+----
+image::map.png[]
+====
+
+.filter
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-filter]
+----
+image::filter.png[]
+====
+
+.take
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-take]
+----
+
+image::take.png[]
+====
+
+.concatMap
+[%collapsible]
+====
+
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-concat]
+----
+
+image::concat.png[]
+* concatMap verarbeitet jeden Wert nacheinander.
+* Für jeden Wert von ['A', 'B', 'C'] wird ein neues Observable mit zwei Werten nacheinander erzeugt (A1, A2).
+====
+
+.first
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-first]
+----
+
+image::first.png[]
+* holt sich den ersten Wert der Observable
+====
+
+.last
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-last]
+----
+
+image::last.png[]
+* holt sich den letzten Wert der Observable
+====
+
+.skip
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-skip]
+----
+
+image::skip.png[]
+* Überspringt die ersten n Werte eines Observables und gibt erst danach die restlichen Werte aus.
+====
+
+.distinct
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-distinct]
+----
+
+image::distinct.jpg[]
+* Gibt nur einzigartige Werte aus und filtert doppelte Einträge aus dem Observable.
+====
+
+.startWith
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-startwith]
+----
+
+image::startWith.png[]
+* fügt zuerst einen definierten Startwert, bevor die eigentlichen Werte des Observables ausgegeben werden.
+====
+
+.pairwise
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-pairwise]
+----
+
+image::pairwise.png[]
+* Gibt die letzten zwei aufeinanderfolgenden Werte als Paare aus
+====
+
+.max
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-max]
+----
+
+image::max.png[]
+* Sucht die maximale Zahl im Observable
+====
+
+.find
+[%collapsible]
+====
+.example.component.ts
+[source, typescript]
+----
+include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-find]
+----
+
+image::find.png[]
+* Gibt das erste Element zurück, das eine bestimmte Bedingung erfüllt.
+====
+
+
 
 == Android
 
-[plantuml]
-----
-!$highlight_component = "rxjava"
-include::puml/architecture.puml[]
-----
 
-RxJava ist eine Implementierung von ReactiveX für die JVM und wird häufig in Android-Apps verwendet, um asynchrone
-Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.
+Für das Android-Projekt verwenden wir RxJava. Sie ist von ReactiveX für die JVM und wird häufig in Android-Apps verwendet,
+um asynchrone Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.
 
 === Android-MVVM
 
+.https://medium.com/@dheerubhadoria/android-mvvm-how-to-use-mvvm-in-android-example-7dec84a1fb73[Android-MVVM]
 image::android-mvvm-pattern.png[]
 
 * Model:
@@ -333,7 +544,6 @@ image::android-mvvm-pattern.png[]
 * ViewModel:
 ** verbindet die Model und die View
 ** Holt Daten aus dem Model, verarbeitet sie und stellt sie der View bereit.
-** Sendet Datenstreams an die View und empfängt Daten von ihr.
 ** Beobachtet Änderungen im Model und leitet diese an die View weiter.
 * View:
 ** Reagiert auf Benutzerinteraktionen (z.B. Klicks) und sendet diese an das ViewModel
@@ -401,7 +611,6 @@ include::../../android-mvvm/app/src/main/java/at/htl/leonding/util/immer/Immer.j
 ----
 
 **Immer** ist eine JavaScript-Bibliothek, die das Arbeiten mit unveränderlichen (immutable) Zuständen vereinfacht.
-Mit Immer kannst du Zustände so bearbeiten, als ob sie veränderbar wären, indem du direkt Änderungen daran vornimmst.
 Intern sorgt Immer dafür, dass der ursprüngliche Zustand unverändert bleibt, indem es eine Kopie erstellt und nur diese aktualisiert.
 
 <.> die Objekte werden in JSON umwandelt und zurück
@@ -440,29 +649,6 @@ include::../../android-mvvm/app/src/main/java/at/htl/leonding/util/store/StoreBa
 3. Vergleich den alten und neuen Zustand
 4. veröffentlicht den neuen Zustand mit onNext, wenn sich etwas geändert hat
 
-.ViewModelBase.java
-[source, java]
-----
-include::../../android-mvvm/app/src/main/java/at/htl/leonding/util/store/ViewModelBase.java[]
-----
-
-* Basisklasse für die Viewmodel
-* Stellt nur die relevanten Daten für die View bereit
-
-<.> PublishSubject gibt immer nur die zukünftigen Werte an die Subscriber
-<.> repräsentiert eine Subscription für einen Observable-Stream. Beenden oder Abbestellen von Observern von einem Observable.
-<.> Konstruktor der ViewModelBase. Der Ablauf:
-1. Verbindung zum Store → store.pipe liefert den aktuellen Zustand.
-2. Umwandlung → map(this::toViewModel) wandelt das Model in das ViewModel um.
-3. Optimierung → distinctUntilChanged() verhindert doppelte Benachrichtigungen.
-4. Weitergabe → subscribe(subject::onNext) sendet Updates an die View
-
-.Ablauf
-image::viewmodel.png[]
-
-image::behavior-subject2.png[]
-.BehaviorSubject vs. PublishSubject
-image::publish-subject.png[]
 
 ====
 
@@ -659,250 +845,6 @@ include::../../android-mvvm/app/src/main/java/at/htl/leonding/feature/todo/ToDoS
 * wenn er erfolgreich die Daten holen konnte, wird er im `store` gespeichert
 ====
 
-== Angular (rxjs-demo)
-
-[plantuml]
-----
-!$highlight_component = "rxjs"
-include::puml/architecture.puml[]
-----
-
-RxJS ist eine reaktive Bibliothek, die speziell in Angular verwendet wird, um asynchrone Datenströme wie API-Aufrufe,
-Benutzereingaben und Ereignisse zu verwalten.
-
-=== Struktur des Projekts
-
-image::angular-project.png[]
-
-==== Model
-
-image::angular-project-model.png[]
-.model.ts
-[source, typescript]
-----
-include::../../rxjs-demo/src/app/model/model.ts[]
-----
-
-<.> definiert das Modell
-<.> der anfängliche Zustand des Modells
-<.> das zentrale Element in der Anwendung (Single Source Of Truth)
-<.> set(...)
-* Änderungen am Zustand vorzunehmen, ohne den aktuellen Zustand direkt zu manipulieren.
-* recipe-Funktion, die beschreibt, wie der Zustand verändert werden soll.
-* die produce() führt eine immutable Änderung durch -> der aktuelle Zustand vom Store wird geholt und die recipe beschreibt
-die Änderungen. Es wird eine Kopie vorgenommen und im store.next() werden alle Subscriber benachrichtigt, dass sich im
-Model was geändert hat.
-
-.todo.ts
-[source, typescript]
-----
-include::../../rxjs-demo/src/app/model/todo.ts[]
-----
-
-==== Services
-
-image::angular-project-service.png[]
-
-
-.store.service.ts
-[source, typescript]
-----
-include::../../rxjs-demo/src/app/services/store.service.ts[]
-----
-
-.todo.service.ts
-[source, typescript]
-----
-include::../../rxjs-demo/src/app/services/todo.service.ts[]
-----
-* holt sich vom https://jsonplaceholder.typicode.com/todos[jsonplaceholder] die ToDoss
-* lastValueFrom: wandelt das Observable in ein Promise um und wartet darauf, dass es abgeschlossen wird. Wenn es
-abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem Fall die Liste der Todos).
-* nachdem er sich die Daten geholt hat, speichert er das im store
-
-
-==== Components
-
-image::angular-project-component.png[]
-
-* todo
-* example
-
-===== todo
-
-.todo.component.html
-[source, typescript]
-----
-include::../../rxjs-demo/src/app/components/todo/todo.component.html[]
-----
-
-.todo.component.ts
-[source, typescript]
-----
-include::../../rxjs-demo/src/app/components/todo/todo.component.ts[]
-----
-
-* holt sich wie beim vorherigen `Android-Beispiel` die todos
-
-
-image::pipe.png[]
-
-===== example
-
-* Im example befinden sich verschiedene Operatoren von RxJs
-
-.map
-[%collapsible]
-====
-.example.component.ts
-[source, typescript]
-----
-include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-map]
-----
-image::map.png[]
-====
-
-.filter
-[%collapsible]
-====
-.example.component.ts
-[source, typescript]
-----
-include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-filter]
-----
-image::filter.png[]
-====
-
-.take
-[%collapsible]
-====
-.example.component.ts
-[source, typescript]
-----
-include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-take]
-----
-
-image::take.png[]
-====
-
-.concatMap
-[%collapsible]
-====
-
-.example.component.ts
-[source, typescript]
-----
-include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-concat]
-----
-
-image::concat.png[]
-* concatMap verarbeitet jeden Wert nacheinander.
-* Für jeden Wert von ['A', 'B', 'C'] wird ein neues Observable mit zwei Werten nacheinander erzeugt (A1, A2).
-====
-
-.first
-[%collapsible]
-====
-.example.component.ts
-[source, typescript]
-----
-include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-first]
-----
-
-image::first.png[]
-* holt sich den ersten Wert der Observable
-====
-
-.last
-[%collapsible]
-====
-.example.component.ts
-[source, typescript]
-----
-include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-last]
-----
-
-image::last.png[]
-* holt sich den letzten Wert der Observable
-====
-
-.skip
-[%collapsible]
-====
-.example.component.ts
-[source, typescript]
-----
-include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-skip]
-----
-
-image::skip.png[]
-* Überspringt die ersten n Werte eines Observables und gibt erst danach die restlichen Werte aus.
-====
-
-.distinct
-[%collapsible]
-====
-.example.component.ts
-[source, typescript]
-----
-include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-distinct]
-----
-
-image::distinct.jpg[]
-* Gibt nur einzigartige Werte aus und filtert doppelte Einträge aus dem Observable.
-====
-
-.startWith
-[%collapsible]
-====
-.example.component.ts
-[source, typescript]
-----
-include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-startwith]
-----
-
-image::startWith.png[]
-* fügt zuerst einen definierten Startwert, bevor die eigentlichen Werte des Observables ausgegeben werden.
-====
-
-.pairwise
-[%collapsible]
-====
-.example.component.ts
-[source, typescript]
-----
-include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-pairwise]
-----
-
-image::pairwise.png[]
-* Gibt die letzten zwei aufeinanderfolgenden Werte als Paare aus
-====
-
-.max
-[%collapsible]
-====
-.example.component.ts
-[source, typescript]
-----
-include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-max]
-----
-
-image::max.png[]
-* Sucht die maximale Zahl im Observable
-====
-
-.find
-[%collapsible]
-====
-.example.component.ts
-[source, typescript]
-----
-include::../../rxjs-demo/src/app/components/example/example.component.ts[tag=angular-find]
-----
-
-image::find.png[]
-* Gibt das erste Element zurück, das eine bestimmte Bedingung erfüllt.
-====
 
 == Glossar
 

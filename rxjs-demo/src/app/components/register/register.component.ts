@@ -1,8 +1,5 @@
 import {Component, computed, inject, model, OnInit, signal} from '@angular/core';
-import {StoreService} from "../../services/store.service";
-import {produce} from "immer";
-import {set} from "../../model/model";
-import {TodoService} from "../../services/todo.service";
+import {AppStateService} from "../../services/app-state.service";
 
 @Component({
   selector: 'app-register',
@@ -11,23 +8,21 @@ import {TodoService} from "../../services/todo.service";
   standalone: true,
   styleUrl: './register.component.css'
 })
-export class RegisterComponent implements OnInit{
-  store = inject(StoreService).store
-  todoService = inject(TodoService)
-  onNameChanged(value: string) {
-    set(model => { model.name = value})
+export class RegisterComponent{
+  state = inject(AppStateService)
+  firstName = inject(AppStateService).firstName;
+  lastName = inject(AppStateService).lastName;
+  onFirstNameChanged(value: string) {
+    this.state.updateState(state => ({
+      ...state,
+      firstName: value
+    }));
   }
 
-  onEmailChanged(value: string) {
-    set(model => { model.email = value})
-  }
-
-  ngOnInit(): void {
-    const count = signal(2);
-    const squared = computed(() => count() * count()); // Quadrat berechnen
-
-    console.log(squared()); // 4
-    count.set(3);
-    console.log(squared()); // 9
+  onLastNameChanged(value: string) {
+    this.state.updateState(state => ({
+      ...state,
+      lastName: value
+    }));
   }
 }
