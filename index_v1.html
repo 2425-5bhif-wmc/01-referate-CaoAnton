@@ -1830,30 +1830,24 @@ Benutzereingaben und Ereignisse zu verwalten.</p>
 <div class="listingblock">
 <div class="title">model.ts</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span><span class="nx">BehaviorSubject</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">rxjs</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">Draft</span><span class="p">,</span> <span class="nx">produce</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">immer</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">Todo</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./todo</span><span class="dl">"</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span><span class="nx">Todo</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./todo</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span><span class="nx">signal</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@angular/core</span><span class="dl">"</span><span class="p">;</span>
 
-<span class="k">export</span> <span class="kr">interface</span> <span class="nx">Model</span> <span class="p">{</span> <i class="conum" data-value="1"></i><b>(1)</b>
-  <span class="k">readonly</span> <span class="nx">name</span><span class="p">:</span> <span class="kr">string</span>
-  <span class="k">readonly</span> <span class="nx">email</span><span class="p">:</span> <span class="kr">string</span>
+<span class="k">export</span> <span class="kr">interface</span> <span class="nx">Model</span> <span class="p">{</span>
+  <span class="k">readonly</span> <span class="nx">firstName</span><span class="p">:</span> <span class="kr">string</span>
+  <span class="k">readonly</span> <span class="nx">lastName</span><span class="p">:</span> <span class="kr">string</span>
   <span class="k">readonly</span> <span class="nx">todos</span><span class="p">:</span> <span class="nx">Todo</span><span class="p">[]</span>
   <span class="k">readonly</span> <span class="nx">todosLoaded</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="k">export</span> <span class="kd">const</span> <span class="nx">initial</span><span class="p">:</span> <span class="nx">Model</span> <span class="o">=</span> <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">initial</span><span class="p">:</span> <span class="nx">Model</span> <span class="o">=</span>
 <span class="p">{</span>
-  <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Dave</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Lewakaslehna</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">firstName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Candice</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">lastName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Oleg</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">todos</span><span class="p">:</span> <span class="p">[],</span>
   <span class="na">todosLoaded</span><span class="p">:</span> <span class="kc">false</span>
 <span class="p">}</span>
-<span class="k">export</span> <span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BehaviorSubject</span><span class="o">&lt;</span><span class="nx">Model</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">initial</span><span class="p">)</span> <i class="conum" data-value="3"></i><b>(3)</b>
-
-<span class="k">export</span> <span class="kd">function</span> <span class="nf">set</span><span class="p">(</span><span class="nx">recipe</span><span class="p">:</span> <span class="p">(</span><span class="nx">model</span><span class="p">:</span> <span class="nx">Draft</span><span class="o">&lt;</span><span class="nx">Model</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">){</span> <i class="conum" data-value="4"></i><b>(4)</b>
-  <span class="kd">const</span> <span class="nx">nextModel</span> <span class="o">=</span> <span class="nf">produce</span><span class="p">(</span><span class="nx">store</span><span class="p">.</span><span class="nf">getValue</span><span class="p">(),</span> <span class="nx">recipe</span><span class="p">)</span>
-  <span class="nx">store</span><span class="p">.</span><span class="nf">next</span><span class="p">(</span><span class="nx">nextModel</span><span class="p">)</span>
-<span class="p">}</span></code></pre>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">signal</span><span class="o">&lt;</span><span class="nx">Model</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">initial</span><span class="p">);</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1913,48 +1907,25 @@ Model was geändert hat.</p>
 <div class="listingblock">
 <div class="title">store.service.ts</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">Injectable</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">store</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../model</span><span class="dl">"</span>
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">Injectable</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">store</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">../model</span><span class="dl">'</span><span class="p">;</span>
 
 <span class="p">@</span><span class="nd">Injectable</span><span class="p">({</span>
   <span class="na">providedIn</span><span class="p">:</span> <span class="dl">'</span><span class="s1">root</span><span class="dl">'</span>
 <span class="p">})</span>
 <span class="k">export</span> <span class="kd">class</span> <span class="nc">StoreService</span> <span class="p">{</span>
 
+  <span class="nf">constructor</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
   <span class="kd">get</span> <span class="nf">store </span><span class="p">()</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">store</span>
   <span class="p">}</span>
-
 <span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">todo.service.ts</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span><span class="nx">inject</span><span class="p">,</span> <span class="nx">Injectable</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">Todo</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../model/todo</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="kd">set</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../model/model</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">HttpClient</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@angular/common/http</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">StoreService</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./store.service</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">lastValueFrom</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">rxjs</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="p">@</span><span class="nd">Injectable</span><span class="p">({</span>
-  <span class="na">providedIn</span><span class="p">:</span> <span class="dl">'</span><span class="s1">root</span><span class="dl">'</span>
-<span class="p">})</span>
-<span class="k">export</span> <span class="kd">class</span> <span class="nc">TodoService</span> <span class="p">{</span>
-
-  <span class="nx">store</span> <span class="o">=</span> <span class="nf">inject</span><span class="p">(</span><span class="nx">StoreService</span><span class="p">).</span><span class="nx">store</span>
-  <span class="nx">httpClient</span> <span class="o">=</span> <span class="nf">inject</span><span class="p">(</span><span class="nx">HttpClient</span><span class="p">)</span>
-  <span class="k">async</span> <span class="nf">findAll</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">const</span> <span class="nx">todos</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">lastValueFrom</span><span class="p">(</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">httpClient</span><span class="p">.</span><span class="kd">get</span><span class="o">&lt;</span><span class="nx">Todo</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://jsonplaceholder.typicode.com/todos</span><span class="dl">"</span><span class="p">)</span>
-    <span class="p">)</span>
-    <span class="nf">set</span><span class="p">(</span><span class="nx">model</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="nx">model</span><span class="p">.</span><span class="nx">todos</span> <span class="o">=</span> <span class="nx">todos</span>
-    <span class="p">})</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">findAll: </span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">store</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nx">todos</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
-  <span class="p">}</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="typescript"><span class="nx">Unresolved</span> <span class="nx">directive</span> <span class="k">in</span> <span class="nx">index_v1</span><span class="p">.</span><span class="nx">adoc</span> <span class="o">-</span> <span class="nx">include</span><span class="p">::..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="nx">rxjs</span><span class="o">-</span><span class="nx">demo</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">services</span><span class="o">/</span><span class="nx">todo</span><span class="p">.</span><span class="nx">service</span><span class="p">.</span><span class="nx">ts</span><span class="p">[]</span></code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -1994,54 +1965,13 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 <div class="listingblock">
 <div class="title">todo.component.html</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="o">&lt;</span><span class="nf">button </span><span class="p">(</span><span class="nx">click</span><span class="p">)</span><span class="o">=</span><span class="dl">"</span><span class="s2">loadTodos()</span><span class="dl">"</span><span class="o">&gt;</span><span class="nx">Load</span> <span class="nx">Todos</span><span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
-</span>
-<span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">todo</span> <span class="nx">works</span><span class="o">!</span><span class="p">({{(</span><span class="nx">viewModel</span> <span class="o">|</span> <span class="k">async</span><span class="p">)?.</span><span class="nx">length</span><span class="p">}})</span><span class="o">&lt;</span><span class="sr">/p</span><span class="err">&gt;
-</span>
-<span class="o">&lt;</span><span class="nx">ol</span><span class="o">&gt;</span>
-  <span class="p">@</span><span class="nd">for</span> <span class="p">(</span><span class="nx">todo</span> <span class="k">of</span> <span class="nx">viewModel</span> <span class="o">|</span> <span class="k">async</span><span class="p">;</span> <span class="nx">track</span> <span class="nx">todo</span><span class="p">.</span><span class="nx">title</span><span class="p">)</span> <span class="p">{</span>
-    <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{{</span> <span class="nx">todo</span><span class="p">.</span><span class="nx">title</span> <span class="p">}}</span><span class="o">&lt;</span><span class="sr">/li</span><span class="err">&gt;
-</span>  <span class="p">}</span> <span class="p">@</span><span class="nd">empty</span> <span class="p">{</span>
-    <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="nx">There</span> <span class="nx">are</span> <span class="nx">no</span> <span class="nx">items</span><span class="p">.</span><span class="o">&lt;</span><span class="sr">/li</span><span class="err">&gt;
-</span>  <span class="p">}</span>
-<span class="o">&lt;</span><span class="sr">/ol&gt;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="typescript"><span class="nx">Unresolved</span> <span class="nx">directive</span> <span class="k">in</span> <span class="nx">index_v1</span><span class="p">.</span><span class="nx">adoc</span> <span class="o">-</span> <span class="nx">include</span><span class="p">::..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="nx">rxjs</span><span class="o">-</span><span class="nx">demo</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">components</span><span class="o">/</span><span class="nx">todo</span><span class="o">/</span><span class="nx">todo</span><span class="p">.</span><span class="nx">component</span><span class="p">.</span><span class="nx">html</span><span class="p">[]</span></code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">todo.component.ts</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">inject</span><span class="p">,</span> <span class="nx">model</span><span class="p">,</span> <span class="nx">OnInit</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">StoreService</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../../services/store.service</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">distinctUntilChanged</span><span class="p">,</span> <span class="nx">map</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">rxjs</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">Todo</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../../model</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">AsyncPipe</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@angular/common</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">TodoService</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../../services/todo.service</span><span class="dl">"</span><span class="p">;</span>
-
-<span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
-  <span class="na">selector</span><span class="p">:</span> <span class="dl">'</span><span class="s1">app-todo</span><span class="dl">'</span><span class="p">,</span>
-  <span class="na">standalone</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-  <span class="na">imports</span><span class="p">:</span> <span class="p">[</span>
-    <span class="nx">AsyncPipe</span>
-  <span class="p">],</span>
-  <span class="na">templateUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./todo.component.html</span><span class="dl">'</span><span class="p">,</span>
-  <span class="na">styleUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./todo.component.css</span><span class="dl">'</span>
-<span class="p">})</span>
-<span class="k">export</span> <span class="kd">class</span> <span class="nc">TodoComponent</span> <span class="k">implements</span> <span class="nx">OnInit</span> <span class="p">{</span>
-  <span class="nx">todoService</span> <span class="o">=</span> <span class="nf">inject</span><span class="p">(</span><span class="nx">TodoService</span><span class="p">)</span>
-  <span class="nx">viewModel</span> <span class="o">=</span> <span class="nf">inject</span><span class="p">(</span><span class="nx">StoreService</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">store</span>
-    <span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
-      <span class="nf">map</span><span class="p">(</span><span class="nx">model</span> <span class="o">=&gt;</span> <span class="nx">model</span><span class="p">.</span><span class="nx">todos</span><span class="p">),</span>
-      <span class="nf">distinctUntilChanged</span><span class="p">()</span>
-    <span class="p">)</span>
-  <span class="nf">loadTodos</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">todoService</span><span class="p">.</span><span class="nf">findAll</span><span class="p">()</span>
-  <span class="p">}</span>
-
-  <span class="nf">ngOnInit</span><span class="p">():</span> <span class="k">void</span> <span class="p">{</span>
-  <span class="p">}</span>
-
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="typescript"><span class="nx">Unresolved</span> <span class="nx">directive</span> <span class="k">in</span> <span class="nx">index_v1</span><span class="p">.</span><span class="nx">adoc</span> <span class="o">-</span> <span class="nx">include</span><span class="p">::..</span><span class="o">/</span><span class="p">..</span><span class="o">/</span><span class="nx">rxjs</span><span class="o">-</span><span class="nx">demo</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">app</span><span class="o">/</span><span class="nx">components</span><span class="o">/</span><span class="nx">todo</span><span class="o">/</span><span class="nx">todo</span><span class="p">.</span><span class="nx">component</span><span class="p">.</span><span class="nx">ts</span><span class="p">[]</span></code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -2611,7 +2541,7 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-30 10:26:59 UTC
+Last updated 2025-01-30 18:07:08 UTC
 </div>
 </div>
 </body>

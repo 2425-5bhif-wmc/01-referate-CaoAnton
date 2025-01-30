@@ -570,21 +570,15 @@ pre.rouge .gs {
 <li><a href="#_signals_mit_single_source_of_truth">2.4. Signals mit Single Source of Truth</a></li>
 </ul>
 </li>
-<li><a href="#_beispiele_mit_reactivex">3. Beispiele mit ReactiveX</a></li>
-<li><a href="#_android">4. Android</a>
+<li><a href="#_android">3. Android</a>
 <ul class="sectlevel2">
-<li><a href="#_android_mvvm">4.1. Android-MVVM</a></li>
-<li><a href="#_drei_prinzipien">4.2. Drei Prinzipien</a></li>
-<li><a href="#_projekt">4.3. Projekt</a></li>
+<li><a href="#_android_mvvm">3.1. Android-MVVM</a></li>
+<li><a href="#_drei_prinzipien">3.2. Drei Prinzipien</a></li>
+<li><a href="#_projekt">3.3. Projekt</a></li>
 </ul>
 </li>
-<li><a href="#_angular_rxjs_demo">5. Angular (rxjs-demo)</a>
-<ul class="sectlevel2">
-<li><a href="#_struktur_des_projekts">5.1. Struktur des Projekts</a></li>
-</ul>
-</li>
-<li><a href="#_glossar">6. Glossar</a></li>
-<li><a href="#_quelle">7. Quelle</a></li>
+<li><a href="#_glossar">4. Glossar</a></li>
+<li><a href="#_quelle">5. Quelle</a></li>
 </ul>
 </div>
 </div>
@@ -1029,1283 +1023,297 @@ Hallo, Oleg!</pre>
 </div>
 <div class="sect2">
 <h3 id="_signals_mit_single_source_of_truth"><a class="anchor" href="#_signals_mit_single_source_of_truth"></a>2.4. Signals mit Single Source of Truth</h3>
-<div class="sect3">
-<h4 id="_beispiel"><a class="anchor" href="#_beispiel"></a>2.4.1. Beispiel</h4>
-
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_beispiele_mit_reactivex"><a class="anchor" href="#_beispiele_mit_reactivex"></a>3. Beispiele mit ReactiveX</h2>
-<div class="sectionbody">
-<div class="imageblock">
-<div class="content">
-<img src="images/diag-plantuml-md5-28be95aa269b132e3ac17a7c51075e1b.png" alt="Diagram" width="687" height="74">
-</div>
-</div>
 <div class="paragraph">
-<p>Es befinden sich im Repository zwei Beispiele mit ReactiveX:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Angular mit RxJS</p>
-</li>
-<li>
-<p>Android mit RxJava</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Beide Projekte demonstrieren die Rx-Operatoren von ReactiveX und als weiteres Beispiel werden Daten als <strong>ToDo</strong> von
-<a href="https://jsonplaceholder.typicode.com/">jsonplaceholder</a> geholt. Außerdem wird die Single Source of Truth (SSoT) Prinzip
-angewendet. So sieht die folgende Struktur der ToDos aus:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/diag-plantuml-md5-9c94654fa2234ed18185d7c21437c749.png" alt="Diagram" width="185" height="133">
-</div>
-</div>
-<div class="paragraph">
-<p><a href="https://jsonplaceholder.typicode.com/todos" class="bare">https://jsonplaceholder.typicode.com/todos</a></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_android"><a class="anchor" href="#_android"></a>4. Android</h2>
-<div class="sectionbody">
-<div class="imageblock">
-<div class="content">
-<img src="images/diag-plantuml-md5-c041c3deb7f15548ee5128b343d882e6.png" alt="Diagram" width="687" height="74">
-</div>
-</div>
-<div class="paragraph">
-<p>RxJava ist eine Implementierung von ReactiveX für die JVM und wird häufig in Android-Apps verwendet, um asynchrone
-Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
-</div>
-<div class="sect2">
-<h3 id="_android_mvvm"><a class="anchor" href="#_android_mvvm"></a>4.1. Android-MVVM</h3>
-<div class="imageblock">
-<div class="content">
-<img src="images/android-mvvm-pattern.png" alt="android mvvm pattern">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Model:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Repräsentiert die Daten und Geschäftslogik der Anwendung</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>ViewModel:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>verbindet die Model und die View</p>
-</li>
-<li>
-<p>Holt Daten aus dem Model, verarbeitet sie und stellt sie der View bereit.</p>
-</li>
-<li>
-<p>Sendet Datenstreams an die View und empfängt Daten von ihr.</p>
-</li>
-<li>
-<p>Beobachtet Änderungen im Model und leitet diese an die View weiter.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>View:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Reagiert auf Benutzerinteraktionen (z.B. Klicks) und sendet diese an das ViewModel</p>
-</li>
-<li>
-<p>Beobachtet Datenänderungen aus dem ViewModel und aktualisiert die UI entsprechend</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_drei_prinzipien"><a class="anchor" href="#_drei_prinzipien"></a>4.2. Drei Prinzipien</h3>
-<div class="paragraph">
-<p><a href="https://redux.js.org/understanding/thinking-in-redux/three-principles">Three Principles</a></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Single Source of Truth</p>
-</li>
-<li>
-<p>State is Read-Only</p>
-</li>
-<li>
-<p>Changes are Made with Pure Functions</p>
-</li>
-</ul>
+<p>In diesem Repository befindet sich ein Angular-Projekt, das die Verwendung von Signals und RxJS demonstriert. Ziel ist 7
+es, beide Ansätze zu vergleichen und zu zeigen, wie man mit dem Prinzip der Single Source of Truth (SSOT) den
+globalen Zustand der Anwendung verwaltet. Mithilfe von Angular Signals wird der Zustand der Anwendung als SSOT gehalten.</p>
 </div>
 <div class="sect3">
-<h4 id="_single_source_of_truth"><a class="anchor" href="#_single_source_of_truth"></a>4.2.1. Single Source of Truth</h4>
+<h4 id="_was_ist_single_source_of_truth"><a class="anchor" href="#_was_ist_single_source_of_truth"></a>2.4.1. Was ist Single Source of Truth?</h4>
+<div class="paragraph">
+<p>Das Single Source of Truth-Prinzip bedeutet, dass der gesamte Zustand einer Anwendung an einer einzigen Stelle verwaltet
+wird. Anstatt dass verschiedene Komponenten ihren eigenen Zustand halten, greifen sie auf eine zentrale Datenquelle (
+State Management Service) zu.</p>
+</div>
+<div class="paragraph">
+<p><strong>Zweck &amp; Vorteile:</strong></p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Der gesamte Zustand der Anwendung wird in einem einzigen, zentralen Store gespeichert.</p>
+<p>Konsistenz: Alle Komponenten beziehen ihre Daten aus derselben Quelle → weniger Inkonsistenzen.</p>
+</li>
+<li>
+<p>Vorhersagbarkeit: Änderungen am Zustand sind leicht nachzuvollziehen → weniger Bugs.</p>
+</li>
+<li>
+<p>Effiziente Updates: Änderungen folgen automatisch an alle betroffenen Komponenten → bessere Performance.</p>
 </li>
 </ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/state-management.png" alt="state management">
+</div>
+<div class="title">Figure 4. <a href="https://medium.com/@2muchcoffee/angular-state-management-a-must-have-for-large-scale-angular-apps-8b98e5a761c7">Single Source Of Truth Angular</a></div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_state_is_read_only"><a class="anchor" href="#_state_is_read_only"></a>4.2.2. State is Read-Only</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Der Zustand kann nicht direkt geändert werden. Änderungen erfolgen nur durch das Auslösen von Actions.</p>
-</li>
-<li>
-<p>Actions beschreiben, <strong>was geändert werden soll</strong>, ohne die Details der Implementierung zu enthalten.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_changes_are_made_with_pure_functions"><a class="anchor" href="#_changes_are_made_with_pure_functions"></a>4.2.3. Changes are Made with Pure Functions</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>hat keine Seiteneffekte &#8594; greift nicht auf externe Ressourcen (z. B. Datenbanken) zu und hat keine unerwarteten Auswirkungen.</p>
-</li>
-<li>
-<p>der Funktionswert bestimmt sich nur durch die Parameter &#8594; Sie gibt immer denselben Rückgabewert für dieselben Eingabewerte zurück.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_projekt"><a class="anchor" href="#_projekt"></a>4.3. Projekt</h3>
-<div class="imageblock">
-<div class="content">
-<img src="images/android-project.png" alt="android project">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Util</p>
-</li>
-<li>
-<p>Model</p>
-</li>
-<li>
-<p>Feature</p>
-</li>
-</ul>
-</div>
-<div class="sect3">
-<h4 id="_util"><a class="anchor" href="#_util"></a>4.3.1. Util</h4>
-<div class="imageblock">
-<div class="content">
-<img src="images/android-project-util.png" alt="android project util">
-</div>
-</div>
-<details>
-<summary class="title">mapper</summary>
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>dient zur Serialisierung und Deserialisierung von Objekten nach JSON und zurück.</p>
-</li>
-<li>
-<p>führt auch tiefe Klonoperationen aus.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/deep-copy.jpg" alt="deep copy">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Deep Copy: ein Object wird geklont, ohne die Referenzen des alten Objekts zu übertragen. Es ist sehr
-ressourcenaufwendig, da durch jede Referenz auf ein anderes Objekt das andere Objekt selbst tief kopiert werden muss.</p>
-</li>
-<li>
-<p>Shallow Copy: erstellt nur ein neues Objekt mit den Werten des alten Objekts, verwendet dabei die gleichen Referenzen
-wie das alte Objekt auf weitere Objekte</p>
-</li>
-</ul>
-</div>
-</div>
-</details>
-<details>
-<summary class="title">immer</summary>
-<div class="content">
-<div class="listingblock">
-<div class="title">Immer.java</div>
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">at.htl.leonding.util.immer</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">android.os.Handler</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">android.os.Looper</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">android.util.Log</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">java.util.concurrent.CompletableFuture</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.function.Consumer</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">at.htl.leonding.util.mapper.Mapper</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">io.reactivex.rxjava3.subjects.BehaviorSubject</span><span class="o">;</span>
-
-<span class="cm">/** Immer simplifies handling immutable data structures.
- * @param &lt;T&gt; The type of the baseState
- */</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Immer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">TAG</span> <span class="o">=</span> <span class="nc">Immer</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getSimpleName</span><span class="o">();</span>
-    <span class="kd">final</span> <span class="kd">public</span> <span class="nc">Mapper</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">mapper</span><span class="o">;</span> <i class="conum" data-value="1"></i><b>(1)</b>
-    <span class="kd">final</span> <span class="nc">Handler</span> <span class="n">handler</span><span class="o">;</span> <i class="conum" data-value="2"></i><b>(2)</b>
-
-    <span class="kd">public</span> <span class="nf">Immer</span><span class="o">(</span><span class="nc">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="no">T</span><span class="o">&gt;</span> <span class="n">type</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Mapper</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;(</span><span class="n">type</span><span class="o">);</span>
-        <span class="n">handler</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Handler</span><span class="o">(</span><span class="nc">Looper</span><span class="o">.</span><span class="na">getMainLooper</span><span class="o">());</span>
-    <span class="o">}</span>
-    <span class="cm">/** Create a deep clone of the existing model, apply a recipe to it and finally pass the new state to the consumer.
-     * To reduce the load on the main thread we clone the current state in a separate thread.
-     * To avoid multithreading issues we call back the recipe and resultConsumer running on the one and only Main thread of the app.
-     * We do not call the resultConsumer if the clone equals the currentState,
-     * @param pipe the previous readonly single source or truth
-     * @param recipe the callback function that modifies parts of the cloned state
-     * @param resultConsumer the callback function that uses the cloned &amp; modified model
-     */</span>
-<span class="c1">// Immer.java</span>
-    <i class="conum" data-value="3"></i><b>(3)</b>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">produce</span><span class="o">(</span><span class="nc">BehaviorSubject</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">pipe</span><span class="o">,</span> <span class="nc">Consumer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">recipe</span><span class="o">,</span> <span class="nc">Consumer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">resultConsumer</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">handler</span><span class="o">.</span><span class="na">post</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
-            <span class="kt">var</span> <span class="n">t</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="na">clone</span><span class="o">(</span><span class="n">pipe</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
-            <span class="kt">var</span> <span class="n">currentAsJson</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="na">toResource</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
-            <span class="n">recipe</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
-            <span class="kt">var</span> <span class="n">nextAsJson</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="na">toResource</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
-            <span class="k">if</span> <span class="o">(!</span><span class="n">nextAsJson</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">currentAsJson</span><span class="o">))</span> <span class="o">{</span>
-                <span class="nc">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="no">TAG</span><span class="o">,</span> <span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"=== state changed ===\n%s\n=&gt;\n%s---"</span><span class="o">,</span> <span class="n">currentAsJson</span><span class="o">,</span> <span class="n">nextAsJson</span><span class="o">));</span>
-                <span class="n">resultConsumer</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
-            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-                <span class="nc">Log</span><span class="o">.</span><span class="na">w</span><span class="o">(</span><span class="no">TAG</span><span class="o">,</span> <span class="s">"produce() without change"</span><span class="o">);</span>
-            <span class="o">}</span>
-        <span class="o">});</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Immer</strong> ist eine JavaScript-Bibliothek, die das Arbeiten mit unveränderlichen (immutable) Zuständen vereinfacht.
-Mit Immer kannst du Zustände so bearbeiten, als ob sie veränderbar wären, indem du direkt Änderungen daran vornimmst.
-Intern sorgt Immer dafür, dass der ursprüngliche Zustand unverändert bleibt, indem es eine Kopie erstellt und nur diese aktualisiert.</p>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>die Objekte werden in JSON umwandelt und zurück</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>führt die Aufgaben im Main-Thread aus</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>die Methode produce(&#8230;&#8203;) sorgt dafür, dass:
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Der aktuelle Zustand aus dem <code>pipe</code> (<code>BehaviorSubject</code>) <strong>tief kopiert</strong> wird</p>
-</li>
-<li>
-<p>Die übergebene <strong>Änderungsfunktion (<code>recipe</code>)</strong> auf diesen <strong>Klon</strong> angewendet wird, um gezielt Änderungen vorzunehmen.</p>
-</li>
-<li>
-<p>Der <strong>alte</strong> und der <strong>neue Zustand</strong> werden <strong>verglichen</strong>:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Falls sich der Zustand <strong>geändert</strong> hat, wird der neue Zustand über den <strong><code>resultConsumer</code></strong> (meist <code>pipe.onNext</code>) weitergegeben.</p>
-</li>
-<li>
-<p>Falls <strong>keine Änderung</strong> erfolgt, wird eine Warnung (<code>"produce() without change"</code>) im Log ausgegeben.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div></td>
-</tr>
-</table>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/produce.png" alt="produce">
-</div>
-<div class="title">Figure 4. produce()</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/behavior-subject.png" alt="behavior subject">
-</div>
-<div class="title">Figure 5. Behavior Subject</div>
-</div>
-</div>
-</details>
-<details>
-<summary class="title">store</summary>
-<div class="content">
-<div class="listingblock">
-<div class="title">StoreBase.java</div>
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">at.htl.leonding.util.store</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">android.util.Log</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">java.util.concurrent.CompletionException</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.function.Consumer</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">at.htl.leonding.util.immer.Immer</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">io.reactivex.rxjava3.subjects.BehaviorSubject</span><span class="o">;</span>
-
-<span class="cm">/** Base class for implementations using a single source of truth approach.
- * @param &lt;T&gt; the class of the ReadOnly Single Source of Truth.
- */</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StoreBase</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">final</span> <span class="nc">BehaviorSubject</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">pipe</span><span class="o">;</span>
-    <span class="kd">protected</span> <span class="kd">final</span> <span class="nc">Immer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">immer</span><span class="o">;</span>
-
-    <span class="kd">protected</span> <span class="nf">StoreBase</span><span class="o">(</span><span class="nc">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="no">T</span><span class="o">&gt;</span> <span class="n">type</span><span class="o">,</span> <span class="no">T</span> <span class="n">initialState</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">try</span> <span class="o">{</span>
-            <span class="n">pipe</span> <span class="o">=</span> <span class="nc">BehaviorSubject</span><span class="o">.</span><span class="na">createDefault</span><span class="o">(</span><span class="n">initialState</span><span class="o">);</span>
-            <span class="n">immer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Immer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;(</span><span class="n">type</span><span class="o">);</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nf">CompletionException</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="no">T</span> <span class="nf">get</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">immer</span><span class="o">.</span><span class="na">mapper</span><span class="o">.</span><span class="na">clone</span><span class="o">(</span><span class="n">pipe</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
-    <span class="o">}</span>
-    <span class="cm">/** clone the current Model, apply the recipe to it and submit it to the pipe as the next Model.
-     * @param recipe
-     * The function that receives a clone of the current model and applies its changes to it.
-     */</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">apply</span><span class="o">(</span><span class="nc">Consumer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">recipe</span><span class="o">)</span> <span class="o">{</span> <i class="conum" data-value="1"></i><b>(1)</b>
-        <span class="nc">Consumer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">onNext</span> <span class="o">=</span> <span class="n">nextState</span> <span class="o">-&gt;</span> <span class="n">pipe</span><span class="o">.</span><span class="na">onNext</span><span class="o">(</span><span class="n">nextState</span><span class="o">);</span>
-        <span class="n">immer</span><span class="o">.</span><span class="na">produce</span><span class="o">(</span><span class="n">pipe</span><span class="o">,</span> <span class="n">recipe</span><span class="o">,</span> <span class="n">onNext</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Basisklasse für Store</p>
-</li>
-<li>
-<p>Verwaltet den Zustand</p>
-</li>
-</ul>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>produce():
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>onNext holt sich den neuen Zustand im BehaviorSubject (pipe).</p>
-</li>
-<li>
-<p>klont sich den aktuellen Zustand und das recipe wird angewendet</p>
-</li>
-<li>
-<p>Vergleich den alten und neuen Zustand</p>
-</li>
-<li>
-<p>veröffentlicht den neuen Zustand mit onNext, wenn sich etwas geändert hat</p>
-</li>
-</ol>
-</div></td>
-</tr>
-</table>
-</div>
-<div class="listingblock">
-<div class="title">ViewModelBase.java</div>
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">at.htl.leonding.util.store</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">at.htl.leonding.model.Model</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">at.htl.leonding.model.Store</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">io.reactivex.rxjava3.disposables.Disposable</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">io.reactivex.rxjava3.subjects.PublishSubject</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">io.reactivex.rxjava3.subjects.Subject</span><span class="o">;</span>
-
-<span class="cm">/** Map our global application state to the small vision that a view has of the world.
- * A base class for our ViewModels in the sense of the MVVM Pattern.
- * In a lot of texts the term "Model-View-ViewModel" is often explained incorrectly.
- * @param &lt;T&gt; the type of the view model, the small world of the view that this special viewmodel serves.
- */</span>
-<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">ViewModelBase</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">final</span> <span class="nc">Subject</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">subject</span> <span class="o">=</span> <span class="nc">PublishSubject</span><span class="o">.</span><span class="na">create</span><span class="o">();</span> <i class="conum" data-value="1"></i><b>(1)</b>
-
-    <span class="kd">protected</span> <span class="kd">final</span> <span class="nc">Store</span> <span class="n">store</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Disposable</span> <span class="n">subscription</span><span class="o">;</span> <i class="conum" data-value="2"></i><b>(2)</b>
-
-    <span class="kd">protected</span> <span class="nf">ViewModelBase</span><span class="o">(</span><span class="nc">Store</span> <span class="n">store</span><span class="o">)</span> <span class="o">{</span> <i class="conum" data-value="3"></i><b>(3)</b>
-        <span class="k">this</span><span class="o">.</span><span class="na">store</span> <span class="o">=</span> <span class="n">store</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">subscription</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="na">pipe</span>
-                <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="k">this</span><span class="o">::</span><span class="n">toViewModel</span><span class="o">)</span>
-                <span class="o">.</span><span class="na">distinctUntilChanged</span><span class="o">()</span>
-                <span class="o">.</span><span class="na">subscribe</span><span class="o">(</span><span class="nl">subject:</span><span class="o">:</span><span class="n">onNext</span><span class="o">);</span>
-    <span class="o">}</span>
-    <span class="kd">public</span> <span class="no">T</span> <span class="nf">getValue</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="nf">toViewModel</span><span class="o">(</span><span class="n">store</span><span class="o">.</span><span class="na">pipe</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
-    <span class="o">}</span>
-
-    <span class="cm">/** map the "big" model to our "small" viewmodel */</span>
-    <span class="kd">protected</span> <span class="kd">abstract</span> <span class="no">T</span> <span class="nf">toViewModel</span><span class="o">(</span><span class="nc">Model</span> <span class="n">model</span><span class="o">);</span>
-<span class="o">}</span></code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Basisklasse für die Viewmodel</p>
-</li>
-<li>
-<p>Stellt nur die relevanten Daten für die View bereit</p>
-</li>
-</ul>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>PublishSubject gibt immer nur die zukünftigen Werte an die Subscriber</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>repräsentiert eine Subscription für einen Observable-Stream. Beenden oder Abbestellen von Observern von einem Observable.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Konstruktor der ViewModelBase. Der Ablauf:
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Verbindung zum Store → store.pipe liefert den aktuellen Zustand.</p>
-</li>
-<li>
-<p>Umwandlung → map(this::toViewModel) wandelt das Model in das ViewModel um.</p>
-</li>
-<li>
-<p>Optimierung → distinctUntilChanged() verhindert doppelte Benachrichtigungen.</p>
-</li>
-<li>
-<p>Weitergabe → subscribe(subject::onNext) sendet Updates an die View</p>
-</li>
-</ol>
-</div></td>
-</tr>
-</table>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/viewmodel.png" alt="viewmodel">
-</div>
-<div class="title">Figure 6. Ablauf</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/behavior-subject2.png" alt="behavior subject2">
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/publish-subject.png" alt="publish subject">
-</div>
-<div class="title">Figure 7. BehaviorSubject vs. PublishSubject</div>
-</div>
-</div>
-</details>
-<details>
-<summary class="title">resteasy</summary>
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>enthält eine Sammlung von Klassen, die zusammenarbeiten, um REST-API-Clients in einer Android-Anwendung effizient zu erstellen.</p>
-</li>
-<li>
-<p>JAX-RS-Implementierung für Java nutzt Jackson zur JSON-Verarbeitung.</p>
-</li>
-</ul>
-</div>
-</div>
-</details>
-<details>
-<summary class="title">config</summary>
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Konfigurationsverwaltung für die Anwendung bereit</p>
-</li>
-<li>
-<p>Es lädt Konfigurationsdateien (z.B. application.properties)</p>
-</li>
-</ul>
-</div>
-</div>
-</details>
-</div>
-<div class="sect3">
-<h4 id="_model"><a class="anchor" href="#_model"></a>4.3.2. Model</h4>
-<div class="imageblock">
-<div class="content">
-<img src="images/android-project-model.png" alt="android project model">
-</div>
-</div>
-<details>
-<summary class="title">Model.java</summary>
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">at.htl.leonding.model</span><span class="o">;</span>
-
-<span class="cm">/** Our read only &lt;a href="https://redux.js.org/understanding/thinking-in-redux/three-principles"&gt;single source of truth&lt;/a&gt; model */</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Model</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">GreetingModel</span> <span class="o">{</span>
-        <span class="kd">public</span> <span class="nc">String</span> <span class="n">greetingText</span> <span class="o">=</span> <span class="s">"Hello, world!"</span><span class="o">;</span>
-    <span class="o">}</span>
-    <span class="kd">public</span> <span class="nc">ToDo</span><span class="o">[]</span> <span class="n">toDos</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ToDo</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
-    <span class="kd">public</span> <span class="nc">UIState</span> <span class="n">uiState</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UIState</span><span class="o">();</span>  <span class="c1">// sub-model für ui state</span>
-    <span class="kd">public</span> <span class="nc">GreetingModel</span> <span class="n">greetingModel</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">GreetingModel</span><span class="o">();</span>
-<span class="o">}</span></code></pre>
-</div>
-</div>
-</div>
-</details>
-<details>
-<summary class="title">Store.java</summary>
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">at.htl.leonding.model</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">javax.inject.Inject</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.inject.Singleton</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">at.htl.leonding.util.store.StoreBase</span><span class="o">;</span>
-
-<span class="cm">/** This is our Storage area for our &lt;a href="https://redux.js.org/understanding/thinking-in-redux/three-principles"&gt;single source of truth&lt;/a&gt; {@link Model}. */</span>
-<span class="nd">@Singleton</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Store</span> <span class="kd">extends</span> <span class="nc">StoreBase</span><span class="o">&lt;</span><span class="nc">Model</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="nd">@Inject</span>
-    <span class="kd">public</span> <span class="nf">Store</span><span class="o">()</span> <span class="o">{</span>
-        <span class="kd">super</span><span class="o">(</span><span class="nc">Model</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Model</span><span class="o">());</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
-</div>
-</div>
-</div>
-</details>
-<details>
-<summary class="title">ToDo.java</summary>
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">at.htl.leonding.model</span><span class="o">;</span>
-
-<span class="cm">/** A ToDo as we get it from &lt;a href="https://jsonplaceholder.typicode.com/todos"&gt;jsonplaceholder.typicode.com&lt;/a&gt;
-*/</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ToDo</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="nc">Long</span> <span class="n">userId</span><span class="o">;</span>
-    <span class="kd">public</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
-    <span class="kd">public</span> <span class="nc">String</span> <span class="n">title</span><span class="o">;</span>
-    <span class="kd">public</span> <span class="kt">boolean</span> <span class="n">completed</span><span class="o">;</span>
-<span class="o">}</span></code></pre>
-</div>
-</div>
-</div>
-</details>
-<details>
-<summary class="title">UIState.java</summary>
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">at.htl.leonding.model</span><span class="o">;</span>
-
-
-<span class="cm">/** The current state of the user interface */</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UIState</span> <span class="o">{</span>
-    <span class="cm">/** the type of Tab - Bars in our main view */</span>
-    <span class="kd">public</span> <span class="kd">enum</span> <span class="nc">Tab</span> <span class="o">{</span>
-        <span class="n">home</span><span class="o">(</span><span class="mi">0</span><span class="o">),</span>
-        <span class="n">todo</span><span class="o">(</span><span class="mi">1</span><span class="o">),</span>
-        <span class="n">settings</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
-
-        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">index</span><span class="o">()</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="n">index</span><span class="o">;</span>
-        <span class="o">}</span>
-        <span class="kd">private</span> <span class="kt">int</span> <span class="n">index</span><span class="o">;</span>
-        <span class="nc">Tab</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">this</span><span class="o">.</span><span class="na">index</span> <span class="o">=</span> <span class="n">index</span><span class="o">;</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-    <span class="cm">/** we define our own enum to have the model independent of the view technology */</span>
-    <span class="kd">public</span> <span class="kd">enum</span> <span class="nc">Orientation</span> <span class="o">{</span>
-        <span class="n">undefined</span><span class="o">,</span>
-        <span class="n">portrait</span><span class="o">,</span>
-        <span class="n">landscape</span>
-    <span class="o">}</span>
-    <span class="cm">/** the currently selected tab */</span>
-    <span class="kd">public</span> <span class="nc">Tab</span> <span class="n">selectedTab</span> <span class="o">=</span> <span class="nc">Tab</span><span class="o">.</span><span class="na">home</span><span class="o">;</span>
-
-    <span class="cm">/** the current orientation of the device. */</span>
-    <span class="kd">public</span> <span class="nc">Orientation</span> <span class="n">orientation</span> <span class="o">=</span> <span class="nc">Orientation</span><span class="o">.</span><span class="na">undefined</span><span class="o">;</span>
-<span class="o">}</span></code></pre>
-</div>
-</div>
-</div>
-</details>
-</div>
-<div class="sect3">
-<h4 id="_feature"><a class="anchor" href="#_feature"></a>4.3.3. Feature</h4>
-<div class="imageblock">
-<div class="content">
-<img src="images/android-project-feature.png" alt="android project feature">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Fokus auf example und todo</p>
-</li>
-</ul>
-</div>
-<div class="sect4">
-<h5 id="_example"><a class="anchor" href="#_example"></a>Example</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Im example befinden sich verschiedene Operatoren von RxJava</p>
-</li>
-</ul>
-</div>
-<details>
-<summary class="title">map</summary>
-<div class="content">
-<div class="listingblock">
-<div class="title">RxJavaView.kt</div>
-<div class="content">
-<pre class="rouge highlight"><code data-lang="kotlin">            <span class="c1">// Map Operator Button</span>
-            <span class="nf">item</span> <span class="p">{</span>
-                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="kd">val</span> <span class="py">originalValues</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="s">"Apple"</span><span class="p">,</span> <span class="s">"Banana"</span><span class="p">,</span> <span class="s">"Cherry"</span><span class="p">)</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">addAll</span><span class="p">(</span><span class="n">originalValues</span><span class="p">)</span>
-                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getMappedObservable</span><span class="p">()</span>
-                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
-                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
-                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
-                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Map Operator"</span><span class="p">)</span>
-                <span class="p">}</span>
-            <span class="p">}</span></code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">RxJavaViewModel.java</div>
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="c1">// Map Operator</span>
-    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="nf">getMappedObservable</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="s">"Apple"</span><span class="o">,</span> <span class="s">"Banana"</span><span class="o">,</span> <span class="s">"Cherry"</span><span class="o">)</span>
-                <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">String:</span><span class="o">:</span><span class="n">toUpperCase</span><span class="o">);</span>
-    <span class="o">}</span></code></pre>
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/map.png" alt="map">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>transformiert jedes Element der Observable nach einer angegebenen Funktion</p>
-</li>
-</ul>
-</div>
-</div>
-</details>
-<details>
-<summary class="title">filter</summary>
-<div class="content">
-<div class="listingblock">
-<div class="title">RxJavaView.kt</div>
-<div class="content">
-<pre class="rouge highlight"><code data-lang="kotlin">            <span class="c1">// Filter Operator Button</span>
-            <span class="nf">item</span> <span class="p">{</span>
-                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="kd">val</span> <span class="py">originalValues</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">addAll</span><span class="p">(</span><span class="n">originalValues</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">()</span> <span class="p">})</span>
-                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getFilteredObservable</span><span class="p">()</span>
-                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">())</span> <span class="p">}</span>
-                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
-                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
-                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Filter Operator"</span><span class="p">)</span>
-                <span class="p">}</span>
-            <span class="p">}</span></code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">RxJavaViewModel.java</div>
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="c1">// Filter Operator</span>
-    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">getFilteredObservable</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
-                <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">number</span> <span class="o">-&gt;</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">);</span>
-    <span class="o">}</span></code></pre>
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/filter.png" alt="filter">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>filtert die Elemente einer Observable basierend auf einer Bedingung</p>
-</li>
-</ul>
-</div>
-</div>
-</details>
-<details>
-<summary class="title">zip</summary>
-<div class="content">
-<div class="listingblock">
-<div class="title">RxJavaView.kt</div>
-<div class="content">
-<pre class="rouge highlight"><code data-lang="kotlin">            <span class="c1">// Zip Operator Button</span>
-            <span class="nf">item</span> <span class="p">{</span>
-                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="kd">val</span> <span class="py">observable1</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="s">"A"</span><span class="p">,</span> <span class="s">"B"</span><span class="p">,</span> <span class="s">"C"</span><span class="p">)</span>
-                    <span class="kd">val</span> <span class="py">observable2</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">addAll</span><span class="p">(</span><span class="n">observable1</span><span class="p">.</span><span class="nf">zip</span><span class="p">(</span><span class="n">observable2</span><span class="p">)</span> <span class="p">{</span> <span class="n">s</span><span class="p">,</span> <span class="n">i</span> <span class="p">-&gt;</span> <span class="s">"$s and $i"</span> <span class="p">})</span>
-                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getZippedObservable</span><span class="p">()</span>
-                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
-                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
-                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
-                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Zip Operator"</span><span class="p">)</span>
-                <span class="p">}</span>
-            <span class="p">}</span></code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">RxJavaViewModel.java</div>
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="c1">// Zip Operator</span>
-    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="nf">getZippedObservable</span><span class="o">()</span> <span class="o">{</span>
-        <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">observable1</span> <span class="o">=</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="s">"A"</span><span class="o">,</span> <span class="s">"B"</span><span class="o">,</span> <span class="s">"C"</span><span class="o">);</span>
-        <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">observable2</span> <span class="o">=</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
-        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">zip</span><span class="o">(</span><span class="n">observable1</span><span class="o">,</span> <span class="n">observable2</span><span class="o">,</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">i</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">s</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
-    <span class="o">}</span></code></pre>
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/zip.png" alt="zip">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>kombiniert mehrere Observables und erstellt neue Paare von Elementen</p>
-</li>
-</ul>
-</div>
-</div>
-</details>
-<details>
-<summary class="title">interval</summary>
-<div class="content">
-<div class="listingblock">
-<div class="title">RxJavaView.kt</div>
-<div class="content">
-<pre class="rouge highlight"><code data-lang="kotlin">            <span class="c1">// Interval Operator Button</span>
-            <span class="nf">item</span> <span class="p">{</span>
-                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s">"Generating interval values"</span><span class="p">)</span>
-                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getIntervalObservable</span><span class="p">()</span>
-                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">())</span> <span class="p">}</span>
-                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
-                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
-                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Interval Operator"</span><span class="p">)</span>
-                <span class="p">}</span>
-            <span class="p">}</span></code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">RxJavaViewModel.java</div>
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="c1">// Interval Operator</span>
-    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">Long</span><span class="o">&gt;</span> <span class="nf">getIntervalObservable</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">interval</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="nc">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">)</span>
-                <span class="o">.</span><span class="na">take</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
-    <span class="o">}</span></code></pre>
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/interval.png" alt="interval">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>erzeugt fortlaufende Werte in einem festen Zeitintervall</p>
-</li>
-</ul>
-</div>
-</div>
-</details>
-<details>
-<summary class="title">take</summary>
-<div class="content">
-<div class="listingblock">
-<div class="title">RxJavaView.kt</div>
-<div class="content">
-<pre class="rouge highlight"><code data-lang="kotlin">            <span class="c1">// Take Operator Button</span>
-            <span class="nf">item</span> <span class="p">{</span>
-                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
-                    <span class="kd">val</span> <span class="py">originalValues</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">addAll</span><span class="p">(</span><span class="n">originalValues</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">()</span> <span class="p">})</span>
-                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getTakeObservable</span><span class="p">()</span>
-                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">())</span> <span class="p">}</span>
-                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
-                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
-                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Take Operator"</span><span class="p">)</span>
-                <span class="p">}</span>
-            <span class="p">}</span></code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">RxJavaViewModel.java</div>
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="c1">// Take Operator</span>
-    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">getTakeObservable</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">)</span>
-                <span class="o">.</span><span class="na">take</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
-    <span class="o">}</span></code></pre>
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/take.png" alt="take">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>nimmt nur eine bestimmte Anzahl von Elementen</p>
-</li>
-</ul>
-</div>
-</div>
-</details>
-</div>
-<div class="sect4">
-<h5 id="_todo"><a class="anchor" href="#_todo"></a>todo</h5>
-<details>
-<summary class="title">Details</summary>
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">at.htl.leonding.feature.todo</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">at.htl.leonding.model.ToDo</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">jakarta.ws.rs.GET</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">jakarta.ws.rs.Path</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">jakarta.ws.rs.Produces</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">jakarta.ws.rs.QueryParam</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">jakarta.ws.rs.core.MediaType</span><span class="o">;</span>
-
-<span class="nd">@Path</span><span class="o">(</span><span class="s">"/todos"</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">ToDoClient</span> <span class="o">{</span>
-    <span class="nd">@GET</span>
-    <span class="nd">@Produces</span><span class="o">(</span><span class="nc">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON</span><span class="o">)</span>
-    <span class="nc">ToDo</span><span class="o">[]</span> <span class="nf">all</span><span class="o">(</span><span class="nd">@QueryParam</span><span class="o">(</span><span class="s">"_start"</span><span class="o">)</span> <span class="kt">int</span> <span class="n">start</span><span class="o">,</span> <span class="nd">@QueryParam</span><span class="o">(</span><span class="s">"_limit"</span><span class="o">)</span> <span class="kt">int</span> <span class="n">maxRecords</span><span class="o">);</span>
-<span class="o">}</span></code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">at.htl.leonding.feature.todo</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.eclipse.microprofile.config.Config</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">java.util.concurrent.CompletableFuture</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.function.Consumer</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">javax.inject.Inject</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.inject.Singleton</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">at.htl.leonding.model.Store</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">at.htl.leonding.model.ToDo</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">at.htl.leonding.util.resteasy.RestApiClientBuilder</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">static</span> <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">concurrent</span><span class="o">.</span><span class="na">CompletableFuture</span><span class="o">.</span><span class="na">supplyAsync</span><span class="o">;</span>
-
-<span class="nd">@Singleton</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ToDoService</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">JSON_PLACEHOLDER_BASE_URL_SETTING</span> <span class="o">=</span> <span class="s">"json.placeholder.baseurl"</span><span class="o">;</span>
-    <span class="kd">public</span> <span class="kd">final</span> <span class="nc">ToDoClient</span> <span class="n">toDoClient</span><span class="o">;</span>
-    <span class="kd">public</span> <span class="kd">final</span> <span class="nc">Store</span> <span class="n">store</span><span class="o">;</span>
-
-    <span class="nd">@Inject</span>
-    <span class="nc">ToDoService</span><span class="o">(</span><span class="nc">Config</span> <span class="n">config</span><span class="o">,</span> <span class="nc">RestApiClientBuilder</span> <span class="n">builder</span><span class="o">,</span> <span class="nc">Store</span> <span class="n">store</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">var</span> <span class="n">baseUrl</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="na">getValue</span><span class="o">(</span><span class="no">JSON_PLACEHOLDER_BASE_URL_SETTING</span><span class="o">,</span> <span class="nc">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-        <span class="n">toDoClient</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="na">build</span><span class="o">(</span><span class="nc">ToDoClient</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">baseUrl</span><span class="o">);</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">store</span> <span class="o">=</span> <span class="n">store</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">getAll</span><span class="o">()</span> <span class="o">{</span> <i class="conum" data-value="1"></i><b>(1)</b>
-        <span class="nc">Consumer</span><span class="o">&lt;</span><span class="nc">ToDo</span><span class="o">[]&gt;</span> <span class="n">setToDos</span> <span class="o">=</span> <span class="n">todos</span> <span class="o">-&gt;</span> <span class="o">{</span>
-            <span class="n">store</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">model</span> <span class="o">-&gt;</span> <span class="n">model</span><span class="o">.</span><span class="na">toDos</span> <span class="o">=</span> <span class="n">todos</span><span class="o">);</span>
-        <span class="o">};</span>
-        <span class="nc">CompletableFuture</span>
-                <span class="o">.</span><span class="na">supplyAsync</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="n">toDoClient</span><span class="o">.</span><span class="na">all</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">40</span><span class="o">))</span>
-                <span class="o">.</span><span class="na">thenAccept</span><span class="o">(</span><span class="n">setToDos</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>getAll()
-<div class="ulist">
-<ul>
-<li>
-<p>Der Consumer speichert die abgerufenen ToDo-Daten im store.</p>
-</li>
-<li>
-<p>Die apply-Methode wird verwendet, um den toDos-Wert des Models im Store zu setzen.</p>
-</li>
-<li>
-<p>es wird asynchron mit der CompletableFuture die all-Methode im Client aufgerufen</p>
-</li>
-<li>
-<p>wenn er erfolgreich die Daten holen konnte, wird er im <code>store</code> gespeichert</p>
-</li>
-</ul>
-</div></td>
-</tr>
-</table>
-</div>
-</div>
-</details>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_angular_rxjs_demo"><a class="anchor" href="#_angular_rxjs_demo"></a>5. Angular (rxjs-demo)</h2>
-<div class="sectionbody">
-<div class="imageblock">
-<div class="content">
-<img src="images/diag-plantuml-md5-f7cfe3703ece8ece746af05a3abc5180.png" alt="Diagram" width="687" height="74">
-</div>
-</div>
-<div class="paragraph">
-<p>RxJS ist eine reaktive Bibliothek, die speziell in Angular verwendet wird, um asynchrone Datenströme wie API-Aufrufe,
-Benutzereingaben und Ereignisse zu verwalten.</p>
-</div>
-<div class="sect2">
-<h3 id="_struktur_des_projekts"><a class="anchor" href="#_struktur_des_projekts"></a>5.1. Struktur des Projekts</h3>
+<h4 id="_beispiel"><a class="anchor" href="#_beispiel"></a>2.4.2. Beispiel</h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/angular-project.png" alt="angular project">
 </div>
 </div>
-<div class="sect3">
-<h4 id="_model_2"><a class="anchor" href="#_model_2"></a>5.1.1. Model</h4>
-<div class="imageblock">
+<details>
+<summary class="title">Model</summary>
 <div class="content">
-<img src="images/angular-project-model.png" alt="angular project model">
-</div>
-</div>
 <div class="listingblock">
 <div class="title">model.ts</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span><span class="nx">BehaviorSubject</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">rxjs</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">Draft</span><span class="p">,</span> <span class="nx">produce</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">immer</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">Todo</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./todo</span><span class="dl">"</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span><span class="nx">Todo</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./todo</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span><span class="nx">signal</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@angular/core</span><span class="dl">"</span><span class="p">;</span>
 
-<span class="k">export</span> <span class="kr">interface</span> <span class="nx">Model</span> <span class="p">{</span> <i class="conum" data-value="1"></i><b>(1)</b>
-  <span class="k">readonly</span> <span class="nx">name</span><span class="p">:</span> <span class="kr">string</span>
-  <span class="k">readonly</span> <span class="nx">email</span><span class="p">:</span> <span class="kr">string</span>
+<span class="k">export</span> <span class="kr">interface</span> <span class="nx">Model</span> <span class="p">{</span>
+  <span class="k">readonly</span> <span class="nx">firstName</span><span class="p">:</span> <span class="kr">string</span>
+  <span class="k">readonly</span> <span class="nx">lastName</span><span class="p">:</span> <span class="kr">string</span>
   <span class="k">readonly</span> <span class="nx">todos</span><span class="p">:</span> <span class="nx">Todo</span><span class="p">[]</span>
   <span class="k">readonly</span> <span class="nx">todosLoaded</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="k">export</span> <span class="kd">const</span> <span class="nx">initial</span><span class="p">:</span> <span class="nx">Model</span> <span class="o">=</span> <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">initial</span><span class="p">:</span> <span class="nx">Model</span> <span class="o">=</span>
 <span class="p">{</span>
-  <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Dave</span><span class="dl">"</span><span class="p">,</span>
-  <span class="na">email</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Lewakaslehna</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">firstName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Candice</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">lastName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Oleg</span><span class="dl">"</span><span class="p">,</span>
   <span class="na">todos</span><span class="p">:</span> <span class="p">[],</span>
   <span class="na">todosLoaded</span><span class="p">:</span> <span class="kc">false</span>
 <span class="p">}</span>
-<span class="k">export</span> <span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BehaviorSubject</span><span class="o">&lt;</span><span class="nx">Model</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">initial</span><span class="p">)</span> <i class="conum" data-value="3"></i><b>(3)</b>
-
-<span class="k">export</span> <span class="kd">function</span> <span class="nf">set</span><span class="p">(</span><span class="nx">recipe</span><span class="p">:</span> <span class="p">(</span><span class="nx">model</span><span class="p">:</span> <span class="nx">Draft</span><span class="o">&lt;</span><span class="nx">Model</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">){</span> <i class="conum" data-value="4"></i><b>(4)</b>
-  <span class="kd">const</span> <span class="nx">nextModel</span> <span class="o">=</span> <span class="nf">produce</span><span class="p">(</span><span class="nx">store</span><span class="p">.</span><span class="nf">getValue</span><span class="p">(),</span> <span class="nx">recipe</span><span class="p">)</span>
-  <span class="nx">store</span><span class="p">.</span><span class="nf">next</span><span class="p">(</span><span class="nx">nextModel</span><span class="p">)</span>
-<span class="p">}</span></code></pre>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">signal</span><span class="o">&lt;</span><span class="nx">Model</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">initial</span><span class="p">);</span> <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>definiert das Modell</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>der anfängliche Zustand des Modells</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>das zentrale Element in der Anwendung (Single Source Of Truth)</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>set(&#8230;&#8203;)
-<div class="ulist">
-<ul>
-<li>
-<p>Änderungen am Zustand vorzunehmen, ohne den aktuellen Zustand direkt zu manipulieren.</p>
-</li>
-<li>
-<p>recipe-Funktion, die beschreibt, wie der Zustand verändert werden soll.</p>
-</li>
-<li>
-<p>die produce() führt eine immutable Änderung durch &#8594; der aktuelle Zustand vom Store wird geholt und die recipe beschreibt
-die Änderungen. Es wird eine Kopie vorgenommen und im store.next() werden alle Subscriber benachrichtigt, dass sich im
-Model was geändert hat.</p>
-</li>
-</ul>
-</div></td>
+<td>die Single Source of Truth</td>
 </tr>
 </table>
 </div>
-<div class="listingblock">
-<div class="title">todo.ts</div>
+</div>
+</details>
+<details>
+<summary class="title">Service</summary>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="k">export</span> <span class="kr">interface</span> <span class="nx">Todo</span> <span class="p">{</span>
-  <span class="nl">userId</span><span class="p">:</span> <span class="kr">number</span>
-  <span class="nx">id</span><span class="p">:</span> <span class="kr">number</span>
-  <span class="nx">title</span><span class="p">:</span> <span class="kr">string</span>
-  <span class="nx">completed</span><span class="p">:</span> <span class="nx">boolean</span>
-<span class="p">}</span></code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_services"><a class="anchor" href="#_services"></a>5.1.2. Services</h4>
-<div class="imageblock">
-<div class="content">
-<img src="images/angular-project-service.png" alt="angular project service">
-</div>
-</div>
 <div class="listingblock">
 <div class="title">store.service.ts</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">Injectable</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">store</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../model</span><span class="dl">"</span>
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">Injectable</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">store</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">../model</span><span class="dl">'</span><span class="p">;</span>
 
 <span class="p">@</span><span class="nd">Injectable</span><span class="p">({</span>
   <span class="na">providedIn</span><span class="p">:</span> <span class="dl">'</span><span class="s1">root</span><span class="dl">'</span>
 <span class="p">})</span>
 <span class="k">export</span> <span class="kd">class</span> <span class="nc">StoreService</span> <span class="p">{</span>
 
+  <span class="nf">constructor</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
   <span class="kd">get</span> <span class="nf">store </span><span class="p">()</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">store</span>
   <span class="p">}</span>
-
 <span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="listingblock">
-<div class="title">todo.service.ts</div>
+<div class="title">app-state.service.ts</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span><span class="nx">inject</span><span class="p">,</span> <span class="nx">Injectable</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">Todo</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../model/todo</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="kd">set</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../model/model</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span> <span class="nx">HttpClient</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@angular/common/http</span><span class="dl">"</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">Injectable</span><span class="p">,</span> <span class="nx">signal</span><span class="p">,</span> <span class="nx">computed</span><span class="p">,</span> <span class="nx">inject</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">HttpClient</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/common/http</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Model</span><span class="p">,</span> <span class="nx">Todo</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">../model</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">initial</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">../model/model</span><span class="dl">'</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span><span class="nx">StoreService</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./store.service</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">lastValueFrom</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">rxjs</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="p">@</span><span class="nd">Injectable</span><span class="p">({</span>
-  <span class="na">providedIn</span><span class="p">:</span> <span class="dl">'</span><span class="s1">root</span><span class="dl">'</span>
+  <span class="na">providedIn</span><span class="p">:</span> <span class="dl">'</span><span class="s1">root</span><span class="dl">'</span><span class="p">,</span>
 <span class="p">})</span>
-<span class="k">export</span> <span class="kd">class</span> <span class="nc">TodoService</span> <span class="p">{</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nc">AppStateService</span> <span class="p">{</span>
+  <span class="k">private</span> <span class="k">readonly</span> <span class="nx">API_URL</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://jsonplaceholder.typicode.com/todos?_limit=20</span><span class="dl">'</span><span class="p">;</span>
 
-  <span class="nx">store</span> <span class="o">=</span> <span class="nf">inject</span><span class="p">(</span><span class="nx">StoreService</span><span class="p">).</span><span class="nx">store</span>
-  <span class="nx">httpClient</span> <span class="o">=</span> <span class="nf">inject</span><span class="p">(</span><span class="nx">HttpClient</span><span class="p">)</span>
-  <span class="k">async</span> <span class="nf">findAll</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">const</span> <span class="nx">todos</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">lastValueFrom</span><span class="p">(</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">httpClient</span><span class="p">.</span><span class="kd">get</span><span class="o">&lt;</span><span class="nx">Todo</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">(</span><span class="dl">"</span><span class="s2">https://jsonplaceholder.typicode.com/todos</span><span class="dl">"</span><span class="p">)</span>
-    <span class="p">)</span>
-    <span class="nf">set</span><span class="p">(</span><span class="nx">model</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="nx">model</span><span class="p">.</span><span class="nx">todos</span> <span class="o">=</span> <span class="nx">todos</span>
-    <span class="p">})</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">findAll: </span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">store</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nx">todos</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+  <span class="c1">// Single Source of Truth als Signal</span>
+  <i class="conum" data-value="1"></i><b>(1)</b>
+  <span class="k">private</span> <span class="nx">state</span> <span class="o">=</span> <span class="nf">inject</span><span class="p">(</span><span class="nx">StoreService</span><span class="p">).</span><span class="nx">store</span>
+
+  <span class="c1">// Computed Signals für Selektoren</span>
+  <i class="conum" data-value="2"></i><b>(2)</b>
+  <span class="k">readonly</span> <span class="nx">todosSignals</span> <span class="o">=</span> <span class="nf">computed</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nf">state</span><span class="p">().</span><span class="nx">todos</span><span class="p">);</span>
+  <span class="k">readonly</span> <span class="nx">firstName</span> <span class="o">=</span> <span class="nf">computed</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nf">state</span><span class="p">().</span><span class="nx">firstName</span><span class="p">);</span>
+  <span class="k">readonly</span> <span class="nx">lastName</span> <span class="o">=</span> <span class="nf">computed</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nf">state</span><span class="p">().</span><span class="nx">lastName</span><span class="p">);</span>
+
+  <span class="nf">constructor</span><span class="p">(</span><span class="k">private</span> <span class="nx">http</span><span class="p">:</span> <span class="nx">HttpClient</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="c1">// Zustand aktualisieren</span>
+  <i class="conum" data-value="3"></i><b>(3)</b>
+  <span class="nf">updateState</span><span class="p">(</span><span class="nx">recipe</span><span class="p">:</span> <span class="p">(</span><span class="nx">state</span><span class="p">:</span> <span class="nx">Model</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">Model</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="nx">recipe</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nf">addTodo</span><span class="p">(</span><span class="nx">todo</span><span class="p">:</span> <span class="nx">Todo</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nf">updateState</span><span class="p">((</span><span class="nx">state</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span>
+      <span class="p">...</span><span class="nx">state</span><span class="p">,</span>
+      <span class="na">todos</span><span class="p">:</span> <span class="p">[...</span><span class="nx">state</span><span class="p">.</span><span class="nx">todos</span><span class="p">,</span> <span class="nx">todo</span><span class="p">],</span>
+    <span class="p">}));</span>
+  <span class="p">}</span>
+
+  <span class="nf">toggleTodoStatus</span><span class="p">(</span><span class="nx">id</span><span class="p">:</span> <span class="kr">number</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nf">updateState</span><span class="p">((</span><span class="nx">state</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span>
+      <span class="p">...</span><span class="nx">state</span><span class="p">,</span>
+      <span class="na">todos</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">todos</span><span class="p">.</span><span class="nf">map</span><span class="p">((</span><span class="nx">todo</span><span class="p">)</span> <span class="o">=&gt;</span>
+        <span class="nx">todo</span><span class="p">.</span><span class="nx">id</span> <span class="o">===</span> <span class="nx">id</span> <span class="p">?</span> <span class="p">{</span> <span class="p">...</span><span class="nx">todo</span><span class="p">,</span> <span class="na">completed</span><span class="p">:</span> <span class="o">!</span><span class="nx">todo</span><span class="p">.</span><span class="nx">completed</span> <span class="p">}</span> <span class="p">:</span> <span class="nx">todo</span>
+      <span class="p">),</span>
+    <span class="p">}));</span>
+  <span class="p">}</span>
+
+  <span class="nf">removeTodo</span><span class="p">(</span><span class="nx">id</span><span class="p">:</span> <span class="kr">number</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nf">updateState</span><span class="p">((</span><span class="nx">state</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span>
+      <span class="p">...</span><span class="nx">state</span><span class="p">,</span>
+      <span class="na">todos</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">todos</span><span class="p">.</span><span class="nf">filter</span><span class="p">((</span><span class="nx">todo</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">todo</span><span class="p">.</span><span class="nx">id</span> <span class="o">!==</span> <span class="nx">id</span><span class="p">),</span>
+    <span class="p">}));</span>
+  <span class="p">}</span>
+
+  <span class="nf">loadTodos</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nf">state</span><span class="p">().</span><span class="nx">todosLoaded</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">http</span>
+        <span class="p">.</span><span class="kd">get</span><span class="o">&lt;</span><span class="nx">Todo</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">API_URL</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">subscribe</span><span class="p">((</span><span class="nx">todos</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="k">this</span><span class="p">.</span><span class="nf">updateState</span><span class="p">((</span><span class="nx">state</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span>
+            <span class="p">...</span><span class="nx">state</span><span class="p">,</span>
+            <span class="nx">todos</span><span class="p">,</span>
+            <span class="na">todosLoaded</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+          <span class="p">}));</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">}</span></code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>holt sich vom <a href="https://jsonplaceholder.typicode.com/todos">jsonplaceholder</a> die ToDoss</p>
-</li>
-<li>
-<p>lastValueFrom: wandelt das Observable in ein Promise um und wartet darauf, dass es abgeschlossen wird. Wenn es
-abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem Fall die Liste der Todos).</p>
-</li>
-<li>
-<p>nachdem er sich die Daten geholt hat, speichert er das im store</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><strong>AppStateService</strong> dient zum Verwalten der ganzen State (Zustand) auf Basis der SSOT, z.B. einfügen, löschen etc&#8230;&#8203;</p>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>es wird sich der store geholt (SSOT)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>wird automatisch aktualisiert, wenn sich state ändert.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>mit recipe &#8594; die den Zustand verändert und ein neues Model-Objekt zurückgibt.</td>
+</tr>
+</table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_components"><a class="anchor" href="#_components"></a>5.1.3. Components</h4>
-<div class="imageblock">
+</details>
+<details>
+<summary class="title">Components</summary>
 <div class="content">
-<img src="images/angular-project-component.png" alt="angular project component">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>todo</p>
-</li>
-<li>
-<p>example</p>
-</li>
-</ul>
-</div>
-<div class="sect4">
-<h5 id="_todo_2"><a class="anchor" href="#_todo_2"></a>todo</h5>
 <div class="listingblock">
-<div class="title">todo.component.html</div>
+<div class="title">signal.component.ts</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="o">&lt;</span><span class="nf">button </span><span class="p">(</span><span class="nx">click</span><span class="p">)</span><span class="o">=</span><span class="dl">"</span><span class="s2">loadTodos()</span><span class="dl">"</span><span class="o">&gt;</span><span class="nx">Load</span> <span class="nx">Todos</span><span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
-</span>
-<span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">todo</span> <span class="nx">works</span><span class="o">!</span><span class="p">({{(</span><span class="nx">viewModel</span> <span class="o">|</span> <span class="k">async</span><span class="p">)?.</span><span class="nx">length</span><span class="p">}})</span><span class="o">&lt;</span><span class="sr">/p</span><span class="err">&gt;
-</span>
-<span class="o">&lt;</span><span class="nx">ol</span><span class="o">&gt;</span>
-  <span class="p">@</span><span class="nd">for</span> <span class="p">(</span><span class="nx">todo</span> <span class="k">of</span> <span class="nx">viewModel</span> <span class="o">|</span> <span class="k">async</span><span class="p">;</span> <span class="nx">track</span> <span class="nx">todo</span><span class="p">.</span><span class="nx">title</span><span class="p">)</span> <span class="p">{</span>
-    <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{{</span> <span class="nx">todo</span><span class="p">.</span><span class="nx">title</span> <span class="p">}}</span><span class="o">&lt;</span><span class="sr">/li</span><span class="err">&gt;
-</span>  <span class="p">}</span> <span class="p">@</span><span class="nd">empty</span> <span class="p">{</span>
-    <span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="nx">There</span> <span class="nx">are</span> <span class="nx">no</span> <span class="nx">items</span><span class="p">.</span><span class="o">&lt;</span><span class="sr">/li</span><span class="err">&gt;
-</span>  <span class="p">}</span>
-<span class="o">&lt;</span><span class="sr">/ol&gt;</span></code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">todo.component.ts</div>
-<div class="content">
-<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">inject</span><span class="p">,</span> <span class="nx">model</span><span class="p">,</span> <span class="nx">OnInit</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">StoreService</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../../services/store.service</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">distinctUntilChanged</span><span class="p">,</span> <span class="nx">map</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">rxjs</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">Todo</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../../model</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">AsyncPipe</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@angular/common</span><span class="dl">"</span><span class="p">;</span>
-<span class="k">import</span> <span class="p">{</span><span class="nx">TodoService</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../../services/todo.service</span><span class="dl">"</span><span class="p">;</span>
+<pre class="rouge highlight"><code data-lang="typescript"><span class="k">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">OnInit</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">AppStateService</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">../../services/app-state.service</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">FormsModule</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/forms</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">NgForOf</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/common</span><span class="dl">'</span><span class="p">;</span>
 
 <span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
-  <span class="na">selector</span><span class="p">:</span> <span class="dl">'</span><span class="s1">app-todo</span><span class="dl">'</span><span class="p">,</span>
-  <span class="na">standalone</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="na">selector</span><span class="p">:</span> <span class="dl">'</span><span class="s1">app-signal</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">templateUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./signal.component.html</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">styleUrls</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">./signal.component.css</span><span class="dl">'</span><span class="p">],</span>
   <span class="na">imports</span><span class="p">:</span> <span class="p">[</span>
-    <span class="nx">AsyncPipe</span>
+    <span class="nx">FormsModule</span><span class="p">,</span>
+    <span class="nx">NgForOf</span><span class="p">,</span>
   <span class="p">],</span>
-  <span class="na">templateUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./todo.component.html</span><span class="dl">'</span><span class="p">,</span>
-  <span class="na">styleUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./todo.component.css</span><span class="dl">'</span>
 <span class="p">})</span>
-<span class="k">export</span> <span class="kd">class</span> <span class="nc">TodoComponent</span> <span class="k">implements</span> <span class="nx">OnInit</span> <span class="p">{</span>
-  <span class="nx">todoService</span> <span class="o">=</span> <span class="nf">inject</span><span class="p">(</span><span class="nx">TodoService</span><span class="p">)</span>
-  <span class="nx">viewModel</span> <span class="o">=</span> <span class="nf">inject</span><span class="p">(</span><span class="nx">StoreService</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">store</span>
-    <span class="p">.</span><span class="nf">pipe</span><span class="p">(</span>
-      <span class="nf">map</span><span class="p">(</span><span class="nx">model</span> <span class="o">=&gt;</span> <span class="nx">model</span><span class="p">.</span><span class="nx">todos</span><span class="p">),</span>
-      <span class="nf">distinctUntilChanged</span><span class="p">()</span>
-    <span class="p">)</span>
-  <span class="nf">loadTodos</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">todoService</span><span class="p">.</span><span class="nf">findAll</span><span class="p">()</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nc">SignalComponent</span> <span class="k">implements</span> <span class="nx">OnInit</span><span class="p">{</span>
+  <span class="nx">newTodoTitle</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+  <span class="nx">todos</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">appState</span><span class="p">.</span><span class="nx">todosSignals</span><span class="p">;</span>
+
+  <span class="nf">constructor</span><span class="p">(</span><span class="k">private</span> <span class="nx">appState</span><span class="p">:</span> <span class="nx">AppStateService</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="nf">ngOnInit</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">appState</span><span class="p">.</span><span class="nf">loadTodos</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="nf">addTodo</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">newTodoTitle</span><span class="p">.</span><span class="nf">trim</span><span class="p">())</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">appState</span><span class="p">.</span><span class="nf">addTodo</span><span class="p">({</span>
+        <span class="na">userId</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="na">id</span><span class="p">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">(),</span>
+        <span class="na">title</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">newTodoTitle</span><span class="p">.</span><span class="nf">trim</span><span class="p">(),</span>
+        <span class="na">completed</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="p">});</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">newTodoTitle</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+    <span class="p">}</span>
   <span class="p">}</span>
 
-  <span class="nf">ngOnInit</span><span class="p">():</span> <span class="k">void</span> <span class="p">{</span>
+  <span class="nf">toggleTodoStatus</span><span class="p">(</span><span class="nx">id</span><span class="p">:</span> <span class="kr">number</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">appState</span><span class="p">.</span><span class="nf">toggleTodoStatus</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
   <span class="p">}</span>
 
+  <span class="nf">deleteTodo</span><span class="p">(</span><span class="nx">id</span><span class="p">:</span> <span class="kr">number</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">appState</span><span class="p">.</span><span class="nf">removeTodo</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+  <span class="p">}</span>
 <span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>holt sich wie beim vorherigen <code>Android-Beispiel</code> die todos</p>
+<p>holt sich vom AppStateService die Methoden für das Einfügen, Löschen, etc&#8230;&#8203;</p>
 </li>
 </ul>
 </div>
+</div>
+</details>
+<div class="sect4">
+<h5 id="_beispiel_vorgang_eines_löschens_von_einem_todo"><a class="anchor" href="#_beispiel_vorgang_eines_löschens_von_einem_todo"></a>Beispiel Vorgang eines Löschens von einem Todo</h5>
 <div class="imageblock">
 <div class="content">
-<img src="images/pipe.png" alt="pipe">
+<img src="images/vorgang-delete.png" alt="vorgang delete">
 </div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Situation: Der Benuter klickt auf den "Delete Button" in der Component (Component)</p>
+</li>
+<li>
+<p>Es wird eine Action ausgelöst, da er die Methode deleteTodo() aufgerufen hat (Action)</p>
+</li>
+<li>
+<p>Die AppStateService ruft in der deleteTodo() die updateState() auf. (AppStateService)</p>
+</li>
+<li>
+<p>Mittels der Methode updateState erzeugt einen neuen Zustand, indem das Todo aus state.todos entfernt wird (Reducer)</p>
+</li>
+<li>
+<p>der Store wird aktualisiert &#8594; alle Komponente, die todosSignals() verwenden, erhalten automatisch den neuen Zustand. (Store)</p>
+</li>
+<li>
+<p>Der Selector passt die UI an &#8594; computed()-Signal erkennt die Änderung und informiert die Component automatisch. (Selector)
+Das gelöschte Todo verschwindet aus der UI ohne manuelles Refresh. (Component)</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Fluss des Löschen in der Grafik:</strong></p>
+</div>
+<div class="paragraph">
+<p>Component &#8594; Action &#8594; AppStateService &#8594; Reducer &#8594; Store &#8594; Selector &#8594;Component aktualisiert sich automatisch.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_example_2"><a class="anchor" href="#_example_2"></a>example</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Im example befinden sich verschiedene Operatoren von RxJs</p>
-</li>
-</ul>
-</div>
+<h5 id="_verschiedene_rxjs_operatoren"><a class="anchor" href="#_verschiedene_rxjs_operatoren"></a>Verschiedene RxJS-Operatoren</h5>
 <details>
 <summary class="title">map</summary>
 <div class="content">
@@ -2702,7 +1710,871 @@ abgeschlossen ist, gibt es den letzten Wert des Observables zurück (in diesem F
 </div>
 </div>
 <div class="sect1">
-<h2 id="_glossar"><a class="anchor" href="#_glossar"></a>6. Glossar</h2>
+<h2 id="_android"><a class="anchor" href="#_android"></a>3. Android</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Für das Android-Projekt verwenden wir RxJava. Sie ist von ReactiveX für die JVM und wird häufig in Android-Apps verwendet,
+um asynchrone Operationen wie Datenbankzugriffe und Benutzerinteraktionen zu verwalten.</p>
+</div>
+<div class="sect2">
+<h3 id="_android_mvvm"><a class="anchor" href="#_android_mvvm"></a>3.1. Android-MVVM</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/android-mvvm-pattern.png" alt="android mvvm pattern">
+</div>
+<div class="title">Figure 5. <a href="https://medium.com/@dheerubhadoria/android-mvvm-how-to-use-mvvm-in-android-example-7dec84a1fb73">Android-MVVM</a></div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Model:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Repräsentiert die Daten und Geschäftslogik der Anwendung</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>ViewModel:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>verbindet die Model und die View</p>
+</li>
+<li>
+<p>Holt Daten aus dem Model, verarbeitet sie und stellt sie der View bereit.</p>
+</li>
+<li>
+<p>Beobachtet Änderungen im Model und leitet diese an die View weiter.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>View:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Reagiert auf Benutzerinteraktionen (z.B. Klicks) und sendet diese an das ViewModel</p>
+</li>
+<li>
+<p>Beobachtet Datenänderungen aus dem ViewModel und aktualisiert die UI entsprechend</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_drei_prinzipien"><a class="anchor" href="#_drei_prinzipien"></a>3.2. Drei Prinzipien</h3>
+<div class="paragraph">
+<p><a href="https://redux.js.org/understanding/thinking-in-redux/three-principles">Three Principles</a></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Single Source of Truth</p>
+</li>
+<li>
+<p>State is Read-Only</p>
+</li>
+<li>
+<p>Changes are Made with Pure Functions</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_single_source_of_truth"><a class="anchor" href="#_single_source_of_truth"></a>3.2.1. Single Source of Truth</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Der gesamte Zustand der Anwendung wird in einem einzigen, zentralen Store gespeichert.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_state_is_read_only"><a class="anchor" href="#_state_is_read_only"></a>3.2.2. State is Read-Only</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Der Zustand kann nicht direkt geändert werden. Änderungen erfolgen nur durch das Auslösen von Actions.</p>
+</li>
+<li>
+<p>Actions beschreiben, <strong>was geändert werden soll</strong>, ohne die Details der Implementierung zu enthalten.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_changes_are_made_with_pure_functions"><a class="anchor" href="#_changes_are_made_with_pure_functions"></a>3.2.3. Changes are Made with Pure Functions</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>hat keine Seiteneffekte &#8594; greift nicht auf externe Ressourcen (z. B. Datenbanken) zu und hat keine unerwarteten Auswirkungen.</p>
+</li>
+<li>
+<p>der Funktionswert bestimmt sich nur durch die Parameter &#8594; Sie gibt immer denselben Rückgabewert für dieselben Eingabewerte zurück.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_projekt"><a class="anchor" href="#_projekt"></a>3.3. Projekt</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/android-project.png" alt="android project">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Util</p>
+</li>
+<li>
+<p>Model</p>
+</li>
+<li>
+<p>Feature</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_util"><a class="anchor" href="#_util"></a>3.3.1. Util</h4>
+<div class="imageblock">
+<div class="content">
+<img src="images/android-project-util.png" alt="android project util">
+</div>
+</div>
+<details>
+<summary class="title">mapper</summary>
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>dient zur Serialisierung und Deserialisierung von Objekten nach JSON und zurück.</p>
+</li>
+<li>
+<p>führt auch tiefe Klonoperationen aus.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/deep-copy.jpg" alt="deep copy">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Deep Copy: ein Object wird geklont, ohne die Referenzen des alten Objekts zu übertragen. Es ist sehr
+ressourcenaufwendig, da durch jede Referenz auf ein anderes Objekt das andere Objekt selbst tief kopiert werden muss.</p>
+</li>
+<li>
+<p>Shallow Copy: erstellt nur ein neues Objekt mit den Werten des alten Objekts, verwendet dabei die gleichen Referenzen
+wie das alte Objekt auf weitere Objekte</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">immer</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">Immer.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">at.htl.leonding.util.immer</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">android.os.Handler</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.os.Looper</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.util.Log</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.concurrent.CompletableFuture</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.function.Consumer</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">at.htl.leonding.util.mapper.Mapper</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.reactivex.rxjava3.subjects.BehaviorSubject</span><span class="o">;</span>
+
+<span class="cm">/** Immer simplifies handling immutable data structures.
+ * @param &lt;T&gt; The type of the baseState
+ */</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Immer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">TAG</span> <span class="o">=</span> <span class="nc">Immer</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getSimpleName</span><span class="o">();</span>
+    <span class="kd">final</span> <span class="kd">public</span> <span class="nc">Mapper</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">mapper</span><span class="o">;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+    <span class="kd">final</span> <span class="nc">Handler</span> <span class="n">handler</span><span class="o">;</span> <i class="conum" data-value="2"></i><b>(2)</b>
+
+    <span class="kd">public</span> <span class="nf">Immer</span><span class="o">(</span><span class="nc">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="no">T</span><span class="o">&gt;</span> <span class="n">type</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Mapper</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;(</span><span class="n">type</span><span class="o">);</span>
+        <span class="n">handler</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Handler</span><span class="o">(</span><span class="nc">Looper</span><span class="o">.</span><span class="na">getMainLooper</span><span class="o">());</span>
+    <span class="o">}</span>
+    <span class="cm">/** Create a deep clone of the existing model, apply a recipe to it and finally pass the new state to the consumer.
+     * To reduce the load on the main thread we clone the current state in a separate thread.
+     * To avoid multithreading issues we call back the recipe and resultConsumer running on the one and only Main thread of the app.
+     * We do not call the resultConsumer if the clone equals the currentState,
+     * @param pipe the previous readonly single source or truth
+     * @param recipe the callback function that modifies parts of the cloned state
+     * @param resultConsumer the callback function that uses the cloned &amp; modified model
+     */</span>
+<span class="c1">// Immer.java</span>
+    <i class="conum" data-value="3"></i><b>(3)</b>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">produce</span><span class="o">(</span><span class="nc">BehaviorSubject</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">pipe</span><span class="o">,</span> <span class="nc">Consumer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">recipe</span><span class="o">,</span> <span class="nc">Consumer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">resultConsumer</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">handler</span><span class="o">.</span><span class="na">post</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="kt">var</span> <span class="n">t</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="na">clone</span><span class="o">(</span><span class="n">pipe</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+            <span class="kt">var</span> <span class="n">currentAsJson</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="na">toResource</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+            <span class="n">recipe</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+            <span class="kt">var</span> <span class="n">nextAsJson</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="na">toResource</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(!</span><span class="n">nextAsJson</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">currentAsJson</span><span class="o">))</span> <span class="o">{</span>
+                <span class="nc">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="no">TAG</span><span class="o">,</span> <span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"=== state changed ===\n%s\n=&gt;\n%s---"</span><span class="o">,</span> <span class="n">currentAsJson</span><span class="o">,</span> <span class="n">nextAsJson</span><span class="o">));</span>
+                <span class="n">resultConsumer</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="nc">Log</span><span class="o">.</span><span class="na">w</span><span class="o">(</span><span class="no">TAG</span><span class="o">,</span> <span class="s">"produce() without change"</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Immer</strong> ist eine JavaScript-Bibliothek, die das Arbeiten mit unveränderlichen (immutable) Zuständen vereinfacht.
+Intern sorgt Immer dafür, dass der ursprüngliche Zustand unverändert bleibt, indem es eine Kopie erstellt und nur diese aktualisiert.</p>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>die Objekte werden in JSON umwandelt und zurück</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>führt die Aufgaben im Main-Thread aus</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>die Methode produce(&#8230;&#8203;) sorgt dafür, dass:
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Der aktuelle Zustand aus dem <code>pipe</code> (<code>BehaviorSubject</code>) <strong>tief kopiert</strong> wird</p>
+</li>
+<li>
+<p>Die übergebene <strong>Änderungsfunktion (<code>recipe</code>)</strong> auf diesen <strong>Klon</strong> angewendet wird, um gezielt Änderungen vorzunehmen.</p>
+</li>
+<li>
+<p>Der <strong>alte</strong> und der <strong>neue Zustand</strong> werden <strong>verglichen</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Falls sich der Zustand <strong>geändert</strong> hat, wird der neue Zustand über den <strong><code>resultConsumer</code></strong> (meist <code>pipe.onNext</code>) weitergegeben.</p>
+</li>
+<li>
+<p>Falls <strong>keine Änderung</strong> erfolgt, wird eine Warnung (<code>"produce() without change"</code>) im Log ausgegeben.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div></td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/produce.png" alt="produce">
+</div>
+<div class="title">Figure 6. produce()</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/behavior-subject.png" alt="behavior subject">
+</div>
+<div class="title">Figure 7. Behavior Subject</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">store</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">StoreBase.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">at.htl.leonding.util.store</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">android.util.Log</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.concurrent.CompletionException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.function.Consumer</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">at.htl.leonding.util.immer.Immer</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.reactivex.rxjava3.subjects.BehaviorSubject</span><span class="o">;</span>
+
+<span class="cm">/** Base class for implementations using a single source of truth approach.
+ * @param &lt;T&gt; the class of the ReadOnly Single Source of Truth.
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StoreBase</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">final</span> <span class="nc">BehaviorSubject</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">pipe</span><span class="o">;</span>
+    <span class="kd">protected</span> <span class="kd">final</span> <span class="nc">Immer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">immer</span><span class="o">;</span>
+
+    <span class="kd">protected</span> <span class="nf">StoreBase</span><span class="o">(</span><span class="nc">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="no">T</span><span class="o">&gt;</span> <span class="n">type</span><span class="o">,</span> <span class="no">T</span> <span class="n">initialState</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">pipe</span> <span class="o">=</span> <span class="nc">BehaviorSubject</span><span class="o">.</span><span class="na">createDefault</span><span class="o">(</span><span class="n">initialState</span><span class="o">);</span>
+            <span class="n">immer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Immer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;(</span><span class="n">type</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">CompletionException</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="no">T</span> <span class="nf">get</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">immer</span><span class="o">.</span><span class="na">mapper</span><span class="o">.</span><span class="na">clone</span><span class="o">(</span><span class="n">pipe</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+    <span class="o">}</span>
+    <span class="cm">/** clone the current Model, apply the recipe to it and submit it to the pipe as the next Model.
+     * @param recipe
+     * The function that receives a clone of the current model and applies its changes to it.
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">apply</span><span class="o">(</span><span class="nc">Consumer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">recipe</span><span class="o">)</span> <span class="o">{</span> <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="nc">Consumer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">onNext</span> <span class="o">=</span> <span class="n">nextState</span> <span class="o">-&gt;</span> <span class="n">pipe</span><span class="o">.</span><span class="na">onNext</span><span class="o">(</span><span class="n">nextState</span><span class="o">);</span>
+        <span class="n">immer</span><span class="o">.</span><span class="na">produce</span><span class="o">(</span><span class="n">pipe</span><span class="o">,</span> <span class="n">recipe</span><span class="o">,</span> <span class="n">onNext</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Basisklasse für Store</p>
+</li>
+<li>
+<p>Verwaltet den Zustand</p>
+</li>
+</ul>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>produce():
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>onNext holt sich den neuen Zustand im BehaviorSubject (pipe).</p>
+</li>
+<li>
+<p>klont sich den aktuellen Zustand und das recipe wird angewendet</p>
+</li>
+<li>
+<p>Vergleich den alten und neuen Zustand</p>
+</li>
+<li>
+<p>veröffentlicht den neuen Zustand mit onNext, wenn sich etwas geändert hat</p>
+</li>
+</ol>
+</div></td>
+</tr>
+</table>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">resteasy</summary>
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>enthält eine Sammlung von Klassen, die zusammenarbeiten, um REST-API-Clients in einer Android-Anwendung effizient zu erstellen.</p>
+</li>
+<li>
+<p>JAX-RS-Implementierung für Java nutzt Jackson zur JSON-Verarbeitung.</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">config</summary>
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Konfigurationsverwaltung für die Anwendung bereit</p>
+</li>
+<li>
+<p>Es lädt Konfigurationsdateien (z.B. application.properties)</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
+</div>
+<div class="sect3">
+<h4 id="_model"><a class="anchor" href="#_model"></a>3.3.2. Model</h4>
+<div class="imageblock">
+<div class="content">
+<img src="images/android-project-model.png" alt="android project model">
+</div>
+</div>
+<details>
+<summary class="title">Model.java</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">at.htl.leonding.model</span><span class="o">;</span>
+
+<span class="cm">/** Our read only &lt;a href="https://redux.js.org/understanding/thinking-in-redux/three-principles"&gt;single source of truth&lt;/a&gt; model */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Model</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">GreetingModel</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="nc">String</span> <span class="n">greetingText</span> <span class="o">=</span> <span class="s">"Hello, world!"</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="nc">ToDo</span><span class="o">[]</span> <span class="n">toDos</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ToDo</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+    <span class="kd">public</span> <span class="nc">UIState</span> <span class="n">uiState</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UIState</span><span class="o">();</span>  <span class="c1">// sub-model für ui state</span>
+    <span class="kd">public</span> <span class="nc">GreetingModel</span> <span class="n">greetingModel</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">GreetingModel</span><span class="o">();</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">Store.java</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">at.htl.leonding.model</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.inject.Inject</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.inject.Singleton</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">at.htl.leonding.util.store.StoreBase</span><span class="o">;</span>
+
+<span class="cm">/** This is our Storage area for our &lt;a href="https://redux.js.org/understanding/thinking-in-redux/three-principles"&gt;single source of truth&lt;/a&gt; {@link Model}. */</span>
+<span class="nd">@Singleton</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Store</span> <span class="kd">extends</span> <span class="nc">StoreBase</span><span class="o">&lt;</span><span class="nc">Model</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="nd">@Inject</span>
+    <span class="kd">public</span> <span class="nf">Store</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="nc">Model</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Model</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">ToDo.java</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">at.htl.leonding.model</span><span class="o">;</span>
+
+<span class="cm">/** A ToDo as we get it from &lt;a href="https://jsonplaceholder.typicode.com/todos"&gt;jsonplaceholder.typicode.com&lt;/a&gt;
+*/</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ToDo</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nc">Long</span> <span class="n">userId</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="n">title</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="n">completed</span><span class="o">;</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">UIState.java</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">at.htl.leonding.model</span><span class="o">;</span>
+
+
+<span class="cm">/** The current state of the user interface */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UIState</span> <span class="o">{</span>
+    <span class="cm">/** the type of Tab - Bars in our main view */</span>
+    <span class="kd">public</span> <span class="kd">enum</span> <span class="nc">Tab</span> <span class="o">{</span>
+        <span class="n">home</span><span class="o">(</span><span class="mi">0</span><span class="o">),</span>
+        <span class="n">todo</span><span class="o">(</span><span class="mi">1</span><span class="o">),</span>
+        <span class="n">settings</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
+
+        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">index</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">index</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="kd">private</span> <span class="kt">int</span> <span class="n">index</span><span class="o">;</span>
+        <span class="nc">Tab</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">index</span> <span class="o">=</span> <span class="n">index</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="cm">/** we define our own enum to have the model independent of the view technology */</span>
+    <span class="kd">public</span> <span class="kd">enum</span> <span class="nc">Orientation</span> <span class="o">{</span>
+        <span class="n">undefined</span><span class="o">,</span>
+        <span class="n">portrait</span><span class="o">,</span>
+        <span class="n">landscape</span>
+    <span class="o">}</span>
+    <span class="cm">/** the currently selected tab */</span>
+    <span class="kd">public</span> <span class="nc">Tab</span> <span class="n">selectedTab</span> <span class="o">=</span> <span class="nc">Tab</span><span class="o">.</span><span class="na">home</span><span class="o">;</span>
+
+    <span class="cm">/** the current orientation of the device. */</span>
+    <span class="kd">public</span> <span class="nc">Orientation</span> <span class="n">orientation</span> <span class="o">=</span> <span class="nc">Orientation</span><span class="o">.</span><span class="na">undefined</span><span class="o">;</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+</div>
+</details>
+</div>
+<div class="sect3">
+<h4 id="_feature"><a class="anchor" href="#_feature"></a>3.3.3. Feature</h4>
+<div class="imageblock">
+<div class="content">
+<img src="images/android-project-feature.png" alt="android project feature">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Fokus auf example und todo</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="_example"><a class="anchor" href="#_example"></a>Example</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Im example befinden sich verschiedene Operatoren von RxJava</p>
+</li>
+</ul>
+</div>
+<details>
+<summary class="title">map</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">RxJavaView.kt</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="kotlin">            <span class="c1">// Map Operator Button</span>
+            <span class="nf">item</span> <span class="p">{</span>
+                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
+                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+                    <span class="kd">val</span> <span class="py">originalValues</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="s">"Apple"</span><span class="p">,</span> <span class="s">"Banana"</span><span class="p">,</span> <span class="s">"Cherry"</span><span class="p">)</span>
+                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">addAll</span><span class="p">(</span><span class="n">originalValues</span><span class="p">)</span>
+                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getMappedObservable</span><span class="p">()</span>
+                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
+                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
+                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
+                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Map Operator"</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">RxJavaViewModel.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="c1">// Map Operator</span>
+    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="nf">getMappedObservable</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="s">"Apple"</span><span class="o">,</span> <span class="s">"Banana"</span><span class="o">,</span> <span class="s">"Cherry"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">String:</span><span class="o">:</span><span class="n">toUpperCase</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/map.png" alt="map">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>transformiert jedes Element der Observable nach einer angegebenen Funktion</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">filter</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">RxJavaView.kt</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="kotlin">            <span class="c1">// Filter Operator Button</span>
+            <span class="nf">item</span> <span class="p">{</span>
+                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
+                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+                    <span class="kd">val</span> <span class="py">originalValues</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">addAll</span><span class="p">(</span><span class="n">originalValues</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">()</span> <span class="p">})</span>
+                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getFilteredObservable</span><span class="p">()</span>
+                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">())</span> <span class="p">}</span>
+                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
+                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
+                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Filter Operator"</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">RxJavaViewModel.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="c1">// Filter Operator</span>
+    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">getFilteredObservable</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">number</span> <span class="o">-&gt;</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/filter.png" alt="filter">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>filtert die Elemente einer Observable basierend auf einer Bedingung</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">zip</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">RxJavaView.kt</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="kotlin">            <span class="c1">// Zip Operator Button</span>
+            <span class="nf">item</span> <span class="p">{</span>
+                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
+                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+                    <span class="kd">val</span> <span class="py">observable1</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="s">"A"</span><span class="p">,</span> <span class="s">"B"</span><span class="p">,</span> <span class="s">"C"</span><span class="p">)</span>
+                    <span class="kd">val</span> <span class="py">observable2</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">addAll</span><span class="p">(</span><span class="n">observable1</span><span class="p">.</span><span class="nf">zip</span><span class="p">(</span><span class="n">observable2</span><span class="p">)</span> <span class="p">{</span> <span class="n">s</span><span class="p">,</span> <span class="n">i</span> <span class="p">-&gt;</span> <span class="s">"$s and $i"</span> <span class="p">})</span>
+                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getZippedObservable</span><span class="p">()</span>
+                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
+                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
+                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
+                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Zip Operator"</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">RxJavaViewModel.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="c1">// Zip Operator</span>
+    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="nf">getZippedObservable</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">observable1</span> <span class="o">=</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="s">"A"</span><span class="o">,</span> <span class="s">"B"</span><span class="o">,</span> <span class="s">"C"</span><span class="o">);</span>
+        <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">observable2</span> <span class="o">=</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">zip</span><span class="o">(</span><span class="n">observable1</span><span class="o">,</span> <span class="n">observable2</span><span class="o">,</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">i</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">s</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/zip.png" alt="zip">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>kombiniert mehrere Observables und erstellt neue Paare von Elementen</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">interval</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">RxJavaView.kt</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="kotlin">            <span class="c1">// Interval Operator Button</span>
+            <span class="nf">item</span> <span class="p">{</span>
+                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
+                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s">"Generating interval values"</span><span class="p">)</span>
+                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getIntervalObservable</span><span class="p">()</span>
+                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">())</span> <span class="p">}</span>
+                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
+                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
+                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Interval Operator"</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">RxJavaViewModel.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="c1">// Interval Operator</span>
+    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">Long</span><span class="o">&gt;</span> <span class="nf">getIntervalObservable</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">interval</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="nc">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">take</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/interval.png" alt="interval">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>erzeugt fortlaufende Werte in einem festen Zeitintervall</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
+<details>
+<summary class="title">take</summary>
+<div class="content">
+<div class="listingblock">
+<div class="title">RxJavaView.kt</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="kotlin">            <span class="c1">// Take Operator Button</span>
+            <span class="nf">item</span> <span class="p">{</span>
+                <span class="nc">Button</span><span class="p">(</span><span class="n">onClick</span> <span class="p">=</span> <span class="p">{</span>
+                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+                    <span class="n">afterResults</span><span class="p">.</span><span class="nf">clear</span><span class="p">()</span>
+                    <span class="kd">val</span> <span class="py">originalValues</span> <span class="p">=</span> <span class="nf">listOf</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+                    <span class="n">beforeResults</span><span class="p">.</span><span class="nf">addAll</span><span class="p">(</span><span class="n">originalValues</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">()</span> <span class="p">})</span>
+                    <span class="n">rxJavaViewModel</span><span class="p">.</span><span class="nf">getTakeObservable</span><span class="p">()</span>
+                        <span class="p">.</span><span class="nf">subscribe</span> <span class="p">{</span> <span class="n">afterResults</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="nf">toString</span><span class="p">())</span> <span class="p">}</span>
+                        <span class="p">.</span><span class="nf">also</span> <span class="p">{</span> <span class="n">compositeDisposable</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">it</span><span class="p">)</span> <span class="p">}</span>
+                <span class="p">},</span> <span class="n">modifier</span> <span class="p">=</span> <span class="nc">Modifier</span><span class="p">.</span><span class="nf">fillMaxWidth</span><span class="p">())</span> <span class="p">{</span>
+                    <span class="nc">Text</span><span class="p">(</span><span class="s">"Take Operator"</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">RxJavaViewModel.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="c1">// Take Operator</span>
+    <span class="kd">public</span> <span class="nc">Observable</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">getTakeObservable</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">take</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/take.png" alt="take">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>nimmt nur eine bestimmte Anzahl von Elementen</p>
+</li>
+</ul>
+</div>
+</div>
+</details>
+</div>
+<div class="sect4">
+<h5 id="_todo"><a class="anchor" href="#_todo"></a>todo</h5>
+<details>
+<summary class="title">Details</summary>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">at.htl.leonding.feature.todo</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">at.htl.leonding.model.ToDo</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">jakarta.ws.rs.GET</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">jakarta.ws.rs.Path</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">jakarta.ws.rs.Produces</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">jakarta.ws.rs.QueryParam</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">jakarta.ws.rs.core.MediaType</span><span class="o">;</span>
+
+<span class="nd">@Path</span><span class="o">(</span><span class="s">"/todos"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">ToDoClient</span> <span class="o">{</span>
+    <span class="nd">@GET</span>
+    <span class="nd">@Produces</span><span class="o">(</span><span class="nc">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON</span><span class="o">)</span>
+    <span class="nc">ToDo</span><span class="o">[]</span> <span class="nf">all</span><span class="o">(</span><span class="nd">@QueryParam</span><span class="o">(</span><span class="s">"_start"</span><span class="o">)</span> <span class="kt">int</span> <span class="n">start</span><span class="o">,</span> <span class="nd">@QueryParam</span><span class="o">(</span><span class="s">"_limit"</span><span class="o">)</span> <span class="kt">int</span> <span class="n">maxRecords</span><span class="o">);</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">at.htl.leonding.feature.todo</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.eclipse.microprofile.config.Config</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.concurrent.CompletableFuture</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.function.Consumer</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.inject.Inject</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.inject.Singleton</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">at.htl.leonding.model.Store</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">at.htl.leonding.model.ToDo</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">at.htl.leonding.util.resteasy.RestApiClientBuilder</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">static</span> <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">concurrent</span><span class="o">.</span><span class="na">CompletableFuture</span><span class="o">.</span><span class="na">supplyAsync</span><span class="o">;</span>
+
+<span class="nd">@Singleton</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ToDoService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">JSON_PLACEHOLDER_BASE_URL_SETTING</span> <span class="o">=</span> <span class="s">"json.placeholder.baseurl"</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">final</span> <span class="nc">ToDoClient</span> <span class="n">toDoClient</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">final</span> <span class="nc">Store</span> <span class="n">store</span><span class="o">;</span>
+
+    <span class="nd">@Inject</span>
+    <span class="nc">ToDoService</span><span class="o">(</span><span class="nc">Config</span> <span class="n">config</span><span class="o">,</span> <span class="nc">RestApiClientBuilder</span> <span class="n">builder</span><span class="o">,</span> <span class="nc">Store</span> <span class="n">store</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">var</span> <span class="n">baseUrl</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="na">getValue</span><span class="o">(</span><span class="no">JSON_PLACEHOLDER_BASE_URL_SETTING</span><span class="o">,</span> <span class="nc">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="n">toDoClient</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="na">build</span><span class="o">(</span><span class="nc">ToDoClient</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">baseUrl</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">store</span> <span class="o">=</span> <span class="n">store</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">getAll</span><span class="o">()</span> <span class="o">{</span> <i class="conum" data-value="1"></i><b>(1)</b>
+        <span class="nc">Consumer</span><span class="o">&lt;</span><span class="nc">ToDo</span><span class="o">[]&gt;</span> <span class="n">setToDos</span> <span class="o">=</span> <span class="n">todos</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="n">store</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">model</span> <span class="o">-&gt;</span> <span class="n">model</span><span class="o">.</span><span class="na">toDos</span> <span class="o">=</span> <span class="n">todos</span><span class="o">);</span>
+        <span class="o">};</span>
+        <span class="nc">CompletableFuture</span>
+                <span class="o">.</span><span class="na">supplyAsync</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="n">toDoClient</span><span class="o">.</span><span class="na">all</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">40</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">thenAccept</span><span class="o">(</span><span class="n">setToDos</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>getAll()
+<div class="ulist">
+<ul>
+<li>
+<p>Der Consumer speichert die abgerufenen ToDo-Daten im store.</p>
+</li>
+<li>
+<p>Die apply-Methode wird verwendet, um den toDos-Wert des Models im Store zu setzen.</p>
+</li>
+<li>
+<p>es wird asynchron mit der CompletableFuture die all-Methode im Client aufgerufen</p>
+</li>
+<li>
+<p>wenn er erfolgreich die Daten holen konnte, wird er im <code>store</code> gespeichert</p>
+</li>
+</ul>
+</div></td>
+</tr>
+</table>
+</div>
+</div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_glossar"><a class="anchor" href="#_glossar"></a>4. Glossar</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -2809,7 +2681,7 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_quelle"><a class="anchor" href="#_quelle"></a>7. Quelle</h2>
+<h2 id="_quelle"><a class="anchor" href="#_quelle"></a>5. Quelle</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -2857,7 +2729,7 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-30 10:26:59 UTC
+Last updated 2025-01-30 18:07:08 UTC
 </div>
 </div>
 </body>
