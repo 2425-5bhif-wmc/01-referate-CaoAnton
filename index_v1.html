@@ -1734,16 +1734,14 @@ Intern sorgt Immer dafür, dass der ursprüngliche Zustand unverändert bleibt, 
 
 <span class="kn">import</span> <span class="nn">org.eclipse.microprofile.config.Config</span><span class="o">;</span>
 
+<span class="kn">import</span> <span class="nn">java.util.Random</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.util.concurrent.CompletableFuture</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.util.function.Consumer</span><span class="o">;</span>
-
 <span class="kn">import</span> <span class="nn">javax.inject.Inject</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.inject.Singleton</span><span class="o">;</span>
-
 <span class="kn">import</span> <span class="nn">at.htl.leonding.model.Store</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">at.htl.leonding.model.ToDo</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">at.htl.leonding.util.resteasy.RestApiClientBuilder</span><span class="o">;</span>
-
 <span class="kn">import</span> <span class="nn">static</span> <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">concurrent</span><span class="o">.</span><span class="na">CompletableFuture</span><span class="o">.</span><span class="na">supplyAsync</span><span class="o">;</span>
 
 <span class="nd">@Singleton</span>
@@ -1759,14 +1757,47 @@ Intern sorgt Immer dafür, dass der ursprüngliche Zustand unverändert bleibt, 
         <span class="k">this</span><span class="o">.</span><span class="na">store</span> <span class="o">=</span> <span class="n">store</span><span class="o">;</span>
     <span class="o">}</span>
 
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">getAll</span><span class="o">()</span> <span class="o">{</span> <i class="conum" data-value="1"></i><b>(1)</b>
-        <span class="nc">Consumer</span><span class="o">&lt;</span><span class="nc">ToDo</span><span class="o">[]&gt;</span> <span class="n">setToDos</span> <span class="o">=</span> <span class="n">todos</span> <span class="o">-&gt;</span> <span class="o">{</span>
-            <span class="n">store</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">model</span> <span class="o">-&gt;</span> <span class="n">model</span><span class="o">.</span><span class="na">toDos</span> <span class="o">=</span> <span class="n">todos</span><span class="o">);</span>
-        <span class="o">};</span>
-        <span class="nc">CompletableFuture</span>
-                <span class="o">.</span><span class="na">supplyAsync</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="n">toDoClient</span><span class="o">.</span><span class="na">all</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">40</span><span class="o">))</span>
-                <span class="o">.</span><span class="na">thenAccept</span><span class="o">(</span><span class="n">setToDos</span><span class="o">);</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">getAll</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">Consumer</span><span class="o">&lt;</span><span class="nc">ToDo</span><span class="o">[]&gt;</span> <span class="n">setToDos</span> <span class="o">=</span> <span class="n">todos</span> <span class="o">-&gt;</span> <span class="n">store</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">model</span> <span class="o">-&gt;</span> <span class="n">model</span><span class="o">.</span><span class="na">toDos</span> <span class="o">=</span> <span class="n">todos</span><span class="o">);</span>
+        <span class="nc">CompletableFuture</span><span class="o">.</span><span class="na">supplyAsync</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="n">toDoClient</span><span class="o">.</span><span class="na">all</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">40</span><span class="o">)).</span><span class="na">thenAccept</span><span class="o">(</span><span class="n">setToDos</span><span class="o">);</span>
     <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addToDo</span><span class="o">(</span><span class="nc">ToDo</span> <span class="n">toDo</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">long</span> <span class="n">newId</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Random</span><span class="o">().</span><span class="na">nextInt</span><span class="o">(</span><span class="mi">100000</span><span class="o">);</span>
+        <span class="n">toDo</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">newId</span><span class="o">;</span>
+
+        <span class="n">store</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">model</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="nc">ToDo</span><span class="o">[]</span> <span class="n">newToDos</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ToDo</span><span class="o">[</span><span class="n">model</span><span class="o">.</span><span class="na">toDos</span><span class="o">.</span><span class="na">length</span> <span class="o">+</span> <span class="mi">1</span><span class="o">];</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">arraycopy</span><span class="o">(</span><span class="n">model</span><span class="o">.</span><span class="na">toDos</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">newToDos</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">model</span><span class="o">.</span><span class="na">toDos</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+            <span class="n">newToDos</span><span class="o">[</span><span class="n">model</span><span class="o">.</span><span class="na">toDos</span><span class="o">.</span><span class="na">length</span><span class="o">]</span> <span class="o">=</span> <span class="n">toDo</span><span class="o">;</span>
+            <span class="n">model</span><span class="o">.</span><span class="na">toDos</span> <span class="o">=</span> <span class="n">newToDos</span><span class="o">;</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+
+
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">deleteToDo</span><span class="o">(</span><span class="nc">Long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">store</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">model</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">model</span><span class="o">.</span><span class="na">toDos</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">model</span><span class="o">.</span><span class="na">toDos</span> <span class="o">=</span> <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">model</span><span class="o">.</span><span class="na">toDos</span><span class="o">)</span>
+                        <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">todo</span> <span class="o">-&gt;</span> <span class="n">todo</span><span class="o">.</span><span class="na">id</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">todo</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">id</span><span class="o">))</span>
+                        <span class="o">.</span><span class="na">toArray</span><span class="o">(</span><span class="nc">ToDo</span><span class="o">[]::</span><span class="k">new</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">toggleToDo</span><span class="o">(</span><span class="nc">Long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">store</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">model</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">model</span><span class="o">.</span><span class="na">toDos</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">for</span> <span class="o">(</span><span class="nc">ToDo</span> <span class="n">todo</span> <span class="o">:</span> <span class="n">model</span><span class="o">.</span><span class="na">toDos</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">todo</span><span class="o">.</span><span class="na">id</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">todo</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">id</span><span class="o">))</span> <span class="o">{</span>
+                        <span class="n">todo</span><span class="o">.</span><span class="na">completed</span> <span class="o">=</span> <span class="o">!</span><span class="n">todo</span><span class="o">.</span><span class="na">completed</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+
 <span class="o">}</span></code></pre>
 </div>
 </div>
@@ -2541,7 +2572,7 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-30 18:07:08 UTC
+Last updated 2025-01-30 19:47:25 UTC
 </div>
 </div>
 </body>
