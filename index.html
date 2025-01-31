@@ -556,7 +556,7 @@ pre.rouge .gs {
 <div class="details">
 <span id="author" class="author">Anton Cao</span><br>
 <span id="revnumber">version 1.0,</span>
-<span id="revdate">2025-01-30</span>
+<span id="revdate">2025-01-31</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -566,7 +566,7 @@ pre.rouge .gs {
 <ul class="sectlevel2">
 <li><a href="#_rxjs">2.1. RxJS</a></li>
 <li><a href="#_signals">2.2. Signals</a></li>
-<li><a href="#_observable_vs_signals">2.3. Observable vs. Signals</a></li>
+<li><a href="#_rxjs_vs_signals">2.3. RxJS vs. Signals</a></li>
 <li><a href="#_signals_mit_single_source_of_truth">2.4. Signals mit Single Source of Truth</a></li>
 </ul>
 </li>
@@ -948,7 +948,7 @@ Hallo, Oleg!</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_observable_vs_signals"><a class="anchor" href="#_observable_vs_signals"></a>2.3. Observable vs. Signals</h3>
+<h3 id="_rxjs_vs_signals"><a class="anchor" href="#_rxjs_vs_signals"></a>2.3. RxJS vs. Signals</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -958,7 +958,7 @@ Hallo, Oleg!</pre>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Eigenschaft</th>
-<th class="tableblock halign-left valign-top">Observable</th>
+<th class="tableblock halign-left valign-top">RxJS</th>
 <th class="tableblock halign-left valign-top">Signals</th>
 </tr>
 </thead>
@@ -979,9 +979,14 @@ Hallo, Oleg!</pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Reaktives State-Management</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Push vs. Pull</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Push-basiert (Werte werden ausgesendet)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Pull-basiert (nur wenn nötig)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Datenfluss</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Push-basiert (Observable)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pull-basiert (Signal)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Abhängigkeitserkennung</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Manuell (subscribe)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Automatisch (Tracking)</p></td>
 </tr>
 </tbody>
 </table>
@@ -2392,7 +2397,7 @@ Beispiel: Zahlen und Buchstaben zu Paaren kombinieren.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2025-01-30 20:25:26 UTC
+Last updated 2025-01-31 06:58:57 UTC
 </div>
 </div>
 </body>
