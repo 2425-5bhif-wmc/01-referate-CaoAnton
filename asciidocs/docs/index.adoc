@@ -257,15 +257,16 @@ Hallo, Oleg!
 ----
 ====
 
-=== Observable vs. Signals
+=== RxJS vs. Signals
 
 |===
-| Eigenschaft              | Observable                     | Signals
+| Eigenschaft              | RxJS                     | Signals
 
 | **Synchronität**        | Asynchron                     | Synchron
 | **Komplexität**         | Höher, erfordert mehr Boilerplate | Niedriger, einfache API
 | **Anwendungsfälle**     | Datenströme, Ereignissteuerung | Reaktives State-Management
-| **Push vs. Pull**     | Push-basiert (Werte werden ausgesendet) | Pull-basiert (nur wenn nötig)
+| **Datenfluss**               | Push-basiert (Observable) | Pull-basiert (Signal)
+| **Abhängigkeitserkennung**   | Manuell (subscribe)      | Automatisch (Tracking)
 
 |===
 
